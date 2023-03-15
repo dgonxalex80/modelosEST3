@@ -1,0 +1,22 @@
+---
+title: <span style="color:#034a94"> **Modelo Lineal General - Logit Multinomial**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+
+
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+```
+
+</br></br>
+
+
+### <span style="color:#FF7F00">**Ejemplo**</span> 

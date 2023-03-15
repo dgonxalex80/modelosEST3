@@ -1,0 +1,176 @@
+---
+title: <span style="color:#034a94"> **Análisis de Componentes Principales**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+
+# devtools::install_github("kassambara/factoextra") # ultima version
+library("factoextra") # visualizacion elegante en ggplot2
+
+
+```
+
+
+<br/><br/>
+
+# **Introducción**
+
+<br/>
+
+Este análisis consiste en describir la variación producida por las observaciones de $p$ variables aleatorias, mediante un conjunto de nuevas variables que estan correlacionadas entre si, denominadas **componentes** y que estan conformadas por combinación lineal de las variables originales. 
+
+Se utiliza como complemento de los análisis descriptivos y para contribución en modelos predictivos, reduciendo el número de variables empleadas en el modelo.
+
+Las nuevas variables se obtienen en orden de contribución a la variabilidad total de los datos, tal forma que el primer componente describe la mayor cantidad de la variación total del conjunto de variables originales. El segundo componente principal se elige de tal forma que explique la mayor cantidad de la variación total del conjunto de datos que resta sin explicar por el primer componente, bajo la condición de ser independiente de la primera componente y así sucesivamente.
+
+<br/><br/>
+
+Las componente se pueden representar por $CP1$, $CP2$, $CP3$ $\dots$ construidas a partir de un conjunto de $p$ variables, de forma que:
+
+
+$$V[CP_1] > V[CP_2] > V[CP_3] > \dots > V[CP_p]$$
+y  $Cor[CP_i, CP_j] = 0$ para todo para de componentes $i \neq j$
+
+El objetivo principal del ACP es poder ver si las dos o tres primeras componentes explican la mayor parte de la variación de las $p$ variables iniciales. Si es así se pueden considerar estas dos componentes, reduciendo la dimensión de los datos y considerar su representación gráfica.
+
+
+### **Nota**
+
+Los procedimientos anteriores están soportados en el supuesto de que las p variables son una combinación lineal de un base que se desea encontrar.
+
+<br/><br/>
+
+## **Determinación de los componentes**
+
+<br/>
+
+El primer componente tiene la forma :
+
+$$CP_{1}  = \beta_{11}X_1+ \beta_{12}X_2 + \dots + \beta_{1p}X_{p} = \displaystyle\sum_{i=1}^{p} \beta_{1i} X_{i} = b'_{1}X$$
+
+Donde $b'= (\beta_{11}, \beta_{12}, \dots , \beta_{1p})$ es el vector de coeficientes a estimar y $X'$ el vector de variables $(X_1, X_2, \dots, X_p)$ que conforma la data.
+
+Para determinar la porción de la varianza total de la data explicada por el componente se define $\Sigma$  
+
+$$
+\Sigma =
+\begin{equation}
+\left(
+\begin{array}{cccc}
+\sigma^2_1 & \sigma_{12} & \cdots & \sigma_{1p} \\
+\sigma_{21} & \sigma^2_2 & \cdots & \sigma_{2p} \\
+\vdots & \vdots & \ddots & \vdots \\
+\sigma_{p1} & \sigma_{2p} & \cdots & \sigma^2_p
+\end{array}
+\right)
+\end{equation}
+$$
+
+
+Enconces la varianza del primer componente será :
+
+$$V[CP_1] = V[b'_1 X] = b'_1 \hspace{.1cm}\Sigma \hspace{.1cm} b_1$$
+Bajo la restricción :
+
+$$\beta_{11}^2  + \beta_{12}^2 + \dots + \beta_{1p} = b'_1 \hspace{.1cm}b_1= 1$$
+
+La solución a este sistema se obtiene  mediante el método matemático Multiplicadores de Lagrange que maximiza el valor $\lambda_1$ para la siguiente función :
+
+$$b'_1 \hspace{.1cm}\Sigma \hspace{.1cm}b_1 - \lambda_1 (b'_1 \hspace{.1cm} b_1-1) $$
+
+Dando como resultados:
+
+$$CP_1 = b'_1 X$$
+
+El segundo componenete estará determinado por una segunda ecuación de Lagrange con la que se obtiene:
+
+
+$$CP_2 = b'_2X$$
+
+
+La varianza total de las $p$
+
+$$\displaystyle\sum_{i=1}^p V[X_i] = \sum_{i=1}^p V[CP_i] = \displaystyle\sum_{i=1}^p \lambda_{i}$$
+
+De tal forma que la contribución total por cada componente se estimará como:
+
+
+$$\dfrac{\lambda_{i}}{\displaystyle\sum_{i=1}^p \lambda_{i}}$$
+
+
+
+Ahora, la contribución de los primeros tres componentes estará dado por :
+
+$$\dfrac{\lambda_{1} + \lambda_2 + \lambda_3}{\displaystyle\sum_{i=1}^p \lambda_{i}}$$
+
+<br/><br/>
+
+## **Ejemplo**
+
+```{r}
+library(paqueteMOD)
+data("creditos")
+prcomp(creditos[,2:5])
+```
+
+<br/><br/>
+
+## **Elección del número de componentes principales**
+
+
+```{r}
+data(decathlon2)
+decathlon2.active <- decathlon2[1:23, 1:10]
+head(decathlon2.active[, 1:6])
+res.pca <- prcomp(decathlon2.active, scale = TRUE)
+fviz_eig(res.pca)
+
+fviz_pca_ind(res.pca,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+             )
+
+
+fviz_pca_var(res.pca,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+             )
+
+fviz_pca_biplot(res.pca, repel = TRUE,
+                col.var = "#2E9FDF", # Variables color
+                col.ind = "#696969"  # Individuals color
+                )
+
+```
+
+
+```{r}
+library(factoextra)
+# Eigenvalues
+eig.val <- get_eigenvalue(res.pca)
+eig.val
+  
+# Results for Variables
+res.var <- get_pca_var(res.pca)
+res.var$coord          # Coordinates
+res.var$contrib        # Contributions to the PCs
+res.var$cos2           # Quality of representation 
+# Results for individuals
+res.ind <- get_pca_ind(res.pca)
+res.ind$coord          # Coordinates
+res.ind$contrib        # Contributions to the PCs
+res.ind$cos2           # Quality of representation 
+```
+

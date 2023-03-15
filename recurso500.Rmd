@@ -1,0 +1,113 @@
+---
+title: <span style="color:#034a94"> **Análisis de Conglomerados**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+
+```
+
+
+#  **Introducción**
+
+
+El análisis de conglomerados, tambien llamado análisis de cluster tiene como objetivo agrupar los elementos de  la muestra en grupos homogéneos respecto de las puntuaciones  de $k$ variables donde :
+
+* Cada grupo tambien llamado conglomerado o cluster debe ser homogeneo respecto a las variables que conforman una data, haciendo que unidad se parezca a todas las que sean incluidas en el mismo grupo.
+
+* Los grupos conformados deben ser los más diferentes posibles unos de otros con respecto a las variables empleadas en la data
+
+Pasos
+
+* La clasificación de las unidades en los grupos se realiza de manera posterior y se deriva de la información contenida en la data. En un inicio se tiene información de $n$ individuos u objetos de los cuales ha medido $p$ variables
+
+* Con esta información se determina una medida que permite medir las distancias o diferencias entre observaciones. Este indicador también es llamado de similaridad 
+
+* Con estos indicadores de distancia se agrupan las observciones más parecidas o que presenten menor distancia. Dependiendo de la medida de distancia utilizada, el análisis de clasifica como:
+
+* Análisis de conglomerado jerarquico
+* Análisis de conglomerado no jerarquico
+
+* Por ultimo se caracterizan los grupos encontrados a través de sus promedio tomadas en la $p$ variables estudiadas.
+
+
+
+
+## **Medidas de similaridad **
+
+Cuando se tienen variables cuantitativas en escala de intervalo o de razón se utilizan los siguientes indicadores:
+
+#### **Distancia Euclidiana**
+
+
+#### **Distancia euclidiana cuadrada**
+
+#### **Distancia de Mikkowski**
+
+
+#### **Distancia de Manhattan**
+
+En el caso de datos binarios
+
+#### **Indice de Jaccard**
+
+## **Coeficiente simple matching  de Sokal - Michener**
+
+
+
+## **Estandarización de datos**
+
+
+
+
+## **Análisis jerárquico**
+
+
+## **Análisis no jerárquico**
+
+
+## **Método del centroide**
+
+
+## **Método del vecino más cercano**
+
+
+## **Método del vecino mś lejano**
+
+
+## **Método de la vinculación promedio**
+
+
+## **Determinación del número de conglomerados**
+
+
+## **Índice CH**
+
+
+
+### <span style="color:#FF7F00">**Ejemplo**</span> 
+
+```{r}
+library(paqueteDEG)
+
+data("beer")
+beer1=beer[,2:4]
+# hclust(beer1, method = "average")
+
+```
+
+
+
+
+
+
+

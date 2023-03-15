@@ -1,0 +1,49 @@
+---
+title : <span style="color:#686868"> **Experiencia**</span>
+output: html_document
+css: style.css
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+library(summarytools)
+
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+
+```
+
+</br></br>
+
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+knitr::include_graphics("img/banner_presentacion.png")
+```
+
+</br></br>
+
+# **Introducción**
+
+</br>
+
+En esta unidad se presentan los siguientes modelos :
+
+* Modelo diseño de experimentos
+* Modelo de Regresión Logiística binomial
+* Modelo de Regresión Logit multinomial
+* Análisis de cluster  **AC**
+* Análisis de componentes principales **ACP**
+
+</br>
+
+Los tres primero están basados en el modelo lineal general y su estructura es similar a la del modelo de regresión, tratado en las unidades 1 y 2
+
+El análisis de Cluster realiza una clasificación de los objetos o individuos de una base de datos en grupo teniendo en cuenta todas la variables, empleando métricas de distancias
+
+Finalmente el análisis de componente principales es un análisis complementario que permite resumir en pocas variables independientes un gran número de variables. Esta herramienta es útil en el caso de tener muchas variables y poder las emplear un modelo de regresión como variables independientes
+
+
+

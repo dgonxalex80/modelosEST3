@@ -1,0 +1,207 @@
+---
+title: <span style="color:#034a94"> **Conceptos básicos**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+
+
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+```
+
+<br/> <br/>
+
+Inicialmente se presetan una serie de conceptos que forman parte de los modelos de diseños experimentales.
+
+<br/> <br/>
+
+##  <span style="color:#034A94">**Análisis de Varianza (ANOVA)**</span>
+
+<br/>
+
+Consisite en dividir la variabilidad total de la variable respuesta ($Y$) por subgrupos que permite determinar si las medias para cada subgupo son iguales o diferentes. En el caso de tener k=2 subgrupos se puede emplear como estadístico de prueba a $T \sim t_{v: n_1+n_2-2}$. Para los casos donde $k>2$ se emplea el estadístico $F$ 
+
+$$Ho:\hspace{.5cm}  \mu_A = \mu_B = \dots =\mu_E$$
+$$Ha: \text{Al menos dos medias no son iguales}$$
+<br/>
+
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE}
+library(ggplot2)
+datos=data.frame(y1=c(551,457,450,731,499,632,
+                    595,580,508,583,633,517,
+                    639,615,511,573,648,677,
+                    471,449,440,437,417,465,
+                    563,631,522,613,656,679),
+                x1=rep(c("A","B","C","D","E"), each=6))
+ggplot2::ggplot(data=datos, aes(x=x1, y=y1), fill=x1)+
+  geom_boxplot(fill=c1)+
+    stat_summary(fun = "mean", geom = "point", shape = 16,
+               size =3, color = "white")+
+  labs(title="",
+        x ="Factor", y = "Y")
+
+```
+
+
+<br/><br/>
+
+
+##  <span style="color:#034A94">**Variable y factor**</span>
+
+<br/>
+
+En este caso se considera como variable independiente $X$ que tiene como rango una conjunto de valores fijos o niveles para los cuales se observan sus respectivos valores asociados  de $Y$
+
+A la variable que agrupa los diferentes niveles que determinan las subpoblacionesde $Y$, se le denomina **factor** y conforma una variable cualitativa.
+
+El modelo a construir tratará de determinar si existe o no una relación entre la variable respuesta $Y$ y una variable cualitativa llamada factor 
+
+<br/><br/>
+
+##  <span style="color:#034A94">**Tratamiento**</span>
+
+<br/>
+
+Se considera tratamiento a cada nivel que toma el factor que proporciona información de $Y$ asociada
+
+<br/><br/>
+
+## **Replica**
+
+<br/>
+
+Se considera replica con el número de veces que se repote el tratamiento para un mismo individuo
+
+
+<br/><br/>
+
+De acuerdo con lo anterior los datos están conformados de la forma: 
+
+
+| Tratamientos   | $T_1$       | $T_2$       | $T_3$       | $\dots$ | $T_k$       |
+|:---------------|:-----------:|:-----------:|:-----------:|:-------:|:-----------:|
+|                | $y_{11}$    | $y_{21}$    | $y_{31}$    | $\dots$ | $y_{k1}$    |
+|                | $y_{12}$    | $y_{22}$    | $y_{32}$    | $\dots$ | $y_{k2}$    |
+|                | $y_{13}$    | $y_{23}$    | $y_{33}$    | $\dots$ | $y_{k3}$    |
+|                | $\vdots$    | $\vdots$    |$\vdots$     | $\vdots$| $\vdots$     |
+|                | $y_{1n_{1}}$| $y_{2n_{2}}$| $y_{3n_{3}}$| $\dots$ | $y_{kn_{k}}$|
+|  medias        | $\bar{y_{1}}$| $\bar{y_{2}}$| $\bar{y_{3}}$| $\dots$ | $\bar{y_{k}}$|
+
+
+Para cada tratamiento $T_{i}$ se tomará una muestra de tamaño $n_{i}$ 
+
+Esto permite dividir la variabilidad total de $Y$ en los siguientes componentes:
+
+* **SCTr** : Variabilidad entre tratamientos : $\displaystyle\sum_{i=1}^kn_i (\bar{y_{i}}-\bar{\bar{y}})^2$
+
+* **SCE** : Variabilidad relacionada con los errores : $\displaystyle\sum_{i=1}^{k}  \displaystyle\sum_{j=1}^{n_{i}} (y_{ij} - \bar{y_{i}})^2$
+
+* **SCT** : Variabilidad total : $\displaystyle\sum_{i=1}^{k}  \displaystyle\sum_{j=1}^{n_{i}} (y_{ij} - \bar{\bar{y}})^2$
+
+
+<br/><br/>
+
+##  <span style="color:#034A94">**Tabla ANOVA**</span>
+
+<br/><br/>
+
+|Fuentes de variación|grados de libertad|Suma de Cuadrados|  Cuadrados medios |Estadístico  F |  valor p |
+|:---------------|:-----------:|:-----------:|:-----------:|:-------:|:-----------:|
+| Tratamientos       |   `k-1`          |   `SCTr`        |`MCTr = SCTr/(k-1)`|`F = MCTr/MCE` |$f_{v_1:k-1,v_2:nk-k, \alpha}$|
+| Error              |   `nk-k`         |   `SCE`         |`MCE  = SCE/(nk-k)`|               |                            |
+| Total              |   `nk-1`         |   `SCT`         |                   |               |                            |
+
+<br/>
+
+La comparación de `MCTr`  con  `MCE` conforma el estadístico F, que determina si la variación explicada por los tratamientos es estadística,mente superior a la variación explicada por los errores o el componente aleatorio.
+
+<br/>
+
+En caso de no rechazarse la $Ho : \mu_{1} = \mu_{2} = \dots = \mu_{k}$, se concluye que los tratamientos generan igual resultado y por tanto no existen efectos diferentes de ellos sobre la variable respuesta.
+
+Por el contrario si $Ho$, se rechaza, se concluye que por lo menos existe alguna $\mu_{i} \neq \mu_{j}$. Para identificar cuales son las medias diferentes se realizan pruebas de comparaciones múltiples :
+
+* Método de la mínima diferencia significativa (LSD)
+* Método de Bonferroni
+* Método de Tukey
+
+<br/><br/>
+
+### <span style="color:#FF7F00">**Ejemplo**</span> 
+
+La siguiente información corresponde a 
+
+|i               | 1    |2     |3    |4      |5      |6      |  
+|:--------------:|-----:|-----:|----:|------:|------:|------:|
+|**Tratamientos**|      |      |     |       |       |       |
+|**A**           |551   |557   |520  |631    |599    |632    |
+|**B**           |555   |580   |508  |563    |533    |517    |
+|**C**           |639   |615   |511  |573    |648    |677    |
+|**D**           |471   |449   |440  |437    |417    |465    |
+|**E**           |563   |631   |522  |613    |656    |679    |
+
+                 
+Donde:
+
+$A$,$B$,$C$,$D$ y $E$ consforman los $k=5$ tratamientos, cada uno de ellos con $n_i=6$ replicas
+
+<br/>
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE}
+library(ggplot2)
+datos=data.frame(y1=c(551,557,520,631,599,652,
+                    555,580,508,563,533,517,
+                    639,615,511,573,648,677,
+                    471,449,440,437,417,465,
+                    563,631,522,613,656,679),
+                x1=rep(c("A","B","C","D","E"), each=6))
+ggplot2::ggplot(data=datos, aes(x=x1, y=y1), fill=x1)+
+  geom_boxplot(fill=c1)+
+    stat_summary(fun = "mean", geom = "point", shape = 16,
+               size = 3, color = "white")+
+    labs(title="",
+        x ="Factor", y = "Y")
+
+anova<-aov(y1 ~x1, datos)
+summary(anova)
+
+```
+
+<br/>
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE}
+library(tidyverse)
+library(kableExtra)
+tmeans=aggregate(y1~x1, datos, mean)
+colnames(tmeans)<-c("Tratamientos", "medias")
+tmeans
+TukeyHSD(anova)
+```
+
+<br/>
+
+Al examinar los resultados de las pruebas de comparaciones multiples de Tukey se observa que solo se presentan diferencias estadisticas entre las medias de los tratamiento D-C y E-D
+
+<br/><br/>
+
+
+## 
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,522 @@
+---
+title: <span style="color:#034a94"> **Modelo Lineal General - Logit binomial**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA, warning = FALSE, message = FALSE)
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+color2=c(c1,c2)
+library(memisc)
+library(MASS)
+library(lattice)
+library(stats)
+library(tidyverse)
+
+# install.packages("learnr")          # solo una vez
+# install.packages("devtools")     # solo una vez
+# devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
+library(paqueteMOD)
+data("eleccion")
+```
+
+</br></br>
+
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+# knitr::include_graphics("img/puntos1.png")
+```
+
+
+## <span style="color:#034A94">**Introducción**</span>
+
+<br/>
+
+La regresión logística tiene la misma estructura presentada en el modelo de regresión lineal múltiple, solo que la variable dependiente es no numérica y corresponde a una variable cualitativa con dos valores (bivariada). En este caso el modelo se denomina Logit binomial.
+
+<br/>
+
+Este modelo esta relacionado con predicción y explicación de las decisiones de los consumidores, la clasificación de los clientes de un banco y presenta como función de ajuste la **función logit** que corresponde a una función en forma de s, en lugar de una linea recta como lo hace la regresión lineal simple.
+
+<br/>
+
+El objetivo de la **regresiòn logística** es la de predecir la probabilidad de que una variable binaria (dicotómica) tome los valores posibles en la que esta está definida ($R_Y= \{0,1 \}$, mediante la combinación lineal de una o varias variables independientes cuantitativas o cualitativas. La regresiòn logistica hace parte de los modelos lineales generalizados en donde se usa una función de enlace llamada logit.
+
+</br>
+
+<div class="content-box-blue">
+$$Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2}   + \beta_{3}X_{3}  +   + \beta_{k}X_{k} + \varepsilon$$
+</div>
+
+</br>
+
+## <span style="color:#034a94">**Supuestos y requisitos**</span>
+
+</br>
+
+El supuesto principal está relacionado con la ausencia de multicolinealidad o en caso de existir  que sea muy baja, pues de no ser así se puede afectar el resultado de las estimaciones, además de aumentar artificialmente los errores de los estimadores de los coeficientes
+
+Tambien se supone que la variable dependiente es una variable con distribución Bernoulli o binomial con $n=1$. Teniendo el valor de uno cuando se obtiene éxito y cero cuando la variable representa fracaso.
+
+
+
+</br></br>
+
+### <span style="color:#FF7F00">**Ejemplo**</span> 
+
+</br>
+
+El siguiente problema es tomado del documento realizado por [Joaquín Amat Rodrigo](https://rpubs.com/Joaquin_ARhttps://web.whatsapp.com//229736) publicado en RPlus con el fin de presentar el modelo logit simple
+
+</br>
+
+Se pretende ilustrar los componentes del modelo lineal general para el caso particular del modelo de logit simple, enmarcado dentro de los modelos llamados **modelos de probabilidad** y determinar la probabilidad de que un estudiante obtenga matricula de honor a partir de la nota obtenida en matemáticas
+
+</br></br>
+
+<div class="content-box-gray">
+## <span style="color:#686868">**Preguntas**</span>
+
+<br/>
+
+* Cómo se estiman los modelos de regresión con variables cualitativas como variables respuesta?
+
+* Qué problemas se presentan cuando se desean realizar inferencias? Que pruebas de hipotesis se deben realizar?
+
+* Como se mide la bondad de ajuste del modelo estimado?
+
+* Como se interpretan los resultados obtenidos?
+
+Preguntas planteadas en Gujarati(2009)
+</div>
+
+Con el prósito de responder a esta preguntas, empezaremos con las caracteristicas de los datos
+
+</br></br>
+
+### <span style="color:#686868">**Datos**</span>
+
+</br>
+
+La  data: `matricular` de `paqueteMOD`,  contiene los datos de un conjunto de estudiantes que han obtenido matricula de honor (`matricula = 1`) y un grupo de no la han conseguido (`matricula = 0`) y sus respectivas notas obtenidas en matemáticas
+
+</br>
+
+En este caso se debe contar con una variable categórica con dos niveles representados por dos valores : $0$ y $1$ (variable matricula), quien obra como variable dependiente y por lo menos una variable cuantitativa que tome diferentes valores (en este caso la nota de matemáticas).  
+
+</br>
+
+```{r}
+library(paqueteMOD)
+data("matricular")
+summary(matricular)
+```
+
+</br></br>
+
+Distribución de matriculados: 
+
+Utilizamos la función  `table()` para encontrar la distribución de la variable categórica matricula:
+
+</br>
+
+```{r}
+table(matricular$matricula)
+```
+
+</br></br>
+
+Distribución del puntaje en matemáticas por tipo de matricula
+
+</br>
+
+Tambien podemos explorar el comportamiento de la variable cuantitativa (matemáticas) para las dos categorías, que en este caso corresponde a la distribución de las notas por tipo de matricula : 
+
+```{r}
+library(ggplot2)
+ggplot(data = matricular, aes(x = as.factor(matricula), y = matematicas, color = matricula)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2)+
+  scale_color_manual(values=c("#FF7F00","#034A94"))+
+  labs(x = "matricula de honor", y = "puntaje matemáticas") +
+  ggtitle("  ")
+```
+
+</br></br></br>
+
+
+## <span style="color:#034A94">**Modelo logit**</br>
+
+</br>
+
+Inicialmente podríamos explorar una estimación de **MCO**, como posibilidad de estimación:
+
+
+$$
+Y = \beta_{0} + \beta_{1}X_{1} + \varepsilon
+$$
+Den de la variable $Y$ es una variable con dos categorías (binaria), la variable $X$ corresponde a una variable numérica y $\varepsilon$ corresponde a una variable aleatoria no observable.
+
+Com prueba inicial y de comparación se plantea realizar la estimación por el método de mínimos cuadrados ordinarios.
+
+```{r}
+library(tidyverse)
+
+matricular$matricula=as.numeric(matricular$matricula)
+
+matricular %>% 
+   lm(matricula ~ matematicas ,  data = .) -> modelo0
+summary(modelo0) 
+```
+
+El resultado muestra un valor muy bajo de ajuste, dado que los puntos están sobre el eje horizontal con $Y=0$ o en el eje horizontal con $Y=1$
+
+```{r}
+library(ggplot2)
+# data(matricular)
+matricular1=matricular
+matricular1$matricula = as.numeric(matricular1$matricula)
+
+g3=ggplot(data = matricular1, mapping = aes(x=matematicas, y=matricula)) + 
+           geom_point() + 
+           geom_smooth(method = "lm", se=FALSE) +         
+           labs(y = "matricula de honor", x = "puntaje matemáticas") +
+           ggtitle("  ")
+
+g3
+```
+
+</br></br>
+
+Como se puede observar este modelo no permite ajustar una linea que represente los valores obtenidos en la prueba de matemáticas.  Además de no cumplir con los supuestos planteados para el modelo de regresión lineal simple.
+
+* No normalidad de los errores
+* Heteroscedasticidad de errores
+* Posibilidad de que $\widehat{Y_{i}}$ se encuentre por fuera del rango $[0,1]$, siendo que estimación  de $Y$ debe corresponder  a la probabilidad de ocurrencia de $Y$
+* Valores muy bajos para $R^{2}$, dada la dificultad de ajuste de los datos a una linea recta 
+
+</br></br>
+
+Estos problemas los podemos superar al plantear el siguiente modelo teniendo como base la función de distribución acumulada $F(x) = P(X \leq x)$ y la función logística:  
+
+</br>
+
+<div class="content-box-blue">
+$$f(z)= \dfrac{1}{1+\exp{\{-z\}}} = \dfrac{\exp{\{z\}}}{1-\exp{\{z\}}}$$
+</div>
+
+</br>
+
+De esta ecuación podemos definir :
+
+$$P_{i} = P(Y=1 | X =x) =  \dfrac{1}{1+\exp{\{-\beta_{0}-\beta_{1}x_{i}\}}} +  \varepsilon_{i}^{*}= \dfrac{\exp{\{ \beta_{0}-\beta_{1}x_{i} \}}}{1-\exp{\{\beta_{0}-\beta_{1}x_{i}\}}} + \varepsilon_{i}^{*}$$
+
+y por tanto su complemento está dado por :
+
+$$1- P_{i} = P(Y=0 | X =x) =  \dfrac{1}{1 + \exp{\{ \beta_{0}-\beta_{1}x_{i} \}}} $$
+
+La división de estas dos probabilidades genera $odds$
+
+
+$$\Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \exp{\Big\{\beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} \Big\}} + \varepsilon_{i}^{*}$$
+Y finalmente al sacar logaritmos en ambos lados se obtiene la siguiente expresión lineal:
+
+$$\ln \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
+</br>
+
+```{r}
+library(ggplot2)
+fx=function(x){
+  1/(1+exp(-x))
+}
+
+ggplot(data.frame(x=c(-8, 8)), aes(x)) + stat_function(fun=fx, size=1, col="#FF7F00")
+```
+
+</br></br>
+
+Empleando la función logística se replantea el modelo partiendo del **logaritmo de la razón de probabilidades** en función de una combinación lineal de las variables independientes :
+
+$$\ln \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
+</br></br>
+
+Su estimación se puede plantear de manera resumida como:
+
+
+<div class="content-box-blue">
+$$\ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln (odds) =\beta_{0} + \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
+</div>
+
+</br>
+
+Donde :
+
+* $odds = \dfrac{P_{i}}{1-P_{i}} = \dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}$
+
+</br>
+
+* $\ln(odds) = \ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg)$
+
+</br>
+
+* $\ln \Bigg(\dfrac{1}{0}\Bigg) \hspace{.5cm}\text{si el estudiante RECIBE matricula de honor}$
+
+</br>
+
+* $\ln \Bigg(\dfrac{0}{1}\Bigg) \hspace{.5cm}\text{si el estudiante NO RECIBE matricula de honor}$
+
+</br></br>
+
+El resultado se puede interpretar como:
+
+</br>
+
+|    |                  |          |                                      |           |                |
+|:---|:-----------------|:---------|:-------------------------------------|-----------|:---------------|
+| Si |$P_{i} = 1-P_{i}$ | entonces |$\dfrac{P_{i}}{1-P_{i}} = odds =1$,   | por tanto | $\ln(odds) = 0$|      
+|    |                  |          |                                      |           |                |
+| Si | $P_{i} < 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = odds < 1$,| por tanto | $\ln(odds) < 0$|      
+|    |                  |          |                                      |           |                |
+| Si | $P_{i} > 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = odds > 1$, | por tanto |$\ln(odds) > 0$ |     
+
+
+</br>
+
+<div class="content-box-yellow">
+### <span style="color:#686868">**Nota:**</span> 
+
+* $P_{i}$ : probabilidad de recibir matricula de honor
+
+* $1-P_{i}$ : probabilidad de no recibir matricula de honor
+
+</div>
+
+</br></br>
+
+
+## <span style="color:#034A94">**Estimación del modelo**</span>
+
+</br>
+
+Para realizar la estimación del modelo logit utilizamos la función `glm()`
+
+```{r}
+library(tidyverse)
+data(matricular)
+matricular %>% 
+  glm(matricula ~ matematicas , family = binomial(link = "logit"), data = .) -> modelo1
+summary(modelo1) 
+
+```
+
+</br></br>
+
+El modelo estimado en su forma original :
+
+$$\ln \Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}x_{i}$$
+</br></br>
+
+Utilizamos la función inversa del logaritmo
+
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\bigg\{ \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm} x_{i}}\bigg\}$$
+</br></br>
+
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.793942  + 0.1563404 \hspace{.2cm}x_{i}}\big\}$$
+</br></br>
+
+## <span style="color:#034A94">**Interpretación de los coeficientes**</span>
+
+</br></br>
+
+### <span style="color:#034A94">$\beta_{0}$</span>
+
+</br>
+
+El coeficiente estimado $\widehat{\beta}_{0}$ corresponde al valor esperado del logaritmo de la razón de probabilidades para un estudiante con nota cero en matemáticas.  Para leerlo en términos de razón de probabilidades realizamos la siguiente transformación:
+
+
+```{r, echo=FALSE}
+# coeficientes estimados
+b=modelo1$coefficients
+b0=b[1]; names(b0)= " "
+b1=b[2]; names(b1)= " "
+#-------------------------
+x=0
+# exp(b0+b1*x)
+# exp(b0+b1*x)/(1-exp(b0+b1*x))
+
+cat("exp{b0} = exp{-9.793942} = ", exp(b0+b1*x))
+```
+
+Cuando $x=0$ el valor de la razón de probabilidades es de $0.0000557885$, indicando que la probabilidad $(1-P_{i})$ es mucho mas grande que $P_{i}$ . Lo cual es consecuente, dado que obtener un puntaje en el examen de matemáticas $x=0$, estima una probabilidad de obtener matricula de honor de 
+
+</br></br>
+
+### <span style="color:#034A94">$\beta_{1}$</span>
+
+</br>
+
+Ahora para interpretar el aporte que genera un punto adicional en la nota de matemáticas sobre la probabilidad realizamos el siguiente cálculo:
+
+$$\exp{\{ 0.1563404 \}} = 1.169224$$
+
+```{r, echo=FALSE}
+cat("exp(0.1563404) = ", exp(0.1563404) )
+```
+
+
+</br></br>
+
+$\widehat{\beta}_{1}$ indica el cambio en $ln(p/(1-p))$  debido a un incremento unitario en $x$,   por lo que es necesario sacar la función inversa al logaritmo que es la función exponencial (`exp()`)
+
+Por cada unidad de aumento de $x$ los $odds$ de obtener matricula se  incrementan en : $1.17$ unidades
+
+```{r}
+exp(b1)
+```
+
+
+Un intervalo de confianza para los coeficientes se puede obtener mediante :
+
+```{r, message=FALSE}
+library(MASS)
+confint(object = modelo1, level = 0.95 )
+```
+</br>
+
+
+```{r}
+data(matricular)
+matricular$matricula <- as.character(matricular$matricula)
+matricular$matematicas <- as.numeric(matricular$matematicas)
+
+plot(matricula ~ matematicas, matricular, col = "darkblue",
+     main = "Modelo regresión logística",
+     ylab = "P(matrícula=1|matemáticas)",
+     xlab = "matemáticas", pch = "I")
+
+# type = "response" devuelve las predicciones en forma de probabilidad en lugar de en log_ODDs
+curve(predict(modelo1, data.frame(matematicas = x), type = "response"),
+      col = "#034A94", lwd = 3, add = TRUE)
+abline(h=.50, col="red")
+
+
+grid()
+```
+
+</br></br></br>
+
+## <span style="color:#034A94">**Bondad de ajuste del modelo**</span>
+
+</br>
+
+Para determinar la bondad de ajuste del modelo se utiliza el resultado de la probabilidad que estima el modelo y se asigna un valor de cero para los individuos que tengan valores menores o iguales a un punto $c$, que en este caso tomamos como $0.50$. Para valores mayores a $0.5$ se asigna un valor de $1$
+
+</br>
+
+```{r}
+library(vcd)
+predicciones <- ifelse(test = modelo1$fitted.values > 0.5, yes = 1, no = 0)
+mc <- table(modelo1$model$matricula, predicciones,
+                          dnn = c("observaciones", "predicciones"))
+mc
+```
+</br>
+
+```{r}
+mosaic(mc, shade = T, colorize = T,
+       gp = gpar(fill = matrix(c("#11224D", "#F98125", "#F5B841","#2C599D"), 2, 2)))
+```
+
+</br>
+
+Los colores azules representan la proporción de clasificaciones correcta :
+
+* Siendo 0, lo clasifica como 0 y 
+* Siendo 1 lo clasifica como 1
+
+Los colores naranjas corresponden a las proporciones de clasificaciones erradas por el modelo.
+
+La proporción de clasificaciones correctas dan una aproximación del valor $R^2$
+
+</br>
+
+$$ 
+\dfrac{140+22}{140+27+11+22} = \dfrac{162}{200} = 0.81
+$$
+Este valor cuenta como el $R^2$ , es decir que el modelo explica (clasifica de manera adecuada) el 81% de los casos
+
+</br></br>
+
+<!-- Cuenta $R^{2}$ -->
+
+<!-- ```{r} -->
+<!-- cuenta_R2= sum(diag(mc))/sum(mc) -->
+<!-- cuenta_R2 -->
+<!-- ``` -->
+
+
+```{r, message=FALSE}
+library(DescTools)
+PseudoR2(modelo1, which = "McFadden")
+```
+
+</br>
+
+```{r,message=FALSE}
+library(pscl)
+pR2(modelo1)
+```
+
+<div class="content-box-yellow">
+### <span style="color:#686868">**Nota:**</span> 
+
+Es importante resaltar que en este tipo de modelos la bondad de ajuste pasa a un segundo plano y cobra importancia el signo de los coeficientes y su significancia estadística.
+
+</div>
+
+</br></br></br>
+
+## <span style="color:#034A94">**Predicción**</span>
+
+</br>
+
+Predecir la probabilidad de que un estudiante pueda tener matricula de honor con un puntajes en matemáticas de: 30,40,50,60, 70 puntos
+
+</br>
+
+```{r}
+newdata1 <- data.frame(matematicas=c(30,40,50, 55, 60,65,70, 75))
+newdata1$rankP <- predict(modelo1, newdata = newdata1, type = "response")
+newdata1
+
+
+```
+
+</br></br>
+
+## **Resumen**
+
+</br>
+
+### **Modelo estimado**
+
+$$
+logit(\text{matricula}) =  -9.793942 + 0.1563404 \hspace{.3cm} \text{matematica}
+$$
+
+### **Probabilidad**
+
+
+$$
+P(\text{matricula}) =  \dfrac{\exp\{ -9.793942 + 0.1563404 \hspace{.3cm} \text{matematica}\}}{1-\exp\{ -9.793942 + 0.1563404 \hspace{.3cm} \text{matematica}\}}
+$$
+
+
+</br></br>
+
