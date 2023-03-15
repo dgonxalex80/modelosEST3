@@ -35,7 +35,9 @@ El análisis de conglomerados se basa en calcular distancias utilizando las comp
 
 </br>
 
-Existen dos tipos de clasificación automática: los metodos no jerarquicos los cuales se basan en encontrar la mejor partición del conjunto de individuos en q clases, en donde sus centros de gravedad se eligen en un inicio de forma aleatoria. Por otra parte están los métodos jerarquicos en los cuales se construye un dendograma en el cual se forman los grupos de individuos más parecidos, esto permite determinar el número de clases que se usarán en el método no jerarquico. <br>
+Existen dos tipos de clasificación automática: los metodos no jerarquicos los cuales se basan en encontrar la mejor partición del conjunto de individuos en q clases, en donde sus centros de gravedad se eligen en un inicio de forma aleatoria. Por otra parte están los métodos jerarquicos en los cuales se construye un dendograma en el cual se forman los grupos de individuos más parecidos, esto permite determinar el número de clases que se usarán en el método no jerarquico. 
+
+</br>
 
 Recordemos que mediante el análisis de conglomerados queremos clasificar a los distintos individuos u observaciones en grupos muy homogeneos, pero que entre los grupos sean muy heterogeneos entre sí. De esta forma podriamos encontrar una forma de calcular el grado de asociación (similitud o disimilitud) entre dos observaciones, en el caso de clustering lo más usado para esto es la distancia euclidiana entre los dos puntos, la cual está dado por:
 
@@ -62,11 +64,11 @@ knitr::include_graphics("img/dendograma.png")
 
 </br></br>
 
-En este se observa que al inicio los individuos que más se parecian (menor distancia euclidea) fueron (1) y (3) los cuales tuvieron una distancia de 1, el siguiente grupo a formarse fue con los individuos (2) y (5) con una distancia de 2, el siguiente nodo a formarse fue con el grupo {1, 3} y el individuo (4) con una distancia de 4. <br>
+En este se observa que al inicio los individuos que más se parecian (menor distancia euclidea) fueron (1) y (3) los cuales tuvieron una distancia de 1, el siguiente grupo a formarse fue con los individuos (2) y (5) con una distancia de 2, el siguiente nodo a formarse fue con el grupo {1, 3} y el individuo (4) con una distancia de 4. 
 
 </br>
 
-Elegir el número óptimo de clusters es una decisión muy subjetiva, sin embargo puede tomarse el criterio del mayor salto de nodo a nodo de las distancias euclidianas, mirando el dendograma vemos que el mayor incremento de las distancias se dio en 4, por lo que si trazamos una linea se hará un corte y tendremos dos nodos, el conformado por {$1,3,4$} y el otro con {$2,5$}. <br>
+Elegir el número óptimo de clusters es una decisión muy subjetiva, sin embargo puede tomarse el criterio del mayor salto de nodo a nodo de las distancias euclidianas, mirando el dendograma vemos que el mayor incremento de las distancias se dio en 4, por lo que si trazamos una linea se hará un corte y tendremos dos nodos, el conformado por {$1,3,4$} y el otro con {$2,5$}. 
 
 </br>
 
@@ -142,7 +144,10 @@ grp
 
 </br>
 
-Podemos usar la libreria *FactoClass* para representar los clusters en el primer plano factorial, en la función *FactoClass* tenemos los siguientes argumentos: <br>
+Podemos usar la libreria *FactoClass* para representar los clusters en el primer plano factorial, en la función `FactoClass` tenemos los siguientes argumentos: 
+
+</br>
+
 * `nf`: número de componentes principales, recordemos que en el acp este será igual al número de variables. <br>
 * `nfcl`: número de componentes usadas para clasificación, en este caso será igual a` nf=p`. <br>
 * `k.clust`: número de clusters, en este caso mediante el dendograma elegimos dos clusters. 

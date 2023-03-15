@@ -363,7 +363,8 @@ conjunto de individuos en q clases, en donde sus centros de gravedad se
 eligen en un inicio de forma aleatoria. Por otra parte están los métodos
 jerarquicos en los cuales se construye un dendograma en el cual se
 forman los grupos de individuos más parecidos, esto permite determinar
-el número de clases que se usarán en el método no jerarquico. <br></p>
+el número de clases que se usarán en el método no jerarquico.</p>
+<p></br></p>
 <p>Recordemos que mediante el análisis de conglomerados queremos
 clasificar a los distintos individuos u observaciones en grupos muy
 homogeneos, pero que entre los grupos sean muy heterogeneos entre sí. De
@@ -394,7 +395,7 @@ promedio y agregación de Ward. <br></p>
 (menor distancia euclidea) fueron (1) y (3) los cuales tuvieron una
 distancia de 1, el siguiente grupo a formarse fue con los individuos (2)
 y (5) con una distancia de 2, el siguiente nodo a formarse fue con el
-grupo {1, 3} y el individuo (4) con una distancia de 4. <br></p>
+grupo {1, 3} y el individuo (4) con una distancia de 4.</p>
 <p></br></p>
 <p>Elegir el número óptimo de clusters es una decisión muy subjetiva,
 sin embargo puede tomarse el criterio del mayor salto de nodo a nodo de
@@ -402,7 +403,7 @@ las distancias euclidianas, mirando el dendograma vemos que el mayor
 incremento de las distancias se dio en 4, por lo que si trazamos una
 linea se hará un corte y tendremos dos nodos, el conformado por {<span
 class="math inline">\(1,3,4\)</span>} y el otro con {<span
-class="math inline">\(2,5\)</span>}. <br></p>
+class="math inline">\(2,5\)</span>}.</p>
 <p></br></p>
 <p>Otro método de agrupamiento es el <span
 class="math inline">\(k-means\)</span> (o centros moviles), este se
@@ -488,13 +489,17 @@ grp</code></pre>
 ##  1  1  2  2  2  2  2  2  2</code></pre>
 <p></br></p>
 <p>Podemos usar la libreria <em>FactoClass</em> para representar los
-clusters en el primer plano factorial, en la función <em>FactoClass</em>
-tenemos los siguientes argumentos: <br> * <code>nf</code>: número de
-componentes principales, recordemos que en el acp este será igual al
-número de variables. <br> * <code>nfcl</code>: número de componentes
-usadas para clasificación, en este caso será igual a<code>nf=p</code>.
-<br> * <code>k.clust</code>: número de clusters, en este caso mediante
-el dendograma elegimos dos clusters.</p>
+clusters en el primer plano factorial, en la función
+<code>FactoClass</code> tenemos los siguientes argumentos:</p>
+<p></br></p>
+<ul>
+<li><code>nf</code>: número de componentes principales, recordemos que
+en el acp este será igual al número de variables. <br></li>
+<li><code>nfcl</code>: número de componentes usadas para clasificación,
+en este caso será igual a<code>nf=p</code>. <br></li>
+<li><code>k.clust</code>: número de clusters, en este caso mediante el
+dendograma elegimos dos clusters.</li>
+</ul>
 <p></br></p>
 <pre class="r"><code>library(FactoClass)
 p = ncol(data)
