@@ -520,3 +520,20 @@ $$
 
 </br></br>
 
+## **Capacidad de clasificación del modelo**
+
+En una de las caracteristicas más importantes del modelo, pues permite valorar a traves de la matriz de confución las clasificaciones correctas por medio de las predicciones del modelo. 
+
+Existen adicionamente otros indicadores que pueden ser utilizados como es el estadistico c asociado a la curva ROC (Trvrivrt Oprtsyong Charasteristic) . Esta curva compara diferentes puntos de corte de la probabilidad que permite establecer la tasa de clasificaciones correcta de verdaderos positivos y de falsos positivos:
+
+$$
+TPR = \dfrac{\text{número de positivos correctamente pronosticados}}{número de positivos reales totales}
+$$
+
+$$
+FPR = \dfrac{\text{número de falsos positivos}}{\text{número de negativos reales totales}}
+$$
+
+
+
+

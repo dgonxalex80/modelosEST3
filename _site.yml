@@ -11,27 +11,15 @@ navbar:
       menu:
         - text: "Modelo de Diseño de Experimentos "
           href: recurso200.html
-    - text: "M Logit binomial"
+    - text: "ML binomial"
       menu:
         - text: "Modelo Lineal General - Logit binomial  "
           href: recurso300.html
-    - text: "M. Logit  Multinomial"
+    - text: "ML Multinomial"
       menu:
         - text: "Modelo Lineal General - Logit Multinomial "
           href: recurso400.html
-    - text: "A. Cluster"
-      menu:
-        - text: "Análisis Cluster"
-          href: recurso500.html
-    - text: "A. Componentes Principales "
-      menu:
-        - text: "Análisis de Componentes Principales"
-          href: recurso600.html    
-    - text: "R"
-      menu:
-        - text: "Código R"
-          href: recurso600.html     
-      
+
 output:
   html_document:
     css: style.css

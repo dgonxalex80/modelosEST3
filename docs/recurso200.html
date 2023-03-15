@@ -270,7 +270,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    M Logit binomial
+    ML binomial
      
     <span class="caret"></span>
   </a>
@@ -282,49 +282,13 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    M. Logit  Multinomial
+    ML Multinomial
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="recurso400.html">Modelo Lineal General - Logit Multinomial </a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    A. Cluster
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso500.html">Análisis Cluster</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    A. Componentes Principales 
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso600.html">Análisis de Componentes Principales</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    R
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso600.html">Código R</a>
     </li>
   </ul>
 </li>
@@ -351,6 +315,7 @@ de diseño de experimentos</strong></span></h1>
 <div id="introducción" class="section level1">
 <h1><span
 style="color:#034A94"><strong>Introducción</strong></span></h1>
+<p><br/></p>
 <p>El modelo de diseño de experimentos forma parte del grupo de modelos
 que conforman los modelos lineales generales. En este caso la variable
 dependiente <span class="math inline">\(Y\)</span> es una variable
@@ -437,6 +402,7 @@ X_k  + \varepsilon
 </tr>
 </tbody>
 </table>
+<p><br/></p>
 <p>Donde:</p>
 <p><span class="math inline">\(A\)</span>,<span
 class="math inline">\(B\)</span>,<span
@@ -456,6 +422,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div id="estimación-del-modelo" class="section level2">
 <h2><span style="color:#034A94"><strong>Estimación del
 modelo</strong></span></h2>
+<p><br/></p>
 <pre><code>
 Call:
 glm(formula = y1 ~ x1, data = datos)
@@ -491,7 +458,7 @@ Number of Fisher Scoring iterations: 2</code></pre>
 <thead>
 <tr class="header">
 <th align="center">Coeficiente</th>
-<th align="left">descripcion</th>
+<th align="left">descripción</th>
 </tr>
 </thead>
 <tbody>
@@ -531,6 +498,7 @@ comparar las medias de los tratamientos utilizando la
 <p><br/><br/></p>
 <div id="ejemplo-1" class="section level3">
 <h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
+<p><br/></p>
 <div id="exploración-de-datos" class="section level4">
 <h4>Exploración de datos</h4>
 <p>Las variables categóricas a incluir en el modelo son :</p>
@@ -538,6 +506,7 @@ comparar las medias de los tratamientos utilizando la
 <li>mg : genotipo del árbol</li>
 <li>finca : finca donde se encuentra ubicado el árbol</li>
 </ul>
+<p><br/></p>
 <pre class="r"><code>library(paqueteMOD)
 data(biomasa)
 table(biomasa[,1:2])</code></pre>
@@ -549,7 +518,8 @@ finca     GENOTIPO_1 GENOTIPO_2
 <p>El proceso de selección a previsto cantidades iguales por finca y
 genotipo de los árboles, proceso que permite neutralizar efectos
 aleatorios en la moderación</p>
-<p>De manera grafica representamos la información por genotipo</p>
+<p>De manera gráfica representamos la información por genotipo</p>
+<p><br/></p>
 <pre class="r"><code>library(ggplot2)
 ggplot2::ggplot(data=biomasa, aes(x=mg, y=bio_total), fill=mg)+
   geom_boxplot(fill=c1)+
@@ -559,7 +529,8 @@ ggplot2::ggplot(data=biomasa, aes(x=mg, y=bio_total), fill=mg)+
         x =&quot;Factor&quot;, y = &quot;Y&quot;)</code></pre>
 <p><img src="recurso200_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 Figura 1 : biomasa total por genotipo</p>
-<p>Se evaluan las diferencias entre las medias de los genotipos</p>
+<p><br/></p>
+<p>Se evalúan las diferencias entre las medias de los genotipos</p>
 <pre class="r"><code>anova1&lt;-aov(bio_total ~ mg, biomasa)
 summary(anova1)</code></pre>
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
@@ -567,8 +538,10 @@ mg           1   1332  1332.3   25.54 2.33e-06 ***
 Residuals   88   4590    52.2                     
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Tambien se repersenta graficamente las distribuciones de la biomasa
+<p><br/></p>
+<p>Tambien se representa gráficamente las distribuciones de la biomasa
 total por finca</p>
+<p><br/></p>
 <pre class="r"><code>library(ggplot2)
 library(ggplot2)
 ggplot2::ggplot(data=biomasa, aes(x=finca, y=bio_total), fill=finca)+
@@ -577,7 +550,9 @@ ggplot2::ggplot(data=biomasa, aes(x=finca, y=bio_total), fill=finca)+
                size = 3, color = &quot;white&quot;)</code></pre>
 <p><img src="recurso200_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Figura 2 : biomasa total por finca</p>
+<p><br/></p>
 <p>Y su respectivo análisis de varianza</p>
+<p><br/></p>
 <pre class="r"><code>anova2&lt;-aov(bio_total ~ finca, biomasa)
 summary(anova2)</code></pre>
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
@@ -585,10 +560,12 @@ finca        2   1572   786.1   15.72 1.48e-06 ***
 Residuals   87   4350    50.0                     
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><br/><br/></p>
 </div>
 </div>
 <div id="modelo-1" class="section level3">
 <h3><strong>Modelo 1</strong></h3>
+<p><br/></p>
 <p>Iniciaremos con un modelo simple que relaciona la biomasa total con
 la finca</p>
 <p><span class="math display">\[
@@ -619,10 +596,12 @@ Residual deviance: 4350.1  on 87  degrees of freedom
 AIC: 612.44
 
 Number of Fisher Scoring iterations: 2</code></pre>
+<p><br/></p>
 <p>El resultado estima los promedios de la biomasa total de la finca1 y
 los efectos promedios adicionales sobre este valor, generados la
 ubicación de los árboles en las fincas 2 y 3 sobre el promedio de
 biomasa de la finca1</p>
+<p><br/></p>
 <table>
 <colgroup>
 <col width="27%" />
@@ -631,7 +610,7 @@ biomasa de la finca1</p>
 <thead>
 <tr class="header">
 <th align="center">Coeficiente</th>
-<th align="left">descripcion</th>
+<th align="left">descripción</th>
 </tr>
 </thead>
 <tbody>
@@ -655,19 +634,24 @@ class="math inline">\(\alpha_{13}\)</span><code>=  7.104</code></td>
 </tr>
 </tbody>
 </table>
+<p><br/></p>
 <p>Lo anterior ratifica lo observado en la gráfica 2, indicando que el
 mayor valor promedio de biomasa total se ubica en la finca 3.</p>
+<p><br/><br/></p>
 </div>
 <div id="modelos-2" class="section level3">
-<h3>Modelos 2</h3>
+<h3><strong>Modelos 2</strong></h3>
+<p><br/></p>
 <p>Ahora estimamos un modelo con dos variables independientes,
 recordemos ambas categóricas</p>
 <p><span class="math display">\[
 Y  = \alpha_{0} +\alpha_{1} \hspace{.2cm}\text{finca} + \alpha_{2}
 \hspace{.2cm} \text{genotipo} + \varepsilon
 \]</span></p>
+<p><br/></p>
 <pre class="r"><code>modelo1_d=glm(bio_total~  finca + mg, data=biomasa)
 summary(modelo1_d)</code></pre>
+<br/>
 <pre>
 Call:
 glm(formula = bio_total ~ finca + mg, data = biomasa)
@@ -694,17 +678,22 @@ AIC: 581.53
 Number of Fisher Scoring iterations: 2
 
 </pre>
+<p><br/><br/></p>
 </div>
 <div id="modelo-3" class="section level3">
 <h3><strong>Modelo 3</strong></h3>
+<p><br/></p>
 <p><span class="math display">\[
 Y  = \alpha_{0} +\alpha_{1} \hspace{.2cm}\text{finca} + \alpha_{2}
 \hspace{.2cm} \text{genotipo} + \alpha_{3}
 \hspace{.2cm}\text{finca}     \times  \text{genotipo}  + \varepsilon
-\]</span> En este modelo además de las variables categóricas se adiciona
-una tercera variable formada por la interacción de las dos variables</p>
+\]</span> <br/></p>
+<p>En este modelo además de las variables categóricas se adiciona una
+tercera variable formada por la interacción de las dos variables</p>
+<p><br/></p>
 <pre class="r"><code>modelo1_d=glm(bio_total~  finca + mg + finca*mg, data=biomasa)
 summary(modelo1_d)</code></pre>
+<p><br/></p>
 <pre>
 Call:
 glm(formula = bio_total ~ finca + mg + finca * mg, data = biomasa)
@@ -733,6 +722,7 @@ AIC: 575.29
 Number of Fisher Scoring iterations: 2
 
 </pre>
+<p><br/><br/></p>
 </div>
 </div>
 </div>

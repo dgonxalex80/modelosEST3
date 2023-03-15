@@ -34,8 +34,8 @@ En esta unidad se presentan los siguientes modelos :
 * Modelo diseño de experimentos
 * Modelo de Regresión Logiística binomial
 * Modelo de Regresión Logit multinomial
-* Análisis de cluster  **AC**
-* Análisis de componentes principales **ACP**
+<!-- * Análisis de cluster  **AC** -->
+<!-- * Análisis de componentes principales **ACP** -->
 
 </br>
 

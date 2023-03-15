@@ -270,7 +270,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    M Logit binomial
+    ML binomial
      
     <span class="caret"></span>
   </a>
@@ -282,49 +282,13 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    M. Logit  Multinomial
+    ML Multinomial
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="recurso400.html">Modelo Lineal General - Logit Multinomial </a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    A. Cluster
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso500.html">Análisis Cluster</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    A. Componentes Principales 
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso600.html">Análisis de Componentes Principales</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    R
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso600.html">Código R</a>
     </li>
   </ul>
 </li>
@@ -924,6 +888,25 @@ P(\text{matricula}) =  \dfrac{\exp\{ -9.793942 + 0.1563404 \hspace{.3cm}
 \]</span></p>
 <p></br></br></p>
 </div>
+</div>
+<div id="capacidad-de-clasificación-del-modelo" class="section level2">
+<h2><strong>Capacidad de clasificación del modelo</strong></h2>
+<p>En una de las caracteristicas más importantes del modelo, pues
+permite valorar a traves de la matriz de confución las clasificaciones
+correctas por medio de las predicciones del modelo.</p>
+<p>Existen adicionamente otros indicadores que pueden ser utilizados
+como es el estadistico c asociado a la curva ROC (Trvrivrt Oprtsyong
+Charasteristic) . Esta curva compara diferentes puntos de corte de la
+probabilidad que permite establecer la tasa de clasificaciones correcta
+de verdaderos positivos y de falsos positivos:</p>
+<p><span class="math display">\[
+TPR = \dfrac{\text{número de positivos correctamente
+pronosticados}}{número de positivos reales totales}
+\]</span></p>
+<p><span class="math display">\[
+FPR = \dfrac{\text{número de falsos positivos}}{\text{número de
+negativos reales totales}}
+\]</span></p>
 </div>
 
 
