@@ -270,7 +270,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML binomial
+    ML
      
     <span class="caret"></span>
   </a>
@@ -282,13 +282,25 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML Multinomial
+    AC
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso400.html">Modelo Lineal General - Logit Multinomial </a>
+      <a href="recurso500.html">Análisis de conglomerados</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    ACP
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso600.html">Análisis de Componentes Principales</a>
     </li>
   </ul>
 </li>
@@ -312,8 +324,49 @@ Lineal General - Logit Multinomial</strong></span></h1>
 
 
 <p></br></br></p>
+<p>La regresión logista multinomial está regida por los mismos
+principios que la regresión logistica binomial, solo que la variable
+respuesta <span class="math inline">\(Y\)</span> presenta más de dos
+categorías</p>
+<div class="content-box-blue">
+<p><span class="math display">\[Y = \beta_{0} + \beta_{1}X_{1} +
+\beta_{2}X_{2}   + \beta_{3}X_{3}  +   + \beta_{k}X_{k} +
+\varepsilon\]</span></p>
+</div>
 <div id="ejemplo" class="section level3">
 <h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
+<p>La siguiente base de datos corresponde a información de 200
+estudiantes.</p>
+<ul>
+<li><strong>id</strong> : identificador del estudiante</li>
+<li><strong>female</strong> : genero: 0= femenino, 1= masculino</li>
+<li><strong>ses</strong> : nivel socio-económico : 1 = bajo,2 medio , 3
+= alto</li>
+<li><strong>schtyp</strong> : tipo de escuela de procedencia</li>
+<li><strong>prog</strong>: programa : 1 = general,2 = académico ,3 =
+vocacional</li>
+<li><strong>read</strong> : puntaje en lectura</li>
+<li><strong>write</strong> : puntaje en escritura</li>
+<li><strong>math</strong> : puntaje en matemáticas</li>
+<li><strong>science</strong> : puntaje en ciencias</li>
+<li><strong>socst</strong> : puntaje en sociales</li>
+<li><strong>honors</strong> : destacado en inglés</li>
+<li><strong>awards</strong> : reconocimientos</li>
+<li><strong>cid</strong></li>
+</ul>
+<pre class="r"><code>library(paqueteMOD)
+data(&quot;hsbdemo&quot;)
+datos=hsbdemo
+table(hsbdemo$prog)</code></pre>
+<pre><code>
+  1   2   3 
+ 45 105  50 </code></pre>
+<pre class="r"><code>with(datos, table(ses, prog))</code></pre>
+<pre><code>   prog
+ses  1  2  3
+  1 16 19 12
+  2 20 44 31
+  3  9 42  7</code></pre>
 </div>
 
 

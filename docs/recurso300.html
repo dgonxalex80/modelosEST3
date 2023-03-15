@@ -270,7 +270,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML binomial
+    ML
      
     <span class="caret"></span>
   </a>
@@ -282,13 +282,25 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML Multinomial
+    AC
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso400.html">Modelo Lineal General - Logit Multinomial </a>
+      <a href="recurso500.html">Análisis de conglomerados</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    ACP
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso600.html">Análisis de Componentes Principales</a>
     </li>
   </ul>
 </li>
@@ -337,7 +349,6 @@ generalizados en donde se usa una función de enlace llamada logit.</p>
 <p></br></p>
 <div class="content-box-blue">
 <p><span class="math display">\[Y = \beta_{0} + \beta_{1}X_{1} +
-\beta_{2}X_{2}   + \beta_{3}X_{3}  +   + \beta_{k}X_{k} +
 \varepsilon\]</span></p>
 </div>
 <p></br></p>
@@ -566,7 +577,8 @@ una combinación lineal de las variables independientes :</p>
 <p>Donde :</p>
 <ul>
 <li><span class="math inline">\(odds = \dfrac{P_{i}}{1-P_{i}} =
-\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\)</span></li>
+\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\)</span>, llamada tambien <strong>razón
+de probabilida</strong> o <strong>ratio ODDS</strong></li>
 </ul>
 <p></br></p>
 <ul>
@@ -870,7 +882,7 @@ newdata1</code></pre>
 <p></br></br></p>
 </div>
 <div id="resumen" class="section level2">
-<h2><strong>Resumen</strong></h2>
+<h2><span style="color:#034a94"><strong>Resumen</strong></spam></h2>
 <p></br></p>
 <div id="modelo-estimado" class="section level3">
 <h3><strong>Modelo estimado</strong></h3>
@@ -890,7 +902,8 @@ P(\text{matricula}) =  \dfrac{\exp\{ -9.793942 + 0.1563404 \hspace{.3cm}
 </div>
 </div>
 <div id="capacidad-de-clasificación-del-modelo" class="section level2">
-<h2><strong>Capacidad de clasificación del modelo</strong></h2>
+<h2><span style="color:#034a94"><strong>Capacidad de clasificación del
+modelo</strong></span></h2>
 <p>En una de las caracteristicas más importantes del modelo, pues
 permite valorar a traves de la matriz de confución las clasificaciones
 correctas por medio de las predicciones del modelo.</p>
@@ -907,6 +920,21 @@ pronosticados}}{número de positivos reales totales}
 FPR = \dfrac{\text{número de falsos positivos}}{\text{número de
 negativos reales totales}}
 \]</span></p>
+<p>Es importante examinar la significancia de los coeficientes estimados
+obtenidos mediante el metodode máxima verosimilitud. En este caso en
+lugar de calcular el valor p para cada coeficiente, se utiliza el
+estadistico <strong>Z</strong> y <strong>chi-cuadrado de
+Wald</strong></p>
+<p>Finalmente para convertir el valor estimado de probabilidad en una
+categoría se debe encontrar el valor de un punto de corte a partir del
+cual se considera que la variable <span class="math inline">\(Y\)</span>
+pertenece a una categoría. En caso de que este valor fuese p=0.5 (<span
+class="math inline">\(P(Y=1|X) &gt; 0.50\)</span>), entonce si la
+estimación del modelo arroja un valor en el rango (0.50 - 1.0), se le
+asignará el valor de <span class="math inline">\(1\)</span>, en caso
+contrario tomará el valor de <span class="math inline">\(0\)</span>.</p>
+<!-- ## **Modelo de regresión ligit múltiple** -->
+<!-- En este caso se cuenta con más de una variable independiente, presentando la siguiente forma: -->
 </div>
 
 

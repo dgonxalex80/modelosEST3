@@ -11,15 +11,18 @@ navbar:
       menu:
         - text: "Modelo de Diseño de Experimentos "
           href: recurso200.html
-    - text: "ML binomial"
+    - text: "ML"
       menu:
         - text: "Modelo Lineal General - Logit binomial  "
           href: recurso300.html
-    - text: "ML Multinomial"
+    - text: "AC"
       menu:
-        - text: "Modelo Lineal General - Logit Multinomial "
-          href: recurso400.html
-
+        - text: "Análisis de conglomerados"
+          href: recurso500.html
+    - text: "ACP"
+      menu:
+        - text: "Análisis de Componentes Principales"
+          href: recurso600.html
 output:
   html_document:
     css: style.css

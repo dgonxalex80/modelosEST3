@@ -14,9 +14,59 @@ c1="#FF7F00"
 c2="#=EB0C6"
 c3="#034A94"
 c4="#686868"
+
+
+library(paqueteMOD)
+data("hsbdemo")
+datos=hsbdemo
 ```
 
 </br></br>
 
 
+La regresión logista multinomial está regida por los mismos principios que la regresión logistica binomial, solo que la variable respuesta $Y$ presenta más de dos categorías
+
+<div class="content-box-blue">
+$$Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2}   + \beta_{3}X_{3}  +   + \beta_{k}X_{k} + \varepsilon$$
+</div>
+
+
+
+
 ### <span style="color:#FF7F00">**Ejemplo**</span> 
+
+La siguiente base de datos corresponde a información de 200 estudiantes. 
+
+* **id**   : identificador del estudiante
+* **female** : genero:  0= femenino, 1= masculino
+* **ses** : nivel socio-económico : 1 = bajo,2  medio , 3 = alto
+* **schtyp** : tipo de escuela de procedencia
+* **prog**: programa : 1 = general,2 = académico ,3 = vocacional
+* **read**  : puntaje en lectura
+* **write** : puntaje en escritura
+* **math**  : puntaje en matemáticas
+* **science** : puntaje en ciencias
+* **socst** : puntaje en sociales
+* **honors** : destacado en inglés
+* **awards**  : reconocimientos
+* **cid**  
+
+
+```{r}
+library(paqueteMOD)
+data("hsbdemo")
+datos=hsbdemo
+table(hsbdemo$prog)
+```
+
+
+
+```{r}
+with(datos, table(ses, prog))
+```
+
+
+
+
+
+

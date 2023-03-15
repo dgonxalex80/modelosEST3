@@ -23,7 +23,7 @@ library("factoextra") # visualizacion elegante en ggplot2
 
 <br/><br/>
 
-# **Introducción**
+# <span style="color:#034a94">**Introducción**</span>
 
 <br/>
 
@@ -50,7 +50,7 @@ Los procedimientos anteriores están soportados en el supuesto de que las p vari
 
 <br/><br/>
 
-## **Determinación de los componentes**
+## <span style="color:#034a94">**Determinación de los componentes**</span>
 
 <br/>
 
@@ -115,7 +115,9 @@ $$\dfrac{\lambda_{1} + \lambda_2 + \lambda_3}{\displaystyle\sum_{i=1}^p \lambda_
 
 <br/><br/>
 
-## **Ejemplo**
+### <span style="color:#FF7F00">**Ejemplo**</span> 
+
+<br/>
 
 ```{r}
 library(paqueteMOD)
@@ -125,8 +127,9 @@ prcomp(creditos[,2:5])
 
 <br/><br/>
 
-## **Elección del número de componentes principales**
+## <span style="color:#034a94">**Elección del número de componentes principales**</span>
 
+<br/>
 
 ```{r}
 data(decathlon2)
@@ -156,21 +159,137 @@ fviz_pca_biplot(res.pca, repel = TRUE,
 ```
 
 
-```{r}
-library(factoextra)
-# Eigenvalues
-eig.val <- get_eigenvalue(res.pca)
-eig.val
-  
-# Results for Variables
-res.var <- get_pca_var(res.pca)
-res.var$coord          # Coordinates
-res.var$contrib        # Contributions to the PCs
-res.var$cos2           # Quality of representation 
-# Results for individuals
-res.ind <- get_pca_ind(res.pca)
-res.ind$coord          # Coordinates
-res.ind$contrib        # Contributions to the PCs
-res.ind$cos2           # Quality of representation 
+<br/><br/>
+
+### <span style="color:#FF7F00">**Ejemplo**</span>
+
+<br/>
+
+Para el ejemplo en R se utilizarán las librerias *ade4* y *factoextra*. A continuación se presenta la matriz de datos de distintos tipos de café y seis variables en puntajes de 0 a 10 de algunas caracteristicas que definen la calidad de estos.
+
+<br/>
+
+```{r message = FALSE}
+library(ade4); library(factoextra)
+data("cafe")
+
 ```
+
+<br/>
+
+Calculando el ACP mediante la libreria *ade4* se tiene:
+
+<br/>
+
+```{r}
+library(ade4)
+p = ncol(cafe) 
+n = nrow(cafe)
+ACP = dudi.pca(cafe[,2:7], scannf=FALSE, center = TRUE, scale = TRUE, nf=p)
+```
+
+
+<br/>
+
+Mediante los argumentos center = TRUE, scale = TRUE estamos normalizando los datos originales. <br>
+
+Los valores propios asociados a la matriz de correlaciones serán:
+
+<br/>
+
+```{r}
+ACP$eig
+```
+
+<br/>
+Como vemos el primer valor propio será siempre el mayor ya que es el que mayor varianza logra explicar. <br>
+
+Las componentes principales de los individuos son:
+
+<br/>
+```{r}
+ACP$li
+```
+
+Y por ultimo las componentes principales de las variables son:
+```{r}
+ACP$co	
+```
+
+<br/>
+Podemos representar mediante un diagrama de barras a los valores propios del ACP.
+
+```{r}
+library("factoextra")
+fviz_screeplot(ACP, addlabels = TRUE)
+```
+
+<br/>
+
+Se evidencia que la primera componente se lleva el 76.7\% de la inercia total, seguida de la segunda componente con un 7.8\% de la varianza explicada, de esta forma el porcentaje de inercia representado en el primer plano factorial es del 84.5\%, perdiendo tan solo un 15.5\% de la información. <br>
+
+<br/>
+
+Gráficando las dos primeras componentes de las variables obtenemos el circulo de correlaciones:
+
+
+
+```{r}
+library("factoextra")
+fviz_pca_var(ACP, repel = TRUE, col.var = "blue")
+```
+
+<br/>
+Se puede observar que todas las variables son bastante excentricas, por lo que cuentan con una buena calidad de la representación mediante el ACP, podemos ver que las variables que más correlacionadas están son Amargo, Aroma, Cuerpo y Acidez, siendo las variables Astring y Amargo las que menos correlacionadas están entre si. La flecha a donde apunta la variable indica la dirección en donde esta aumenta.
+
+Podemos entonces realizar la representación simultanea de individuos y variables para poder caracterizar los tipos de café:
+
+<br/>
+```{r}
+library("factoextra")
+fviz_pca_biplot(ACP, repel = TRUE, col.var = "blue")
+```
+
+Recordemos que las variables están en puntajes. En este caso se puede decir que el tipo de café con la mejor calidad es el ex_o, caracterizandose más por el Aroma, Acidez y el cuerpo. Seguido de este se encuentra el ex_cl, el cual tiene buena puntuacion en todas las variables pero se caracteriza más por la astringencia y el aroma. Los cafés con peor calidad son los que se encuentran en dirección contraria a las variables, siendo estos o40m, cl40m, cl20m y cl40cb. Por otra parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad promedio. <br>
+
+<br/>
+
+Obteniendo las contribuciones a la varianza total de las componentes principales se tiene:
+
+<br/>
+
+```{r}
+library("factoextra")
+inercia.ACP = inertia.dudi(ACP,row.inertia=TRUE, col.inertia=TRUE)
+inercia.ACP$tot.inertia
+```
+
+<br/>
+
+Podemos observar que hasta la segunda componente (Ax2) se acumula un 84.51\% de la inercia total. <br>
+
+Las contribuciones de las variables a la varianza explicada de cada componente será:
+
+
+<br/>
+```{r}
+inercia.ACP$col.abs
+```
+
+Siendo la variable IAroma la que más contribuye a la varianza explicada por el primer eje (20\%), mientras que Astring es la que más contribuye al segundo eje (63.8\%). <br>
+
+<br/>
+Por ultimo podemos estudiar las contribuciones de cada individuo a las componentes principales:
+
+
+<br/>
+```{r}
+library("factoextra")
+inercia.ACP$row.abs
+```
+
+Se observa que el café ex_o (27.2\%) es el que más varianza explicada aporta a la primera componente, por otra parte el café o40m (26.3\%) es el que más aporta al segundo eje.
+
+
+<br/><br/>
 

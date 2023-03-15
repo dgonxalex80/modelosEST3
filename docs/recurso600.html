@@ -270,7 +270,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML binomial
+    ML
      
     <span class="caret"></span>
   </a>
@@ -282,13 +282,25 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML Multinomial
+    AC
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso400.html">Modelo Lineal General - Logit Multinomial </a>
+      <a href="recurso500.html">Análisis de conglomerados</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    ACP
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso600.html">Análisis de Componentes Principales</a>
     </li>
   </ul>
 </li>
@@ -313,7 +325,8 @@ $(document).ready(function () {
 
 <p><br/><br/></p>
 <div id="introducción" class="section level1">
-<h1><strong>Introducción</strong></h1>
+<h1><span
+style="color:#034a94"><strong>Introducción</strong></span></h1>
 <p><br/></p>
 <p>Este análisis consiste en describir la variación producida por las
 observaciones de <span class="math inline">\(p\)</span> variables
@@ -356,7 +369,8 @@ encontrar.</p>
 <p><br/><br/></p>
 </div>
 <div id="determinación-de-los-componentes" class="section level2">
-<h2><strong>Determinación de los componentes</strong></h2>
+<h2><span style="color:#034a94"><strong>Determinación de los
+componentes</strong></span></h2>
 <p><br/></p>
 <p>El primer componente tiene la forma :</p>
 <p><span class="math display">\[CP_{1}  = \beta_{11}X_1+ \beta_{12}X_2 +
@@ -413,9 +427,9 @@ por :</p>
 <p><span class="math display">\[\dfrac{\lambda_{1} + \lambda_2 +
 \lambda_3}{\displaystyle\sum_{i=1}^p \lambda_{i}}\]</span></p>
 <p><br/><br/></p>
-</div>
-<div id="ejemplo" class="section level2">
-<h2><strong>Ejemplo</strong></h2>
+<div id="ejemplo" class="section level3">
+<h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
+<p><br/></p>
 <pre class="r"><code>library(paqueteMOD)
 data(&quot;creditos&quot;)
 prcomp(creditos[,2:5])</code></pre>
@@ -430,9 +444,12 @@ cuota      -1.074701e-01 -9.942083e-01  1.416024e-06  1.105868e-06
 ingresos   -9.942083e-01  1.074701e-01  2.559740e-06  3.988255e-07</code></pre>
 <p><br/><br/></p>
 </div>
+</div>
 <div id="elección-del-número-de-componentes-principales"
 class="section level2">
-<h2><strong>Elección del número de componentes principales</strong></h2>
+<h2><span style="color:#034a94"><strong>Elección del número de
+componentes principales</strong></span></h2>
+<p><br/></p>
 <pre class="r"><code>data(decathlon2)
 decathlon2.active &lt;- decathlon2[1:23, 1:10]
 head(decathlon2.active[, 1:6])</code></pre>
@@ -463,241 +480,154 @@ fviz_eig(res.pca)</code></pre>
                 col.ind = &quot;#696969&quot;  # Individuals color
                 )</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
-<pre class="r"><code>library(factoextra)
-# Eigenvalues
-eig.val &lt;- get_eigenvalue(res.pca)
-eig.val</code></pre>
-<pre><code>       eigenvalue variance.percent cumulative.variance.percent
-Dim.1   4.1242133        41.242133                    41.24213
-Dim.2   1.8385309        18.385309                    59.62744
-Dim.3   1.2391403        12.391403                    72.01885
-Dim.4   0.8194402         8.194402                    80.21325
-Dim.5   0.7015528         7.015528                    87.22878
-Dim.6   0.4228828         4.228828                    91.45760
-Dim.7   0.3025817         3.025817                    94.48342
-Dim.8   0.2744700         2.744700                    97.22812
-Dim.9   0.1552169         1.552169                    98.78029
-Dim.10  0.1219710         1.219710                   100.00000</code></pre>
-<pre class="r"><code># Results for Variables
-res.var &lt;- get_pca_var(res.pca)
-res.var$coord          # Coordinates</code></pre>
-<pre><code>                    Dim.1       Dim.2       Dim.3       Dim.4      Dim.5
-X100m        -0.850625692 -0.17939806 -0.30155643  0.03357320 -0.1944440
-Long.jump     0.794180641  0.28085695  0.19054653 -0.11538956  0.2331567
-Shot.put      0.733912733  0.08540412 -0.51759781  0.12846837 -0.2488129
-High.jump     0.610083985 -0.46521415 -0.33008517  0.14455012  0.4027002
-X400m        -0.701603377  0.29017826 -0.28353292  0.43082552  0.1039085
-X110m.hurdle -0.764125197 -0.02474081 -0.44888733 -0.01689589  0.2242200
-Discus        0.743209016  0.04966086 -0.17652518  0.39500915 -0.4082391
-Pole.vault   -0.217268042  0.80745110 -0.09405773 -0.33898477 -0.2216853
-Javeline      0.428226639  0.38610928 -0.60412432 -0.33173454  0.1978128
-X1500m        0.004278487  0.78448019  0.21947068  0.44800961  0.2632527
-                    Dim.6        Dim.7        Dim.8       Dim.9       Dim.10
-X100m        -0.035374780 -0.091336386 -0.104716925 -0.30306448  0.044417974
-Long.jump     0.033727883 -0.154330810 -0.397380703 -0.05158951  0.029719453
-Shot.put      0.239789034 -0.009886612  0.024359049  0.04778655  0.217451948
-High.jump     0.284644846  0.028157465  0.084405578 -0.11213822 -0.133566774
-X400m         0.049289996  0.286106008 -0.233552216  0.08216041 -0.034170673
-X110m.hurdle -0.002632395 -0.370072158 -0.008344682  0.16176025 -0.015629914
-Discus       -0.198544870 -0.142725641 -0.039559255  0.01336209 -0.172590426
-Pole.vault    0.327464549 -0.010393176  0.032914942 -0.02576874 -0.137211339
-Javeline     -0.362097598  0.133564318  0.052841099 -0.04045397 -0.003854347
-X1500m       -0.042050151 -0.111367083  0.194469730 -0.10224014  0.062834809</code></pre>
-<pre class="r"><code>res.var$contrib        # Contributions to the PCs</code></pre>
-<pre><code>                    Dim.1      Dim.2      Dim.3       Dim.4     Dim.5
-X100m        1.754429e+01  1.7505098  7.3386590  0.13755240  5.389252
-Long.jump    1.529317e+01  4.2904162  2.9300944  1.62485936  7.748815
-Shot.put     1.306014e+01  0.3967224 21.6204325  2.01407269  8.824401
-High.jump    9.024811e+00 11.7715838  8.7928883  2.54987951 23.115504
-X400m        1.193554e+01  4.5799296  6.4876363 22.65090599  1.539012
-X110m.hurdle 1.415754e+01  0.0332933 16.2612611  0.03483735  7.166193
-Discus       1.339309e+01  0.1341398  2.5147385 19.04132022 23.755756
-Pole.vault   1.144592e+00 35.4618611  0.7139512 14.02307063  7.005084
-Javeline     4.446377e+00  8.1086683 29.4531777 13.42963254  5.577615
-X1500m       4.438531e-04 33.4728757  3.8871610 24.49386930  9.878367
-                    Dim.6       Dim.7       Dim.8      Dim.9      Dim.10
-X100m         0.295915322  2.75705260  3.99520353 59.1740009  1.61756139
-Long.jump     0.269003613  7.87159392 57.53322220  1.7146826  0.72414393
-Shot.put     13.596858744  0.03230371  0.21618512  1.4712015 38.76768578
-High.jump    19.159607001  0.26202607  2.59565787  8.1015517 14.62649091
-X400m         0.574509906 27.05274658 19.87344405  4.3489667  0.95730504
-X110m.hurdle  0.001638634 45.26163460  0.02537025 16.8579392  0.20028870
-Discus        9.321746508  6.73226823  0.57016606  0.1150295 24.42174410
-Pole.vault   25.357622290  0.03569883  0.39472201  0.4278065 15.43559151
-Javeline     31.004964393  5.89573984  1.01729950  1.0543458  0.01217993
-X1500m        0.418133591  4.09893563 13.77872941  6.7344755  3.23700871</code></pre>
-<pre class="r"><code>res.var$cos2           # Quality of representation </code></pre>
-<pre><code>                    Dim.1        Dim.2       Dim.3        Dim.4      Dim.5
-X100m        7.235641e-01 0.0321836641 0.090936280 0.0011271597 0.03780845
-Long.jump    6.307229e-01 0.0788806285 0.036307981 0.0133147506 0.05436203
-Shot.put     5.386279e-01 0.0072938636 0.267907488 0.0165041211 0.06190783
-High.jump    3.722025e-01 0.2164242070 0.108956221 0.0208947375 0.16216747
-X400m        4.922473e-01 0.0842034209 0.080390914 0.1856106269 0.01079698
-X110m.hurdle 5.838873e-01 0.0006121077 0.201499837 0.0002854712 0.05027463
-Discus       5.523596e-01 0.0024662013 0.031161138 0.1560322304 0.16665918
-Pole.vault   4.720540e-02 0.6519772763 0.008846856 0.1149106765 0.04914437
-Javeline     1.833781e-01 0.1490803723 0.364966189 0.1100478063 0.03912992
-X1500m       1.830545e-05 0.6154091638 0.048167378 0.2007126089 0.06930197
-                    Dim.6        Dim.7        Dim.8        Dim.9       Dim.10
-X100m        1.251375e-03 0.0083423353 1.096563e-02 0.0918480768 1.972956e-03
-Long.jump    1.137570e-03 0.0238179990 1.579114e-01 0.0026614779 8.832459e-04
-Shot.put     5.749878e-02 0.0000977451 5.933633e-04 0.0022835540 4.728535e-02
-High.jump    8.102269e-02 0.0007928428 7.124302e-03 0.0125749811 1.784008e-02
-X400m        2.429504e-03 0.0818566479 5.454664e-02 0.0067503333 1.167635e-03
-X110m.hurdle 6.929502e-06 0.1369534023 6.963371e-05 0.0261663784 2.442942e-04
-Discus       3.942007e-02 0.0203706085 1.564935e-03 0.0001785453 2.978746e-02
-Pole.vault   1.072330e-01 0.0001080181 1.083393e-03 0.0006640282 1.882695e-02
-Javeline     1.311147e-01 0.0178394271 2.792182e-03 0.0016365234 1.485599e-05
-X1500m       1.768215e-03 0.0124026272 3.781848e-02 0.0104530472 3.948213e-03</code></pre>
-<pre class="r"><code># Results for individuals
-res.ind &lt;- get_pca_ind(res.pca)
-res.ind$coord          # Coordinates</code></pre>
-<pre><code>                 Dim.1      Dim.2       Dim.3       Dim.4         Dim.5
-SEBRLE       0.1912074  1.5541282 -0.62836882  0.08205241  1.1426139415
-CLAY         0.7901217  2.4204156  1.35688701  1.26984296 -0.8068483724
-BERNARD     -1.3292592  1.6118687 -0.19614996 -1.92092203  0.0823428202
-YURKOV      -0.8694134 -0.4328779 -2.47398223  0.69723814  0.3988584116
-ZSIVOCZKY   -0.1057450 -2.0233632  1.30493117 -0.09929630 -0.1970241089
-McMULLEN     0.1185550 -0.9916237  0.84355824  1.31215266  1.5858708644
-MARTINEAU   -2.3923532 -1.2849234 -0.89816842  0.37309771 -2.2433515889
-HERNU       -1.8910497  1.1784614 -0.15641037  0.89130068 -0.1267412520
-BARRAS      -1.7744575 -0.4125321  0.65817750  0.22872866 -0.2338366980
-NOOL        -2.7770058 -1.5726757  0.60724821 -1.55548081  1.4241839810
-BOURGUIGNON -4.4137335  1.2635770 -0.01003734  0.66675478  0.4191518468
-Sebrle       3.4514485  1.2169193 -1.67816711 -0.80870696 -0.0250530746
-Clay         3.3162243  1.6232908 -0.61840443 -0.31679906  0.5691645854
-Karpov       4.0703560 -0.7983510  1.01501662  0.31336354 -0.7974259553
-Macey        1.8484623 -2.0638828 -0.97928455  0.58469073 -0.0002157834
-Warners      1.3873514  0.2819083  1.99969621 -1.01959817 -0.0405401497
-Zsivoczky    0.4715533 -0.9267436 -1.72815525 -0.18483138  0.4073029909
-Hernu        0.2763118 -1.1657260  0.17056375 -0.84869401 -0.6894795441
-Bernard      1.3672590 -1.4780354  0.83137913  0.74531557  0.8598016482
-Schwarzl    -0.7102777  0.6584251  1.04075176 -0.92717510 -0.2887568007
-Pogorelov   -0.2143524  0.8610557  0.29761010  1.35560294 -0.0150531057
-Schoenbeck  -0.4953166  1.3000530  0.10300360 -0.24927712 -0.6452257128
-Barras      -0.3158867 -0.8193681 -0.86169481 -0.58935985 -0.7797389436
-                  Dim.6       Dim.7        Dim.8        Dim.9      Dim.10
-SEBRLE       0.46389755 -0.20796012  0.043460568 -0.659344137  0.03273238
-CLAY        -1.30420016 -0.21291866  0.617240611 -0.060125359 -0.31716015
-BERNARD      0.40062867 -0.40643754  0.703856040  0.170083313 -0.09908142
-YURKOV      -0.10286344 -0.32487448  0.114996135 -0.109524039 -0.11969720
-ZSIVOCZKY   -0.89554111  0.08825624 -0.202341299 -0.523103099 -0.34842265
-McMULLEN    -0.18657283  0.47828432  0.293089967 -0.105623196 -0.39317797
-MARTINEAU    0.45666350 -0.29975522 -0.291628488 -0.223417655 -0.61640509
-HERNU       -0.43623496 -0.56609980 -1.529404317  0.006184409  0.55368016
-BARRAS      -0.09026010  0.21594095  0.682583078 -0.669282042  0.53085420
-NOOL        -0.49716399 -0.53205687 -0.433385655 -0.115777808 -0.09622142
-BOURGUIGNON  0.08200220 -0.59833739  0.563619921  0.525814030  0.05855882
-Sebrle       0.08279306  0.01016177 -0.030585843 -0.847210682  0.21970353
-Clay        -0.77715960  0.25750851 -0.580638301  0.409776590 -0.61601933
-Karpov       0.32958134 -1.36365568  0.345306381  0.193055107  0.21721852
-Macey        0.19728082 -0.26927772 -0.363219506  0.368260269  0.21249474
-Warners      0.55673300 -0.26739400 -0.109470797  0.180283071  0.24208420
-Zsivoczky    0.11383190  0.03991159  0.538039776  0.585966156 -0.14271715
-Hernu        0.33168404  0.44308686  0.247293566  0.066908586 -0.20868256
-Bernard      0.32806564  0.36357920  0.006165316  0.279488675  0.32067773
-Schwarzl     0.68891640  0.56568604 -0.687053339 -0.008358849 -0.30211546
-Pogorelov    1.59379599  0.78370119 -0.037623661 -0.130531397 -0.03697576
-Schoenbeck  -0.16172381  0.85752368 -0.255850722  0.564222295  0.29680481
-Barras      -1.17415412  0.94512710  0.365550568  0.102255763  0.61186706</code></pre>
-<pre class="r"><code>res.ind$contrib        # Contributions to the PCs</code></pre>
-<pre><code>                  Dim.1      Dim.2        Dim.3       Dim.4        Dim.5
-SEBRLE       0.03854254  5.7118249 1.385418e+00  0.03572215 8.091161e+00
-CLAY         0.65814114 13.8541889 6.460097e+00  8.55568792 4.034555e+00
-BERNARD      1.86273218  6.1441319 1.349983e-01 19.57827284 4.202070e-02
-YURKOV       0.79686310  0.4431309 2.147558e+01  2.57939100 9.859373e-01
-ZSIVOCZKY    0.01178829  9.6816398 5.974848e+00  0.05231437 2.405750e-01
-McMULLEN     0.01481737  2.3253860 2.496789e+00  9.13531719 1.558646e+01
-MARTINEAU    6.03367104  3.9044125 2.830527e+00  0.73858431 3.118936e+01
-HERNU        3.76996156  3.2842176 8.583863e-02  4.21505626 9.955149e-02
-BARRAS       3.31942012  0.4024544 1.519980e+00  0.27758505 3.388731e-01
-NOOL         8.12988880  5.8489726 1.293851e+00 12.83761115 1.257025e+01
-BOURGUIGNON 20.53729577  3.7757623 3.534995e-04  2.35877858 1.088816e+00
-Sebrle      12.55838616  3.5020697 9.881482e+00  3.47006223 3.889859e-03
-Clay        11.59361384  6.2315181 1.341828e+00  0.53250375 2.007648e+00
-Karpov      17.46609555  1.5072627 3.614914e+00  0.52101693 3.940874e+00
-Macey        3.60207087 10.0732890 3.364879e+00  1.81387486 2.885677e-07
-Warners      2.02910262  0.1879390 1.403071e+01  5.51585696 1.018550e-02
-Zsivoczky    0.23441891  2.0310492 1.047894e+01  0.18126182 1.028128e+00
-Hernu        0.08048777  3.2136178 1.020764e-01  3.82170515 2.946148e+00
-Bernard      1.97075488  5.1661961 2.425213e+00  2.94737426 4.581507e+00
-Schwarzl     0.53184785  1.0252129 3.800546e+00  4.56119277 5.167449e-01
-Pogorelov    0.04843819  1.7533304 3.107757e-01  9.75034337 1.404313e-03
-Schoenbeck   0.25864068  3.9969003 3.722687e-02  0.32970059 2.580092e+00
-Barras       0.10519467  1.5876667 2.605305e+00  1.84296038 3.767994e+00
-                  Dim.6        Dim.7        Dim.8        Dim.9      Dim.10
-SEBRLE       2.21256620  0.621426384 2.992045e-02 12.177477305  0.03819185
-CLAY        17.48801877  0.651413899 6.035125e+00  0.101262442  3.58568943
-BERNARD      1.65019840  2.373652810 7.847747e+00  0.810319793  0.34994507
-YURKOV       0.10878629  1.516564073 2.094806e-01  0.336009790  0.51072064
-ZSIVOCZKY    8.24561722  0.111923276 6.485544e-01  7.664919832  4.32741147
-McMULLEN     0.35788945  3.287016354 1.360753e+00  0.312501167  5.51053518
-MARTINEAU    2.14409841  1.291109482 1.347216e+00  1.398195851 13.54402896
-HERNU        1.95655942  4.604850849 3.705288e+01  0.001071345 10.92781554
-BARRAS       0.08376135  0.670038259 7.380544e+00 12.547331617 10.04537028
-NOOL         2.54127369  4.067669683 2.975270e+00  0.375477289  0.33003418
-BOURGUIGNON  0.06913582  5.144247534 5.032108e+00  7.744571086  0.12223626
-Sebrle       0.07047579  0.001483775 1.481898e-02 20.105546253  1.72063803
-Clay         6.20972751  0.952824148 5.340583e+00  4.703566841 13.52708188
-Karpov       1.11680500 26.720158115 1.888802e+00  1.043988269  1.68193477
-Macey        0.40014909  1.041910483 2.089853e+00  3.798767930  1.60957713
-Warners      3.18673563  1.027384225 1.898339e-01  0.910422384  2.08904756
-Zsivoczky    0.13322327  0.022889042 4.585705e+00  9.617852173  0.72605208
-Hernu        1.13110069  2.821027418 9.687304e-01  0.125399768  1.55234328
-Bernard      1.10655655  1.899449022 6.021268e-04  2.188071254  3.66566729
-Schwarzl     4.87961053  4.598122119 7.477531e+00  0.001957159  3.25357879
-Pogorelov   26.11665608  8.825322559 2.242329e-02  0.477268755  0.04873597
-Schoenbeck   0.26890572 10.566272800 1.036933e+00  8.917302863  3.14020004
-Barras      14.17432302 12.835417603 2.116763e+00  0.292892746 13.34533825</code></pre>
-<pre class="r"><code>res.ind$cos2           # Quality of representation </code></pre>
-<pre><code>                  Dim.1      Dim.2        Dim.3       Dim.4        Dim.5
-SEBRLE      0.007530179 0.49747323 8.132523e-02 0.001386688 2.689027e-01
-CLAY        0.048701249 0.45701660 1.436281e-01 0.125791741 5.078506e-02
-BERNARD     0.197199804 0.28996555 4.294015e-03 0.411819183 7.567259e-04
-YURKOV      0.096109800 0.02382571 7.782303e-01 0.061812637 2.022798e-02
-ZSIVOCZKY   0.001574385 0.57641944 2.397542e-01 0.001388216 5.465497e-03
-McMULLEN    0.002175437 0.15219499 1.101379e-01 0.266486530 3.892621e-01
-MARTINEAU   0.404013915 0.11654676 5.694575e-02 0.009826320 3.552552e-01
-HERNU       0.399282749 0.15506199 2.731529e-03 0.088699901 1.793538e-03
-BARRAS      0.616241975 0.03330700 8.478249e-02 0.010239088 1.070152e-02
-NOOL        0.489872515 0.15711146 2.342405e-02 0.153694675 1.288433e-01
-BOURGUIGNON 0.859698130 0.07045912 4.446015e-06 0.019618511 7.753120e-03
-Sebrle      0.675380606 0.08395940 1.596674e-01 0.037079012 3.558507e-05
-Clay        0.687592867 0.16475409 2.391051e-02 0.006274965 2.025440e-02
-Karpov      0.783666922 0.03014772 4.873187e-02 0.004644764 3.007790e-02
-Macey       0.363436037 0.45308203 1.020057e-01 0.036362957 4.952707e-09
-Warners     0.255651956 0.01055582 5.311341e-01 0.138081100 2.182965e-04
-Zsivoczky   0.045053176 0.17401353 6.051030e-01 0.006921739 3.361236e-02
-Hernu       0.024824321 0.44184663 9.459148e-03 0.234196727 1.545686e-01
-Bernard     0.289347476 0.33813318 1.069834e-01 0.085980212 1.144234e-01
-Schwarzl    0.116721435 0.10030142 2.506043e-01 0.198892209 1.929118e-02
-Pogorelov   0.007803472 0.12591966 1.504272e-02 0.312101619 3.848427e-05
-Schoenbeck  0.067070098 0.46204603 2.900467e-03 0.016987442 1.138116e-01
-Barras      0.018972684 0.12765099 1.411800e-01 0.066043061 1.156018e-01
-                   Dim.6        Dim.7        Dim.8        Dim.9       Dim.10
-SEBRLE      0.0443241299 8.907507e-03 3.890334e-04 8.954067e-02 0.0002206741
-CLAY        0.1326907339 3.536548e-03 2.972084e-02 2.820119e-04 0.0078471026
-BERNARD     0.0179131165 1.843634e-02 5.529104e-02 3.228572e-03 0.0010956493
-YURKOV      0.0013453555 1.341980e-02 1.681440e-03 1.525225e-03 0.0018217256
-ZSIVOCZKY   0.1129176906 1.096685e-03 5.764478e-03 3.852703e-02 0.0170924251
-McMULLEN    0.0053876990 3.540616e-02 1.329562e-02 1.726733e-03 0.0239268142
-MARTINEAU   0.0147210347 6.342774e-03 6.003515e-03 3.523552e-03 0.0268211980
-HERNU       0.0212478795 3.578167e-02 2.611676e-01 4.270425e-06 0.0342288717
-BARRAS      0.0015944528 9.126203e-03 9.118662e-02 8.766746e-02 0.0551531863
-NOOL        0.0157010551 1.798232e-02 1.193105e-02 8.514912e-04 0.0005881295
-BOURGUIGNON 0.0002967459 1.579887e-02 1.401866e-02 1.220108e-02 0.0001513277
-Sebrle      0.0003886276 5.854423e-06 5.303795e-05 4.069384e-02 0.0027366539
-Clay        0.0377627839 4.145976e-03 2.107924e-02 1.049876e-02 0.0237264222
-Karpov      0.0051379747 8.795817e-02 5.639959e-03 1.762907e-03 0.0022318265
-Macey       0.0041397727 7.712721e-03 1.403282e-02 1.442502e-02 0.0048028954
-Warners     0.0411689767 9.496848e-03 1.591742e-03 4.317040e-03 0.0077841113
-Zsivoczky   0.0026253777 3.227467e-04 5.865332e-02 6.956790e-02 0.0041268259
-Hernu       0.0357707217 6.383462e-02 1.988402e-02 1.455601e-03 0.0141595965
-Bernard     0.0166586433 2.046050e-02 5.883405e-06 1.209056e-02 0.0159167991
-Schwarzl    0.1098063093 7.403638e-02 1.092132e-01 1.616543e-05 0.0211173850
-Pogorelov   0.4314162233 1.043115e-01 2.404103e-04 2.893750e-03 0.0002322016
-Schoenbeck  0.0071500829 2.010275e-01 1.789520e-02 8.702893e-02 0.0240826922
-Barras      0.2621297474 1.698426e-01 2.540745e-02 1.988116e-03 0.0711836486</code></pre>
+<p><br/><br/></p>
+<div id="ejemplo-1" class="section level3">
+<h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
+<p><br/></p>
+<p>Para el ejemplo en R se utilizarán las librerias <em>ade4</em> y
+<em>factoextra</em>. A continuación se presenta la matriz de datos de
+distintos tipos de café y seis variables en puntajes de 0 a 10 de
+algunas caracteristicas que definen la calidad de estos.</p>
+<p><br/></p>
+<pre class="r"><code>library(ade4); library(factoextra)
+data(&quot;cafe&quot;)</code></pre>
+<p><br/></p>
+<p>Calculando el ACP mediante la libreria <em>ade4</em> se tiene:</p>
+<p><br/></p>
+<pre class="r"><code>library(ade4)
+p = ncol(cafe) 
+n = nrow(cafe)
+ACP = dudi.pca(cafe[,2:7], scannf=FALSE, center = TRUE, scale = TRUE, nf=p)</code></pre>
+<p><br/></p>
+<p>Mediante los argumentos center = TRUE, scale = TRUE estamos
+normalizando los datos originales. <br></p>
+<p>Los valores propios asociados a la matriz de correlaciones serán:</p>
+<p><br/></p>
+<pre class="r"><code>ACP$eig</code></pre>
+<pre><code>[1] 4.60147661 0.46937103 0.38451212 0.34461612 0.14487978 0.05514434</code></pre>
+<p><br/> Como vemos el primer valor propio será siempre el mayor ya que
+es el que mayor varianza logra explicar. <br></p>
+<p>Las componentes principales de los individuos son:</p>
+<p><br/></p>
+<pre class="r"><code>ACP$li</code></pre>
+<pre><code>        Axis1       Axis2      Axis3       Axis4       Axis5       Axis6
+1  -2.9947077  1.01622318  0.6088641 -0.03785795  0.02866881  0.18511122
+2   3.2057321  0.03615753  0.7806676 -0.07003494 -0.09122485 -0.22696752
+3   1.3866259 -0.55662815  0.6612540 -0.18398706 -0.03470995 -0.06223661
+4   0.9814076  0.21905587 -1.0260987 -1.39279259  0.15092805  0.05010482
+5  -0.3457128 -0.50136938  0.4641112 -0.41096544 -0.57540901  0.13120929
+6  -3.5409698 -0.08826572  0.2660512 -0.09933568  0.28882042  0.01645509
+7   3.0213005  1.11233544 -0.1516589  0.64680223  0.28754799  0.20819208
+8   0.1375515 -0.84616260 -0.7108259  0.72170121 -0.32801652  0.36384152
+9  -0.4982973 -0.90730984 -0.1613885  0.35575388  0.75859223 -0.18371900
+10 -1.3529300  0.51596367 -0.7309759  0.47071634 -0.48519716 -0.48199090</code></pre>
+<p>Y por ultimo las componentes principales de las variables son:</p>
+<pre class="r"><code>ACP$co  </code></pre>
+<pre><code>             Comp1       Comp2        Comp3       Comp4        Comp5
+IAroma  -0.9594169  0.10472444  0.006052845 -0.15371519 -0.097171463
+Aroma   -0.9144779 -0.09905878 -0.245477287  0.04789976  0.301769522
+Cuerpo  -0.8891227 -0.09880354 -0.389613549  0.00138818 -0.201486279
+Acidez  -0.8667067 -0.07067830  0.274819022 -0.39762926  0.035161005
+Amargo  -0.8151809 -0.36599671  0.289897844  0.33905502 -0.049737315
+Astring -0.7990534  0.54761303  0.113364062  0.21359800  0.008113424
+               Comp6
+IAroma   0.188267462
+Aroma    0.017298649
+Cuerpo  -0.085447344
+Acidez  -0.094621441
+Amargo   0.007324156
+Astring -0.055608952</code></pre>
+<p><br/> Podemos representar mediante un diagrama de barras a los
+valores propios del ACP.</p>
+<pre class="r"><code>library(&quot;factoextra&quot;)
+fviz_screeplot(ACP, addlabels = TRUE)</code></pre>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><br/></p>
+<p>Se evidencia que la primera componente se lleva el 76.7% de la
+inercia total, seguida de la segunda componente con un 7.8% de la
+varianza explicada, de esta forma el porcentaje de inercia representado
+en el primer plano factorial es del 84.5%, perdiendo tan solo un 15.5%
+de la información. <br></p>
+<p><br/></p>
+<p>Gráficando las dos primeras componentes de las variables obtenemos el
+circulo de correlaciones:</p>
+<pre class="r"><code>library(&quot;factoextra&quot;)
+fviz_pca_var(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><br/> Se puede observar que todas las variables son bastante
+excentricas, por lo que cuentan con una buena calidad de la
+representación mediante el ACP, podemos ver que las variables que más
+correlacionadas están son Amargo, Aroma, Cuerpo y Acidez, siendo las
+variables Astring y Amargo las que menos correlacionadas están entre si.
+La flecha a donde apunta la variable indica la dirección en donde esta
+aumenta.</p>
+<p>Podemos entonces realizar la representación simultanea de individuos
+y variables para poder caracterizar los tipos de café:</p>
+<p><br/></p>
+<pre class="r"><code>library(&quot;factoextra&quot;)
+fviz_pca_biplot(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Recordemos que las variables están en puntajes. En este caso se puede
+decir que el tipo de café con la mejor calidad es el ex_o,
+caracterizandose más por el Aroma, Acidez y el cuerpo. Seguido de este
+se encuentra el ex_cl, el cual tiene buena puntuacion en todas las
+variables pero se caracteriza más por la astringencia y el aroma. Los
+cafés con peor calidad son los que se encuentran en dirección contraria
+a las variables, siendo estos o40m, cl40m, cl20m y cl40cb. Por otra
+parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad promedio.
+<br></p>
+<p><br/></p>
+<p>Obteniendo las contribuciones a la varianza total de las componentes
+principales se tiene:</p>
+<p><br/></p>
+<pre class="r"><code>library(&quot;factoextra&quot;)
+inercia.ACP = inertia.dudi(ACP,row.inertia=TRUE, col.inertia=TRUE)
+inercia.ACP$tot.inertia</code></pre>
+<pre><code>       inertia      cum    cum(%)
+Ax1 4.60147661 4.601477  76.69128
+Ax2 0.46937103 5.070848  84.51413
+Ax3 0.38451212 5.455360  90.92266
+Ax4 0.34461612 5.799976  96.66626
+Ax5 0.14487978 5.944856  99.08093
+Ax6 0.05514434 6.000000 100.00000</code></pre>
+<p><br/></p>
+<p>Podemos observar que hasta la segunda componente (Ax2) se acumula un
+84.51% de la inercia total. <br></p>
+<p>Las contribuciones de las variables a la varianza explicada de cada
+componente será:</p>
+<p><br/></p>
+<pre class="r"><code>inercia.ACP$col.abs</code></pre>
+<pre><code>           Axis1     Axis2        Axis3        Axis4       Axis5       Axis6
+IAroma  20.00403  2.336575  0.009528159 6.856429e+00  6.51732976 64.27610524
+Aroma   18.17394  2.090594 15.671573296 6.657806e-01 62.85545355  0.54265446
+Cuerpo  17.18012  2.079834 39.478266260 5.591856e-04 28.02097007 13.24024917
+Acidez  16.32477  1.064280 19.641902322 4.587975e+01  0.85332558 16.23596585
+Amargo  14.44145 28.538956 21.856465870 3.335837e+01  1.70748498  0.09727789
+Astring 13.87568 63.889761  3.342264093 1.323911e+01  0.04543605  5.60774737</code></pre>
+<p>Siendo la variable IAroma la que más contribuye a la varianza
+explicada por el primer eje (20%), mientras que Astring es la que más
+contribuye al segundo eje (63.8%). <br></p>
+<p><br/> Por ultimo podemos estudiar las contribuciones de cada
+individuo a las componentes principales:</p>
+<p><br/></p>
+<pre class="r"><code>library(&quot;factoextra&quot;)
+inercia.ACP$row.abs</code></pre>
+<pre><code>         Axis1       Axis2      Axis3       Axis4       Axis5       Axis6
+1  19.48999241 22.00198737  9.6411901  0.04158901  0.05672983  6.21390373
+2  22.33352233  0.02785359 15.8497441  0.14232919  0.57440544  9.34171101
+3   4.17850953  6.60106561 11.3717309  0.98228826  0.08315726  0.70241029
+4   2.09315612  1.02233565 27.3821959 56.29078571  1.57228815  0.45525842
+5   0.25973694  5.35549142  5.6018837  4.90089069 22.85312172  3.12196638
+6  27.24879089  0.16598463  1.8408579  0.28633532  5.75768628  0.04910204
+7  19.83766803 26.36059855  0.5981716 12.13968540  5.70706576  7.86008865
+8   0.04111817 15.25426797 13.1406396 15.11399500  7.42649088 24.00620580
+9   0.53960973 17.53860139  0.6773843  3.67251609 39.71997726  6.12078543
+10  3.97789584  5.67181382 13.8962018  6.42958532 16.24907743 42.12856826</code></pre>
+<p>Se observa que el café ex_o (27.2%) es el que más varianza explicada
+aporta a la primera componente, por otra parte el café o40m (26.3%) es
+el que más aporta al segundo eje.</p>
+<p><br/><br/></p>
+</div>
 </div>
 </div>
 
