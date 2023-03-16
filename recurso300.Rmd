@@ -156,13 +156,18 @@ ggplot(data = matricular, aes(x = as.factor(matricula), y = matematicas, color =
 
 Inicialmente podríamos explorar una estimación de **MCO**, como posibilidad de estimación:
 
+</br>
 
 $$
 Y = \beta_{0} + \beta_{1}X_{1} + \varepsilon
 $$
-Den de la variable $Y$ es una variable con dos categorías (binaria), la variable $X$ corresponde a una variable numérica y $\varepsilon$ corresponde a una variable aleatoria no observable.
+</br>
+
+Donde la variable $Y$ es una variable con dos categorías (binaria), la variable $X$ corresponde a una variable numérica y $\varepsilon$ corresponde a una variable aleatoria no observable.
 
 Com prueba inicial y de comparación se plantea realizar la estimación por el método de mínimos cuadrados ordinarios.
+
+</br>
 
 ```{r}
 library(tidyverse)
@@ -174,7 +179,11 @@ matricular %>%
 summary(modelo0) 
 ```
 
+</br>
+
 El resultado muestra un valor muy bajo de ajuste, dado que los puntos están sobre el eje horizontal con $Y=0$ o en el eje horizontal con $Y=1$
+
+</br>
 
 ```{r}
 library(ggplot2)
@@ -195,9 +204,14 @@ g3
 
 Como se puede observar este modelo no permite ajustar una linea que represente los valores obtenidos en la prueba de matemáticas.  Además de no cumplir con los supuestos planteados para el modelo de regresión lineal simple.
 
+</br>
+
 * No normalidad de los errores
+
 * Heteroscedasticidad de errores
+
 * Posibilidad de que $\widehat{Y_{i}}$ se encuentre por fuera del rango $[0,1]$, siendo que estimación  de $Y$ debe corresponder  a la probabilidad de ocurrencia de $Y$
+
 * Valores muy bajos para $R^{2}$, dada la dificultad de ajuste de los datos a una linea recta 
 
 </br></br>
@@ -212,15 +226,20 @@ $$f(z)= \dfrac{1}{1+\exp{\{-z\}}} = \dfrac{\exp{\{z\}}}{1-\exp{\{z\}}}$$
 
 </br>
 
-De esta ecuación podemos definir :
+De esta ecuación se puede  definir la probabilidad de $P(Y=1| X=x)$ y su complemento $P(Y=0| X=x)$ :
+
+</br>
+
 
 $$P_{i} = P(Y=1 | X =x) =  \dfrac{1}{1+\exp{\{-\beta_{0}-\beta_{1}x_{i}\}}} +  \varepsilon_{i}^{*}= \dfrac{\exp{\{ \beta_{0}-\beta_{1}x_{i} \}}}{1-\exp{\{\beta_{0}-\beta_{1}x_{i}\}}} + \varepsilon_{i}^{*}$$
 
-y por tanto su complemento está dado por :
+$P(Y=1| X=x)$
 
 $$1- P_{i} = P(Y=0 | X =x) =  \dfrac{1}{1 + \exp{\{ \beta_{0}-\beta_{1}x_{i} \}}} $$
 
-La división de estas dos probabilidades genera $odds$
+$P(Y=1| X=x)$
+
+La división de estas dos probabilidades $P(Y=1|X=x)\hspace{.2cm}/ \hspace{.2cm} P(Y=0 |X=0)$ genera  $Odds$ (`Odds ratio`) 
 
 
 $$\Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \exp{\Big\{\beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} \Big\}} + \varepsilon_{i}^{*}$$
@@ -240,7 +259,7 @@ ggplot(data.frame(x=c(-8, 8)), aes(x)) + stat_function(fun=fx, size=1, col="#FF7
 
 </br></br>
 
-Empleando la función logística se replantea el modelo partiendo del **logaritmo de la razón de probabilidades** en función de una combinación lineal de las variables independientes :
+Empleando la función logística se replantea el modelo partiendo del **logaritmo de la razón de probabilidades** (logaritmo de los Odds ratio)  en función de una combinación lineal de las variables independientes :
 
 $$\ln \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
 </br></br>
@@ -249,7 +268,7 @@ Su estimación se puede plantear de manera resumida como:
 
 
 <div class="content-box-blue">
-$$\ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln (odds) =\beta_{0} + \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
+$$\ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln (Odds) =\beta_{0} + \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
 </div>
 
 </br>
@@ -281,11 +300,11 @@ El resultado se puede interpretar como:
 
 |    |                  |          |                                      |           |                |
 |:---|:-----------------|:---------|:-------------------------------------|-----------|:---------------|
-| Si |$P_{i} = 1-P_{i}$ | entonces |$\dfrac{P_{i}}{1-P_{i}} = odds =1$,   | por tanto | $\ln(odds) = 0$|      
+| Si |$P_{i} = 1-P_{i}$ | entonces |$\dfrac{P_{i}}{1-P_{i}} = Odds =1$,   | por tanto | $\ln(Odds) = 0$|      
 |    |                  |          |                                      |           |                |
-| Si | $P_{i} < 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = odds < 1$,| por tanto | $\ln(odds) < 0$|      
+| Si | $P_{i} < 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = Odds < 1$,| por tanto | $\ln(Odds) < 0$|      
 |    |                  |          |                                      |           |                |
-| Si | $P_{i} > 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = odds > 1$, | por tanto |$\ln(odds) > 0$ |     
+| Si | $P_{i} > 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = Odds > 1$, | por tanto |$\ln(Odds) > 0$ |     
 
 
 </br>
@@ -355,6 +374,7 @@ x=0
 
 cat("exp{b0} = exp{-9.793942} = ", exp(b0+b1*x))
 ```
+</br>
 
 Cuando $x=0$ el valor de la razón de probabilidades es de $0.0000557885$, indicando que la probabilidad $(1-P_{i})$ es mucho mas grande que $P_{i}$ . Lo cual es consecuente, dado que obtener un puntaje en el examen de matemáticas $x=0$, estima una probabilidad de obtener matricula de honor de 
 
@@ -366,7 +386,11 @@ Cuando $x=0$ el valor de la razón de probabilidades es de $0.0000557885$, indic
 
 Ahora para interpretar el aporte que genera un punto adicional en la nota de matemáticas sobre la probabilidad realizamos el siguiente cálculo:
 
-$$\exp{\{ 0.1563404 \}} = 1.169224$$
+</br>
+
+<!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
+
+</br>
 
 ```{r, echo=FALSE}
 cat("exp(0.1563404) = ", exp(0.1563404) )
@@ -379,13 +403,16 @@ $\widehat{\beta}_{1}$ indica el cambio en $ln(p/(1-p))$  debido a un incremento 
 
 Por cada unidad de aumento de $x$ los $odds$ de obtener matricula se  incrementan en : $1.17$ unidades
 
-```{r}
-exp(b1)
+```{r, echo=FALSE}
+cat("exp(b1) = ", exp(b1))
 ```
 
 
+</br>
+
 Un intervalo de confianza para los coeficientes se puede obtener mediante :
 
+</br>
 ```{r, message=FALSE}
 library(MASS)
 confint(object = modelo1, level = 0.95 )
@@ -429,6 +456,7 @@ mc <- table(modelo1$model$matricula, predicciones,
                           dnn = c("observaciones", "predicciones"))
 mc
 ```
+
 </br>
 
 ```{r}
@@ -440,10 +468,13 @@ mosaic(mc, shade = T, colorize = T,
 
 Los colores azules representan la proporción de clasificaciones correcta :
 
-* Siendo 0, lo clasifica como 0 y 
-* Siendo 1 lo clasifica como 1
+* Siendo $0$, lo clasifica como $0$ y 
+* Siendo $1$ lo clasifica como $1$
 
 Los colores naranjas corresponden a las proporciones de clasificaciones erradas por el modelo.
+
+* Falsos positivos
+* Falsos negativos
 
 La proporción de clasificaciones correctas dan una aproximación del valor $R^2$
 
