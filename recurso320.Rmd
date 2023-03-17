@@ -1,0 +1,204 @@
+---
+title: <span style="color:#034a94"> **Estimación del modelo**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA, warning = FALSE, message = FALSE)
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+color2=c(c1,c2)
+library(memisc)
+library(MASS)
+library(lattice)
+library(stats)
+library(tidyverse)
+
+# install.packages("learnr")          # solo una vez
+# install.packages("devtools")     # solo una vez
+# devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
+library(paqueteMOD)
+data("eleccion")
+```
+
+</br></br>
+
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+# knitr::include_graphics("img/puntos1.png")
+```
+
+
+</br></br>
+
+Para realizar la estimación del modelo logit utilizamos la función `glm()`
+
+```{r}
+library(tidyverse)
+data(matricular)
+matricular %>% 
+  glm(matricula ~ matematicas , family = binomial(link = "logit"), data = .) -> modelo1
+summary(modelo1) 
+
+```
+
+</br></br>
+
+El modelo estimado en su forma original :
+
+$$\ln \Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -9.79394  + 0.15634 \hspace{.2cm} x_{i}$$
+</br></br>
+
+Utilizamos la función inversa del logaritmo
+
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\bigg\{ \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm} x_{i}}\bigg\}$$
+</br></br>
+
+
+En caso de ser $P_{i} = 0.80$, entonces $1-P_{i} = 0.20$, luego :
+
+$$\Bigg( \dfrac{0.80}{0.20} \Bigg) = 4.0 $$
+
+Indicando una razón entre las probabilidades de 4 a 1.  Es cuatro veces mas problable que ocurra el evento sobre que no ocurra.
+
+
+En el modelo estimado esta relación para un valor específico de $X$ de la siguiente forma:
+
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.793942  + 0.1563404 \hspace{.2cm}x_{i}}\big\}$$
+</br></br>
+
+
+Un estudiante con un puntaje de en matemáticas de $60$ tendrá una razón $Odds$ de :
+
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.793942  + 0.1563404 \hspace{.2cm} \times 70}\big\} =3.204108$$
+
+Lo que indica que un estudiante con puntaje en matemáticas igual a 70, tiene 3.2 veces más probabilidad de obtener la matricula de honor en comparación de no tenerla.
+
+</br></br>
+
+
+
+
+## <span style="color:#034A94">**Pruebas de significancia individual**</span>
+
+
+En este caso la significancia del modelo se determina por los valores del estadístico **Wald chi-square**, bajo la condición  el tamaño de la muestra grande. 
+
+$H_0 : \beta_{i} = 0$
+$H_1 : \beta_{i} \neq 0$
+
+Estadístico de prueba
+
+$$W_{i} = \dfrac{\widehat{\beta}_{i}}{\sigma^2_{\beta_{i}}} \sim N(0,1) $$
+
+
+<pre>
+Coefficients:
+              Estimate   Std. Error   z value    Pr(>|z|)    
+(Intercept)   -9.79394      1.48174  -6.610      3.85e-11 ***
+matematicas    0.15634      0.02561   6.105      1.03e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre>
+
+</br>
+
+
+En el ejemplo ambos coeficientes son estadisticamente significativos, con valor p de cero
+
+</br></br>
+
+## <span style="color:#034A94">**Interpretación de los coeficientes**</span>
+
+</br></br>
+
+### <span style="color:#034A94">$\beta_{0}$</span>
+
+</br>
+
+El coeficiente estimado $\widehat{\beta}_{0}$ corresponde al valor esperado del logaritmo de la razón de probabilidades para un estudiante con nota cero en matemáticas.  Para leerlo en términos de razón de probabilidades realizamos la siguiente transformación:
+
+
+```{r, echo=FALSE}
+# coeficientes estimados
+b=modelo1$coefficients
+b0=b[1]; names(b0)= " "
+b1=b[2]; names(b1)= " "
+#-------------------------
+x=0
+# exp(b0+b1*x)
+# exp(b0+b1*x)/(1-exp(b0+b1*x))
+
+cat("exp{b0} = exp{-9.793942} = ", exp(b0+b1*x))
+```
+</br>
+
+Cuando $x=0$ el valor de la razón de probabilidades es de $0.0000557885$, indicando que la probabilidad $(1-P_{i})$ es mucho mas grande que $P_{i}$ . Lo cual es consecuente, dado que obtener un puntaje en el examen de matemáticas $x=0$, estima una probabilidad de obtener matricula de honor de 
+
+</br></br>
+
+### <span style="color:#034A94">$\beta_{1}$</span>
+
+</br>
+
+Ahora para interpretar el aporte que genera un punto adicional en la nota de matemáticas sobre la probabilidad realizamos el siguiente cálculo:
+
+</br>
+
+<!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
+
+</br>
+
+```{r, echo=FALSE}
+cat("exp(0.1563404) = ", exp(0.1563404) )
+```
+
+
+</br></br>
+
+$\widehat{\beta}_{1}$ indica el cambio en $ln(p/(1-p))$  debido a un incremento unitario en $x$,   por lo que es necesario sacar la función inversa al logaritmo que es la función exponencial (`exp()`)
+
+Por cada unidad de aumento de $x$ los $odds$ de obtener matricula se  incrementan en : $1.17$ unidades
+
+```{r, echo=FALSE}
+cat("exp(b1) = ", exp(b1))
+```
+
+
+</br>
+
+Un intervalo de confianza para los coeficientes se puede obtener mediante :
+
+</br>
+```{r, message=FALSE}
+library(MASS)
+confint(object = modelo1, level = 0.95 )
+```
+</br>
+
+
+```{r}
+data(matricular)
+matricular$matricula <- as.character(matricular$matricula)
+matricular$matematicas <- as.numeric(matricular$matematicas)
+
+plot(matricula ~ matematicas, matricular, col = "darkblue",
+     main = "Modelo regresión logística",
+     ylab = "P(matrícula=1|matemáticas)",
+     xlab = "matemáticas", pch = "I")
+
+# type = "response" devuelve las predicciones en forma de probabilidad en lugar de en log_ODDs
+curve(predict(modelo1, data.frame(matematicas = x), type = "response"),
+      col = "#034A94", lwd = 3, add = TRUE)
+abline(h=.50, col="red")
+
+
+grid()
+```
+
+</br></br></br>
+

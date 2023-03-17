@@ -12,7 +12,7 @@
 <meta name="author" content="Modelos Estadísticos para la toma de decisiones" />
 
 
-<title> Modelo Lineal General - Logit Multinomial</title>
+<title> Evaluación del modelo</title>
 
 <script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -325,57 +325,172 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore"><span style="color:#034a94"> <strong>Modelo
-Lineal General - Logit Multinomial</strong></span></h1>
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Evaluación del modelo</strong></span></h1>
 <h4 class="author">Modelos Estadísticos para la toma de decisiones</h4>
 
 </div>
 
 
 <p></br></br></p>
-<p>La regresión logista multinomial está regida por los mismos
-principios que la regresión logistica binomial, solo que la variable
-respuesta <span class="math inline">\(Y\)</span> presenta más de dos
-categorías</p>
-<div class="content-box-blue">
-<p><span class="math display">\[Y = \beta_{0} + \beta_{1}X_{1} +
-\beta_{2}X_{2}   + \beta_{3}X_{3}  +   + \beta_{k}X_{k} +
-\varepsilon\]</span></p>
-</div>
-<div id="ejemplo" class="section level3">
-<h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
-<p>La siguiente base de datos corresponde a información de 200
-estudiantes.</p>
+<div id="bondad-de-ajuste-del-modelo" class="section level2">
+<h2><span style="color:#034A94"><strong>Bondad de ajuste del
+modelo</strong></span></h2>
+<p></br></p>
+<p>Para determinar la bondad de ajuste del modelo se utiliza el
+resultado de la probabilidad que estima el modelo y se asigna un valor
+de cero para los individuos que tengan valores menores o iguales a un
+punto <span class="math inline">\(c\)</span>, que en este caso tomamos
+como <span class="math inline">\(0.50\)</span>. Para valores mayores a
+<span class="math inline">\(0.5\)</span> se asigna un valor de <span
+class="math inline">\(1\)</span>. Al construir una tabla con los
+resultados de la predicción contra los valores reales de <span
+class="math inline">\(Y\)</span>, obtenemos:</p>
+<p></br></p>
+<pre>
+        |                predicción    |  
+        |         |   0     |    1     |
+--------|---------|---------|----------|   
+Estado  |  0      |     140 |      11  |
+real    |  1      |      27 |      22  |
+
+</pre>
+<p></br></p>
+<p>Representados por el siguiente gráfico de mosaico:</p>
+<p></br></p>
+<pre class="r"><code>library(vcd)
+predicciones &lt;- ifelse(test = modelo1$fitted.values &gt; 0.5, yes = 1, no = 0)
+mc &lt;- table(modelo1$model$matricula, predicciones,
+                          dnn = c(&quot;Estado real&quot;, &quot;Predicciones&quot;))
+mosaic(mc, shade = T, colorize = T,
+       gp = gpar(fill = matrix(c(&quot;#11224D&quot;, &quot;#F98125&quot;, &quot;#F5B841&quot;,&quot;#2C599D&quot;), 2, 2)))</code></pre>
+<p><img src="recurso330_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p></br></p>
+<p>Los colores azules representan la proporción de clasificaciones
+correcta :</p>
 <ul>
-<li><strong>id</strong> : identificador del estudiante</li>
-<li><strong>female</strong> : genero: 0= femenino, 1= masculino</li>
-<li><strong>ses</strong> : nivel socio-económico : 1 = bajo,2 medio , 3
-= alto</li>
-<li><strong>schtyp</strong> : tipo de escuela de procedencia</li>
-<li><strong>prog</strong>: programa : 1 = general,2 = académico ,3 =
-vocacional</li>
-<li><strong>read</strong> : puntaje en lectura</li>
-<li><strong>write</strong> : puntaje en escritura</li>
-<li><strong>math</strong> : puntaje en matemáticas</li>
-<li><strong>science</strong> : puntaje en ciencias</li>
-<li><strong>socst</strong> : puntaje en sociales</li>
-<li><strong>honors</strong> : destacado en inglés</li>
-<li><strong>awards</strong> : reconocimientos</li>
-<li><strong>cid</strong></li>
+<li>Siendo <span class="math inline">\(0\)</span>, lo clasifica como
+<span class="math inline">\(0\)</span> y</li>
+<li>Siendo <span class="math inline">\(1\)</span> lo clasifica como
+<span class="math inline">\(1\)</span></li>
 </ul>
+<p>Los colores naranjas corresponden a las proporciones de
+clasificaciones erradas por el modelo.</p>
+<ul>
+<li>Falsos positivos</li>
+<li>Falsos negativos</li>
+</ul>
+<p>La proporción de clasificaciones correctas dan una aproximación del
+valor <span class="math inline">\(R^2\)</span></p>
+<p></br></p>
+<p><span class="math display">\[
+\dfrac{140+22}{140+27+11+22} = \dfrac{162}{200} = 0.81
+\]</span> Este valor cuenta como el <span
+class="math inline">\(R^2\)</span> , es decir que el modelo explica
+(clasifica de manera adecuada) el 81% de los casos</p>
+<p></br></br></p>
+<p>Este valor se puede obtener de la matriz de confusión</p>
+</div>
+<div id="matriz-de-confusión" class="section level2">
+<h2><span style="color:#034A94"><strong>Matriz de
+confusión</strong></span></h2>
 <pre class="r"><code>library(paqueteMOD)
-data(&quot;hsbdemo&quot;)
-datos=hsbdemo
-table(hsbdemo$prog)</code></pre>
-<pre><code>
-  1   2   3 
- 45 105  50 </code></pre>
-<pre class="r"><code>with(datos, table(ses, prog))</code></pre>
-<pre><code>   prog
-ses  1  2  3
-  1 16 19 12
-  2 20 44 31
-  3  9 42  7</code></pre>
+data(&quot;matricular&quot;)
+modelo1= glm(matricula ~ matematicas, data=matricular, family = &quot;binomial&quot;)
+# summary(modelo1)
+matricula.fit = as.numeric(modelo1$fitted.values&gt;0.5)  # clasificacion de las estimaciones en 0,1
+data1= data.frame(matricular$matricula, matricula.fit)
+matrizC=table(data1)
+matrizC   # matriz de confusión</code></pre>
+<pre>
+        |                predicción    |  
+        |         |   0     |    1     |
+--------|---------|---------|----------|   
+Estado  |  0      |     140 |      11  |
+real    |  1      |      27 |      22  |
+
+</pre>
+<p></br></p>
+<blockquote>
+
+</blockquote>
+<p>A partir de la matriz de confusión se obtienen indicadores</p>
+<div id="capacidad-de-clasificación-del-modelo" class="section level4">
+<h4><span style="color:#034a94"><strong>Capacidad de clasificación del
+modelo</strong></span></h4>
+<p>En una de las características más importantes del modelo, pues
+permite valorar a través de la matriz de confusión las clasificaciones
+correctas por medio de las predicciones del modelo.</p>
+<p>Existen adicionamente otros indicadores que pueden ser utilizados
+como es el estadistico c asociado a la curva ROC (Trvrivrt Oprtsyong
+Charasteristic) . Esta curva compara diferentes puntos de corte de la
+probabilidad que permite establecer la tasa de clasificaciones correcta
+de verdaderos positivos y de falsos positivos:</p>
+<p></br></br></p>
+</div>
+<div id="exactitud" class="section level3">
+<h3><strong>Exactitud</strong></h3>
+<p>Porcentaje de casos correctamente clasificados</p>
+<p>$$</p>
+<p>$$</p>
+</div>
+<div id="sensibilidad" class="section level3">
+<h3><strong>Sensibilidad</strong></h3>
+<p>Porcentaje de positivos que son clasificados por el modelo como
+positivos</p>
+<p><span class="math display">\[
+TPR = \dfrac{\text{número de positivos correctamente
+pronosticados}}{\text{número de positivos reales totales}} =
+\]</span></p>
+</div>
+<div id="especificidad" class="section level3">
+<h3><strong>Especificidad</strong></h3>
+<p>Porcentaje de negativos que son clasificados por el modelo como
+negativos</p>
+<p><span class="math display">\[
+FPR = \dfrac{\text{número de falsos positivos}}{\text{número de
+negativos reales totales}}
+\]</span></p>
+</div>
+<div id="falsos-positivos" class="section level3">
+<h3><strong>Falsos positivos</strong></h3>
+<p>Porcentaje de negativos, clasificados por el modelo como
+positivos</p>
+</div>
+<div id="falsos-negarativos" class="section level3">
+<h3><strong>Falsos negarativos</strong></h3>
+<p>Porcentaje de positivos clasificados por el modelo como negativos</p>
+<p></br></br></p>
+</div>
+<div id="nota" class="section level3 content-box-yellow">
+<h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
+<p>Es importante examinar la significancia de los coeficientes estimados
+obtenidos mediante el metodo de máxima verosimilitud. En este caso en
+lugar de calcular el valor p para cada coeficiente, se utiliza el
+estadístico <strong>Z</strong> de la prueba <strong>chi-cuadrado de
+Wald</strong></p>
+<ul>
+<li><p>En este tipo de modelos la bondad de ajuste pasa a un segundo
+plano y cobra importancia el signo de los coeficientes y su
+significancia estadística.</p></li>
+<li><p>Tambien es condición que las observaciones deben ser
+independientes unas de otras</p></li>
+<li><p>Y la relación entre <span
+class="math inline">\(\ln(Odds)\)</span> y las variables independientes
+<span class="math inline">\(X_{1},\dots, X_{k} + \varepsilon\)</span>
+debe ser lineal</p></li>
+<li><p>Finalmente para convertir el valor estimado de probabilidad en
+una categoría se debe encontrar el valor de un punto de corte a partir
+del cual se considera que la variable <span
+class="math inline">\(Y\)</span> pertenece a una categoría. En caso de
+que este valor fuese p=0.5 (<span class="math inline">\(P(Y=1|X) &gt;
+0.50\)</span>), entonce si la estimación del modelo arroja un valor en
+el rango (0.50 - 1.0), se le asignará el valor de <span
+class="math inline">\(1\)</span>, en caso contrario tomará el valor de
+<span class="math inline">\(0\)</span>.</p></li>
+</ul>
+</div>
+<p></br></br></p>
 </div>
 
 

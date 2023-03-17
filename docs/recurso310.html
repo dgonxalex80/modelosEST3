@@ -12,7 +12,7 @@
 <meta name="author" content="Modelos Estadísticos para la toma de decisiones" />
 
 
-<title> Modelo Lineal General - Logit Multinomial</title>
+<title> Modelo</title>
 
 <script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -325,57 +325,251 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore"><span style="color:#034a94"> <strong>Modelo
-Lineal General - Logit Multinomial</strong></span></h1>
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Modelo</strong></span></h1>
 <h4 class="author">Modelos Estadísticos para la toma de decisiones</h4>
 
 </div>
 
 
 <p></br></br></p>
-<p>La regresión logista multinomial está regida por los mismos
-principios que la regresión logistica binomial, solo que la variable
-respuesta <span class="math inline">\(Y\)</span> presenta más de dos
-categorías</p>
-<div class="content-box-blue">
-<p><span class="math display">\[Y = \beta_{0} + \beta_{1}X_{1} +
-\beta_{2}X_{2}   + \beta_{3}X_{3}  +   + \beta_{k}X_{k} +
-\varepsilon\]</span></p>
-</div>
-<div id="ejemplo" class="section level3">
-<h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
-<p>La siguiente base de datos corresponde a información de 200
-estudiantes.</p>
-<ul>
-<li><strong>id</strong> : identificador del estudiante</li>
-<li><strong>female</strong> : genero: 0= femenino, 1= masculino</li>
-<li><strong>ses</strong> : nivel socio-económico : 1 = bajo,2 medio , 3
-= alto</li>
-<li><strong>schtyp</strong> : tipo de escuela de procedencia</li>
-<li><strong>prog</strong>: programa : 1 = general,2 = académico ,3 =
-vocacional</li>
-<li><strong>read</strong> : puntaje en lectura</li>
-<li><strong>write</strong> : puntaje en escritura</li>
-<li><strong>math</strong> : puntaje en matemáticas</li>
-<li><strong>science</strong> : puntaje en ciencias</li>
-<li><strong>socst</strong> : puntaje en sociales</li>
-<li><strong>honors</strong> : destacado en inglés</li>
-<li><strong>awards</strong> : reconocimientos</li>
-<li><strong>cid</strong></li>
-</ul>
-<pre class="r"><code>library(paqueteMOD)
-data(&quot;hsbdemo&quot;)
-datos=hsbdemo
-table(hsbdemo$prog)</code></pre>
+<p></br></br></p>
+<div id="modelo-logit" class="section level2">
+<h2><span style="color:#034A94"><strong>Modelo logit</strong></br></h2>
+<p></br></p>
+<p>Inicialmente podríamos explorar una estimación de
+<strong>MCO</strong>, como posibilidad de estimación:</p>
+<p></br></p>
+<p><span class="math display">\[
+Y = \beta_{0} + \beta_{1}X_{1} + \varepsilon
+\]</span> </br></p>
+<p>Donde la variable <span class="math inline">\(Y\)</span> es una
+variable con dos categorías (binaria), la variable <span
+class="math inline">\(X\)</span> corresponde a una variable numérica y
+<span class="math inline">\(\varepsilon\)</span> corresponde a una
+variable aleatoria no observable.</p>
+<p>Com prueba inicial y de comparación se plantea realizar la estimación
+por el método de mínimos cuadrados ordinarios.</p>
+<p></br></p>
+<pre class="r"><code>library(tidyverse)
+
+matricular$matricula=as.numeric(matricular$matricula)
+
+matricular %&gt;% 
+   lm(matricula ~ matematicas ,  data = .) -&gt; modelo0
+summary(modelo0) </code></pre>
 <pre><code>
-  1   2   3 
- 45 105  50 </code></pre>
-<pre class="r"><code>with(datos, table(ses, prog))</code></pre>
-<pre><code>   prog
-ses  1  2  3
-  1 16 19 12
-  2 20 44 31
-  3  9 42  7</code></pre>
+Call:
+lm(formula = matricula ~ matematicas, data = .)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.76516 -0.27653 -0.06712  0.17720  1.02596 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.020053   0.150883   0.133    0.894    
+matematicas 0.023268   0.002822   8.245 2.25e-14 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.3729 on 198 degrees of freedom
+Multiple R-squared:  0.2556,    Adjusted R-squared:  0.2518 
+F-statistic: 67.99 on 1 and 198 DF,  p-value: 2.248e-14</code></pre>
+<p></br></p>
+<p>El resultado muestra un valor muy bajo de ajuste, dado que los puntos
+están sobre el eje horizontal con <span
+class="math inline">\(Y=0\)</span> o en el eje horizontal con <span
+class="math inline">\(Y=1\)</span></p>
+<p></br></p>
+<pre class="r"><code>library(ggplot2)
+# data(matricular)
+matricular1=matricular
+matricular1$matricula = as.numeric(matricular1$matricula)
+
+g3=ggplot(data = matricular1, mapping = aes(x=matematicas, y=matricula)) + 
+           geom_point() + 
+           geom_smooth(method = &quot;lm&quot;, se=FALSE) +         
+           labs(y = &quot;matricula de honor&quot;, x = &quot;puntaje matemáticas&quot;) +
+           ggtitle(&quot;  &quot;)
+
+g3</code></pre>
+<p><img src="recurso310_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p></br></br></p>
+<p>Como se puede observar este modelo no permite ajustar una linea que
+represente los valores obtenidos en la prueba de matemáticas. Además de
+no cumplir con los supuestos planteados para el modelo de regresión
+lineal simple.</p>
+<p></br></p>
+<ul>
+<li><p>No normalidad de los errores</p></li>
+<li><p>Heteroscedasticidad de errores</p></li>
+<li><p>Posibilidad de que <span
+class="math inline">\(\widehat{Y_{i}}\)</span> se encuentre por fuera
+del rango <span class="math inline">\([0,1]\)</span>, siendo que
+estimación de <span class="math inline">\(Y\)</span> debe corresponder a
+la probabilidad de ocurrencia de <span
+class="math inline">\(Y\)</span></p></li>
+<li><p>Valores muy bajos para <span
+class="math inline">\(R^{2}\)</span>, dada la dificultad de ajuste de
+los datos a una linea recta</p></li>
+</ul>
+<p></br></br></p>
+<p>Estos problemas los podemos superar al plantear el siguiente modelo
+teniendo como base la función de distribución acumulada <span
+class="math inline">\(F(x) = P(X \leq x)\)</span> y la función
+logística:</p>
+<p></br></p>
+<div class="content-box-blue">
+<p><span class="math display">\[f(z)= \dfrac{1}{1+\exp{\{-z\}}} =
+\dfrac{\exp{\{z\}}}{1-\exp{\{z\}}}\]</span></p>
+</div>
+<p></br></p>
+<p>De esta ecuación se puede definir la probabilidad de <span
+class="math inline">\(P(Y=1| X=x)\)</span> y su complemento <span
+class="math inline">\(P(Y=0| X=x)\)</span> :</p>
+<p></br></p>
+<p><span class="math display">\[P_{i} = P(Y=1 | X =x)
+=  \dfrac{1}{1+\exp{\{-\beta_{0}-\beta_{1}x_{i}\}}}
++  \varepsilon_{i}^{*}= \dfrac{\exp{\{ \beta_{0}-\beta_{1}x_{i}
+\}}}{1-\exp{\{\beta_{0}-\beta_{1}x_{i}\}}} +
+\varepsilon_{i}^{*}\]</span></p>
+<p><span class="math inline">\(P(Y=1| X=x)\)</span></p>
+<p><span class="math display">\[1- P_{i} = P(Y=0 | X =x) =  \dfrac{1}{1
++ \exp{\{ \beta_{0}-\beta_{1}x_{i} \}}} \]</span></p>
+<p><span class="math inline">\(P(Y=1| X=x)\)</span></p>
+<p>La división de estas dos probabilidades <span
+class="math inline">\(P(Y=1|X=x)\hspace{.2cm}/ \hspace{.2cm} P(Y=0
+|X=0)\)</span> genera <span class="math inline">\(Odds\)</span>
+(<code>Odds ratio</code>)</p>
+<p><span
+class="math display">\[\Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg)
+=  \exp{\Big\{\beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} \Big\}} +
+\varepsilon_{i}^{*}\]</span> Y finalmente al sacar logaritmos en ambos
+lados se obtiene la siguiente expresión lineal:</p>
+<p><span class="math display">\[\ln
+\Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1}
+\hspace{.2cm}x_{i} + \varepsilon_{i}^{*}\]</span> </br></p>
+<pre class="r"><code>library(ggplot2)
+fx=function(x){
+  1/(1+exp(-x))
+}
+
+ggplot(data.frame(x=c(-8, 8)), aes(x)) + stat_function(fun=fx, size=1, col=&quot;#FF7F00&quot;)</code></pre>
+<p><img src="recurso310_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p></br></br></p>
+<p>Empleando la función logística se replantea el modelo partiendo del
+<strong>logaritmo de la razón de probabilidades</strong> (logaritmo de
+los Odds ratio) en función de una combinación lineal de las variables
+independientes :</p>
+<p><span class="math display">\[\ln
+\Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1}
+\hspace{.2cm}x_{i} + \varepsilon_{i}^{*}\]</span> </br></br></p>
+<p>Su estimación se puede plantear de manera resumida como:</p>
+<div class="content-box-blue">
+<p><span class="math display">\[\ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg)
+= \ln (Odds) =\beta_{0} + \beta_{1} \hspace{.2cm}x_{i} +
+\varepsilon_{i}^{*}\]</span></p>
+</div>
+<p></br></p>
+<p>Donde :</p>
+<ul>
+<li><span class="math inline">\(odds = \dfrac{P_{i}}{1-P_{i}} =
+\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\)</span>, llamada tambien <strong>razón
+de probabilida</strong> o <strong>ratio ODDS</strong></li>
+</ul>
+<p></br></p>
+<ul>
+<li><span class="math inline">\(\ln(odds) = \ln
+\Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln
+\Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg)\)</span></li>
+</ul>
+<p></br></p>
+<ul>
+<li><span class="math inline">\(\ln \Bigg(\dfrac{1}{0}\Bigg)
+\hspace{.5cm}\text{si el estudiante RECIBE matricula de
+honor}\)</span></li>
+</ul>
+<p></br></p>
+<ul>
+<li><span class="math inline">\(\ln \Bigg(\dfrac{0}{1}\Bigg)
+\hspace{.5cm}\text{si el estudiante NO RECIBE matricula de
+honor}\)</span></li>
+</ul>
+<p></br></br></p>
+<p>El resultado se puede interpretar como:</p>
+<p></br></p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="18%" />
+<col width="10%" />
+<col width="39%" />
+<col width="11%" />
+<col width="16%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">Si</td>
+<td align="left"><span class="math inline">\(P_{i} =
+1-P_{i}\)</span></td>
+<td align="left">entonces</td>
+<td align="left"><span class="math inline">\(\dfrac{P_{i}}{1-P_{i}} =
+Odds =1\)</span>,</td>
+<td>por tanto</td>
+<td align="left"><span class="math inline">\(\ln(Odds) = 0\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Si</td>
+<td align="left"><span class="math inline">\(P_{i} &lt;
+1-P_{i}\)</span></td>
+<td align="left">entonces</td>
+<td align="left"><span class="math inline">\(\dfrac{P_{i}}{1-P_{i}} =
+Odds &lt; 1\)</span>,</td>
+<td>por tanto</td>
+<td align="left"><span class="math inline">\(\ln(Odds) &lt;
+0\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Si</td>
+<td align="left"><span class="math inline">\(P_{i} &gt;
+1-P_{i}\)</span></td>
+<td align="left">entonces</td>
+<td align="left"><span class="math inline">\(\dfrac{P_{i}}{1-P_{i}} =
+Odds &gt; 1\)</span>,</td>
+<td>por tanto</td>
+<td align="left"><span class="math inline">\(\ln(Odds) &gt;
+0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p></br></p>
+<div id="nota" class="section level3 content-box-yellow">
+<h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
+<ul>
+<li><p><span class="math inline">\(P_{i}\)</span> : probabilidad de
+recibir matricula de honor</p></li>
+<li><p><span class="math inline">\(1-P_{i}\)</span> : probabilidad de no
+recibir matricula de honor</p></li>
+</ul>
+</div>
+<p></br></br></p>
 </div>
 
 

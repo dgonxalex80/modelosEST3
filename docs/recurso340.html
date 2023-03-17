@@ -12,7 +12,7 @@
 <meta name="author" content="Modelos Estadísticos para la toma de decisiones" />
 
 
-<title> Modelo Lineal General - Logit Multinomial</title>
+<title> Validación cruzada</title>
 
 <script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -325,58 +325,126 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore"><span style="color:#034a94"> <strong>Modelo
-Lineal General - Logit Multinomial</strong></span></h1>
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Validación cruzada</strong></span></h1>
 <h4 class="author">Modelos Estadísticos para la toma de decisiones</h4>
 
 </div>
 
 
 <p></br></br></p>
-<p>La regresión logista multinomial está regida por los mismos
-principios que la regresión logistica binomial, solo que la variable
-respuesta <span class="math inline">\(Y\)</span> presenta más de dos
-categorías</p>
-<div class="content-box-blue">
-<p><span class="math display">\[Y = \beta_{0} + \beta_{1}X_{1} +
-\beta_{2}X_{2}   + \beta_{3}X_{3}  +   + \beta_{k}X_{k} +
-\varepsilon\]</span></p>
-</div>
-<div id="ejemplo" class="section level3">
-<h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
-<p>La siguiente base de datos corresponde a información de 200
-estudiantes.</p>
+<p>La validación cruzada es una metodología empleada para determinar si
+los resultados obtenidos es consistente para muestras diferentes a la
+muestra con que se estima el modelo</p>
+<p>Para realizarlo se parte la muestra en dos submuestras:</p>
 <ul>
-<li><strong>id</strong> : identificador del estudiante</li>
-<li><strong>female</strong> : genero: 0= femenino, 1= masculino</li>
-<li><strong>ses</strong> : nivel socio-económico : 1 = bajo,2 medio , 3
-= alto</li>
-<li><strong>schtyp</strong> : tipo de escuela de procedencia</li>
-<li><strong>prog</strong>: programa : 1 = general,2 = académico ,3 =
-vocacional</li>
-<li><strong>read</strong> : puntaje en lectura</li>
-<li><strong>write</strong> : puntaje en escritura</li>
-<li><strong>math</strong> : puntaje en matemáticas</li>
-<li><strong>science</strong> : puntaje en ciencias</li>
-<li><strong>socst</strong> : puntaje en sociales</li>
-<li><strong>honors</strong> : destacado en inglés</li>
-<li><strong>awards</strong> : reconocimientos</li>
-<li><strong>cid</strong></li>
+<li>muestra de entrenamiento</li>
+<li>muestra de prueba</li>
 </ul>
+<p>Una vez separadas las muestras se estima el modelo con la muestra de
+entrenamiento (modelo1) para despues probar la capacidad de
+clasificación del modelo.</p>
+<p></br></br></p>
 <pre class="r"><code>library(paqueteMOD)
-data(&quot;hsbdemo&quot;)
-datos=hsbdemo
-table(hsbdemo$prog)</code></pre>
+data(matricular)
+
+set.seed(1)
+muestra.train =sample(x=1:200, 200*0.70)</code></pre>
+<p></br></p>
+<pre class="r"><code>library(paqueteMOD)
+library(tidyverse)
+data(matricular)
+
+matricular %&gt;% 
+  glm(matricula ~ matematicas , family = binomial(link = &quot;logit&quot;), data = .) -&gt; modelo1
+summary(modelo1) </code></pre>
 <pre><code>
-  1   2   3 
- 45 105  50 </code></pre>
-<pre class="r"><code>with(datos, table(ses, prog))</code></pre>
-<pre><code>   prog
-ses  1  2  3
-  1 16 19 12
-  2 20 44 31
-  3  9 42  7</code></pre>
-</div>
+Call:
+glm(formula = matricula ~ matematicas, family = binomial(link = &quot;logit&quot;), 
+    data = .)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0332  -0.6785  -0.3506  -0.1565   2.6143  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -9.79394    1.48174  -6.610 3.85e-11 ***
+matematicas  0.15634    0.02561   6.105 1.03e-09 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.71  on 199  degrees of freedom
+Residual deviance: 167.07  on 198  degrees of freedom
+AIC: 171.07
+
+Number of Fisher Scoring iterations: 5</code></pre>
+<pre class="r"><code>library(caTools)
+set.seed(1234)
+split &lt;- sample.split(matricular$matricula, SplitRatio = 0.60)
+muestra.entrena &lt;- subset(matricular, split == TRUE)
+muestra.prueba &lt;- subset(matricular, split == FALSE)</code></pre>
+<pre class="r"><code>table(muestra.entrena$matricula)</code></pre>
+<pre><code>
+ 0  1 
+91 29 </code></pre>
+<pre class="r"><code>table(matricular$matricula)</code></pre>
+<pre><code>
+  0   1 
+151  49 </code></pre>
+<pre class="r"><code>modelo2= glm(matricula ~ matematicas , family = binomial(link = &quot;logit&quot;), data = muestra.entrena) 
+summary(modelo2)</code></pre>
+<pre><code>
+Call:
+glm(formula = matricula ~ matematicas, family = binomial(link = &quot;logit&quot;), 
+    data = muestra.entrena)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.1312  -0.6439  -0.3456  -0.1475   2.6380  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -10.21364    1.93789  -5.270 1.36e-07 ***
+matematicas   0.16501    0.03387   4.872 1.10e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 132.718  on 119  degrees of freedom
+Residual deviance:  95.134  on 118  degrees of freedom
+AIC: 99.134
+
+Number of Fisher Scoring iterations: 5</code></pre>
+<pre class="r"><code>matricula.fit2 = as.numeric(modelo2$fitted.values&gt;0.5)  # clasificacion de las estimaciones en 0,1
+data2= data.frame(muestra.entrena$matricula, matricula.fit2)
+matrizC2=table(data2)
+matrizC2   # matriz de confusión</code></pre>
+<pre><code>                         matricula.fit2
+muestra.entrena.matricula  0  1
+                        0 85  6
+                        1 15 14</code></pre>
+<pre class="r"><code>sum(diag(matrizC2))/sum(matrizC2)</code></pre>
+<pre><code>[1] 0.825</code></pre>
+<pre class="r"><code>matricula.valid &lt;- predict(modelo2, type = &#39;response&#39;, newdata = muestra.prueba)
+matricula.fit3 = as.numeric(matricula.valid&gt;0.5)  # clasificacion de las estimaciones en 0,1
+data3= data.frame(muestra.prueba$matricula, matricula.fit3)
+matrizC3=table(data3)
+matrizC3   # matriz de confusión</code></pre>
+<pre><code>                        matricula.fit3
+muestra.prueba.matricula  0  1
+                       0 53  7
+                       1 10 10</code></pre>
+<pre class="r"><code>sum(diag(matrizC3))/sum(matrizC3)</code></pre>
+<pre><code>[1] 0.7875</code></pre>
+<pre class="r"><code>library(ROCR)
+pred1 &lt;- prediction(as.numeric(matricula.valid), as.numeric(matricula.fit3))
+perf1 &lt;- performance(pred1, &quot;tpr&quot;, &quot;fpr&quot;)
+plot(perf1)</code></pre>
+<p><img src="recurso340_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 
 
 

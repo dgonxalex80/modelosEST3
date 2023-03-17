@@ -13,8 +13,14 @@ navbar:
           href: recurso200.html
     - text: "ML"
       menu:
-        - text: "Modelo Lineal General - Logit binomial  "
+        - text: "Introducción"
           href: recurso300.html
+        - text: "Modelo"
+          href: recurso310.html
+        - text: "Estimación del modelo"
+          href: recurso320.html
+        - text: "Evaluación del modelo"
+          href: recurso330.html
     - text: "AC"
       menu:
         - text: "Análisis de conglomerados"

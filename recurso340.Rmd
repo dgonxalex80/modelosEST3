@@ -1,0 +1,114 @@
+---
+title: <span style="color:#034a94"> **Validación cruzada**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA, warning = FALSE, message = FALSE)
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+color2=c(c1,c2)
+library(memisc)
+library(MASS)
+library(lattice)
+library(stats)
+library(tidyverse)
+
+# install.packages("learnr")          # solo una vez
+# install.packages("devtools")     # solo una vez
+# devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
+library(paqueteMOD)
+library(tidyverse)
+data(matricular)
+matricular %>% 
+  glm(matricula ~ matematicas , family = binomial(link = "logit"), data = .) -> modelo1
+summary(modelo1) 
+```
+
+</br></br>
+
+La validación cruzada es una metodología empleada para determinar si los resultados obtenidos es consistente para muestras diferentes a la muestra con que se estima el modelo
+
+Para realizarlo se parte la muestra en dos submuestras:
+
+* muestra de entrenamiento
+* muestra de prueba
+
+Una vez separadas las muestras se estima el modelo con la muestra de entrenamiento (modelo1) para despues probar la capacidad de clasificación del modelo.
+
+
+</br></br>
+
+
+```{r}
+library(paqueteMOD)
+data(matricular)
+
+set.seed(1)
+muestra.train =sample(x=1:200, 200*0.70)
+```
+
+</br>
+
+```{r}
+library(paqueteMOD)
+library(tidyverse)
+data(matricular)
+
+matricular %>% 
+  glm(matricula ~ matematicas , family = binomial(link = "logit"), data = .) -> modelo1
+summary(modelo1) 
+```
+
+
+```{r}
+library(caTools)
+set.seed(1234)
+split <- sample.split(matricular$matricula, SplitRatio = 0.60)
+muestra.entrena <- subset(matricular, split == TRUE)
+muestra.prueba <- subset(matricular, split == FALSE)
+```
+
+```{r}
+table(muestra.entrena$matricula)
+```
+
+```{r}
+table(matricular$matricula)
+```
+
+```{r}
+modelo2= glm(matricula ~ matematicas , family = binomial(link = "logit"), data = muestra.entrena) 
+summary(modelo2)
+```
+
+
+```{r}
+matricula.fit2 = as.numeric(modelo2$fitted.values>0.5)  # clasificacion de las estimaciones en 0,1
+data2= data.frame(muestra.entrena$matricula, matricula.fit2)
+matrizC2=table(data2)
+matrizC2   # matriz de confusión
+sum(diag(matrizC2))/sum(matrizC2)
+```
+
+```{r}
+matricula.valid <- predict(modelo2, type = 'response', newdata = muestra.prueba)
+matricula.fit3 = as.numeric(matricula.valid>0.5)  # clasificacion de las estimaciones en 0,1
+data3= data.frame(muestra.prueba$matricula, matricula.fit3)
+matrizC3=table(data3)
+matrizC3   # matriz de confusión
+sum(diag(matrizC3))/sum(matrizC3)
+```
+
+```{r}
+library(ROCR)
+pred1 <- prediction(as.numeric(matricula.valid), as.numeric(matricula.fit3))
+perf1 <- performance(pred1, "tpr", "fpr")
+plot(perf1)
+```
+

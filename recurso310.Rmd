@@ -1,0 +1,207 @@
+---
+title: <span style="color:#034a94"> **Modelo**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output: html_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA, warning = FALSE, message = FALSE)
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+color2=c(c1,c2)
+library(memisc)
+library(MASS)
+library(lattice)
+library(stats)
+library(tidyverse)
+
+# install.packages("learnr")          # solo una vez
+# install.packages("devtools")     # solo una vez
+# devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
+library(paqueteMOD)
+data("eleccion")
+```
+
+</br></br>
+
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+# knitr::include_graphics("img/puntos1.png")
+```
+
+
+</br></br>
+
+## <span style="color:#034A94">**Modelo logit**</br>
+
+</br>
+
+Inicialmente podríamos explorar una estimación de **MCO**, como posibilidad de estimación:
+
+</br>
+
+$$
+Y = \beta_{0} + \beta_{1}X_{1} + \varepsilon
+$$
+</br>
+
+Donde la variable $Y$ es una variable con dos categorías (binaria), la variable $X$ corresponde a una variable numérica y $\varepsilon$ corresponde a una variable aleatoria no observable.
+
+Com prueba inicial y de comparación se plantea realizar la estimación por el método de mínimos cuadrados ordinarios.
+
+</br>
+
+```{r}
+library(tidyverse)
+
+matricular$matricula=as.numeric(matricular$matricula)
+
+matricular %>% 
+   lm(matricula ~ matematicas ,  data = .) -> modelo0
+summary(modelo0) 
+```
+
+</br>
+
+El resultado muestra un valor muy bajo de ajuste, dado que los puntos están sobre el eje horizontal con $Y=0$ o en el eje horizontal con $Y=1$
+
+</br>
+
+```{r}
+library(ggplot2)
+# data(matricular)
+matricular1=matricular
+matricular1$matricula = as.numeric(matricular1$matricula)
+
+g3=ggplot(data = matricular1, mapping = aes(x=matematicas, y=matricula)) + 
+           geom_point() + 
+           geom_smooth(method = "lm", se=FALSE) +         
+           labs(y = "matricula de honor", x = "puntaje matemáticas") +
+           ggtitle("  ")
+
+g3
+```
+
+</br></br>
+
+Como se puede observar este modelo no permite ajustar una linea que represente los valores obtenidos en la prueba de matemáticas.  Además de no cumplir con los supuestos planteados para el modelo de regresión lineal simple.
+
+</br>
+
+* No normalidad de los errores
+
+* Heteroscedasticidad de errores
+
+* Posibilidad de que $\widehat{Y_{i}}$ se encuentre por fuera del rango $[0,1]$, siendo que estimación  de $Y$ debe corresponder  a la probabilidad de ocurrencia de $Y$
+
+* Valores muy bajos para $R^{2}$, dada la dificultad de ajuste de los datos a una linea recta 
+
+</br></br>
+
+Estos problemas los podemos superar al plantear el siguiente modelo teniendo como base la función de distribución acumulada $F(x) = P(X \leq x)$ y la función logística:  
+
+</br>
+
+<div class="content-box-blue">
+$$f(z)= \dfrac{1}{1+\exp{\{-z\}}} = \dfrac{\exp{\{z\}}}{1-\exp{\{z\}}}$$
+</div>
+
+</br>
+
+De esta ecuación se puede  definir la probabilidad de $P(Y=1| X=x)$ y su complemento $P(Y=0| X=x)$ :
+
+</br>
+
+
+$$P_{i} = P(Y=1 | X =x) =  \dfrac{1}{1+\exp{\{-\beta_{0}-\beta_{1}x_{i}\}}} +  \varepsilon_{i}^{*}= \dfrac{\exp{\{ \beta_{0}-\beta_{1}x_{i} \}}}{1-\exp{\{\beta_{0}-\beta_{1}x_{i}\}}} + \varepsilon_{i}^{*}$$
+
+$P(Y=1| X=x)$
+
+$$1- P_{i} = P(Y=0 | X =x) =  \dfrac{1}{1 + \exp{\{ \beta_{0}-\beta_{1}x_{i} \}}} $$
+
+$P(Y=1| X=x)$
+
+La división de estas dos probabilidades $P(Y=1|X=x)\hspace{.2cm}/ \hspace{.2cm} P(Y=0 |X=0)$ genera  $Odds$ (`Odds ratio`) 
+
+
+$$\Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \exp{\Big\{\beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} \Big\}} + \varepsilon_{i}^{*}$$
+Y finalmente al sacar logaritmos en ambos lados se obtiene la siguiente expresión lineal:
+
+$$\ln \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
+</br>
+
+```{r}
+library(ggplot2)
+fx=function(x){
+  1/(1+exp(-x))
+}
+
+ggplot(data.frame(x=c(-8, 8)), aes(x)) + stat_function(fun=fx, size=1, col="#FF7F00")
+```
+
+</br></br>
+
+Empleando la función logística se replantea el modelo partiendo del **logaritmo de la razón de probabilidades** (logaritmo de los Odds ratio)  en función de una combinación lineal de las variables independientes :
+
+$$\ln \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
+</br></br>
+
+Su estimación se puede plantear de manera resumida como:
+
+
+<div class="content-box-blue">
+$$\ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln (Odds) =\beta_{0} + \beta_{1} \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}$$
+</div>
+
+</br>
+
+Donde :
+
+* $odds = \dfrac{P_{i}}{1-P_{i}} = \dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}$, llamada tambien **razón de probabilida** o **ratio ODDS**
+
+
+</br>
+
+* $\ln(odds) = \ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg)$
+
+</br>
+
+* $\ln \Bigg(\dfrac{1}{0}\Bigg) \hspace{.5cm}\text{si el estudiante RECIBE matricula de honor}$
+
+</br>
+
+* $\ln \Bigg(\dfrac{0}{1}\Bigg) \hspace{.5cm}\text{si el estudiante NO RECIBE matricula de honor}$
+
+</br></br>
+
+
+
+El resultado se puede interpretar como:
+
+</br>
+
+|    |                  |          |                                      |           |                |
+|:---|:-----------------|:---------|:-------------------------------------|-----------|:---------------|
+| Si |$P_{i} = 1-P_{i}$ | entonces |$\dfrac{P_{i}}{1-P_{i}} = Odds =1$,   | por tanto | $\ln(Odds) = 0$|      
+|    |                  |          |                                      |           |                |
+| Si | $P_{i} < 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = Odds < 1$,| por tanto | $\ln(Odds) < 0$|      
+|    |                  |          |                                      |           |                |
+| Si | $P_{i} > 1-P_{i}$| entonces | $\dfrac{P_{i}}{1-P_{i}} = Odds > 1$, | por tanto |$\ln(Odds) > 0$ |     
+
+
+</br>
+
+<div class="content-box-yellow">
+### <span style="color:#686868">**Nota:**</span> 
+
+* $P_{i}$ : probabilidad de recibir matricula de honor
+
+* $1-P_{i}$ : probabilidad de no recibir matricula de honor
+
+</div>
+
+</br></br>
+
