@@ -403,11 +403,11 @@ data1= data.frame(matricular$matricula, matricula.fit)
 matrizC=table(data1)
 matrizC   # matriz de confusión</code></pre>
 <pre>
-        |                predicción    |  
-        |         |   0     |    1     |
---------|---------|---------|----------|   
-Estado  |  0      |     140 |      11  |
-real    |  1      |      27 |      22  |
+        |                predicción            |  
+        |         |   0        |    1          |
+--------|---------|------------|---------------|   
+Estado  |  0      |     140 (a) |      11  (c) |
+real    |  1      |      27 (b) |      22  (d) |
 
 </pre>
 <p></br></p>
@@ -431,7 +431,7 @@ de verdaderos positivos y de falsos positivos:</p>
 <div id="exactitud" class="section level3">
 <h3><strong>Exactitud</strong></h3>
 <p>Porcentaje de casos correctamente clasificados</p>
-<p>$$</p>
+<p>$$ = = </p>
 <p>$$</p>
 </div>
 <div id="sensibilidad" class="section level3">
@@ -441,6 +441,7 @@ positivos</p>
 <p><span class="math display">\[
 TPR = \dfrac{\text{número de positivos correctamente
 pronosticados}}{\text{número de positivos reales totales}} =
+\dfrac{a}{a+c}
 \]</span></p>
 </div>
 <div id="especificidad" class="section level3">
@@ -449,17 +450,15 @@ pronosticados}}{\text{número de positivos reales totales}} =
 negativos</p>
 <p><span class="math display">\[
 FPR = \dfrac{\text{número de falsos positivos}}{\text{número de
-negativos reales totales}}
+negativos reales totales}} = \dfrac{d}{b+d}
 \]</span></p>
-</div>
-<div id="falsos-positivos" class="section level3">
-<h3><strong>Falsos positivos</strong></h3>
-<p>Porcentaje de negativos, clasificados por el modelo como
-positivos</p>
-</div>
-<div id="falsos-negarativos" class="section level3">
-<h3><strong>Falsos negarativos</strong></h3>
-<p>Porcentaje de positivos clasificados por el modelo como negativos</p>
+<!-- ### **Falsos positivos** -->
+<!-- Porcentaje de negativos, clasificados por el modelo como positivos -->
+<!-- $$ -->
+<!-- FNR = \dfrac{}{} -->
+<!-- $$ -->
+<!-- ### **Falsos negarativos** -->
+<!-- Porcentaje de positivos clasificados por el modelo como negativos -->
 <p></br></br></p>
 </div>
 <div id="nota" class="section level3 content-box-yellow">

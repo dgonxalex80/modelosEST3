@@ -106,11 +106,11 @@ matrizC   # matriz de confusión
 ```
 
 <pre>
-        |                predicción    |  
-        |         |   0     |    1     |
---------|---------|---------|----------|   
-Estado  |  0      |     140 |      11  |
-real    |  1      |      27 |      22  |
+        |                predicción            |  
+        |         |   0        |    1          |
+--------|---------|------------|---------------|   
+Estado  |  0      |     140 (a) |      11  (c) |
+real    |  1      |      27 (b) |      22  (d) |
 
 </pre>
 
@@ -134,7 +134,7 @@ Existen adicionamente otros indicadores que pueden ser utilizados como es el est
 Porcentaje de casos correctamente clasificados
 
 $$
-
+\text{Exactitud} = \dfrac{\text{aciertos en clasificación}}{\text{total de  observaciones}} = \dfrac{a+d}{a+b+c+d}
 
 $$
 
@@ -144,7 +144,7 @@ $$
 Porcentaje de positivos que son clasificados por el modelo como positivos 
 
 $$
-TPR = \dfrac{\text{número de positivos correctamente pronosticados}}{\text{número de positivos reales totales}} = 
+TPR = \dfrac{\text{número de positivos correctamente pronosticados}}{\text{número de positivos reales totales}} = \dfrac{a}{a+c}
 $$
 
 ### **Especificidad**
@@ -152,18 +152,21 @@ $$
 Porcentaje de negativos que son clasificados por el modelo como negativos 
 
 $$
-FPR = \dfrac{\text{número de falsos positivos}}{\text{número de negativos reales totales}}
+FPR = \dfrac{\text{número de falsos positivos}}{\text{número de negativos reales totales}} = \dfrac{d}{b+d}
 $$
 
-### **Falsos positivos**
+<!-- ### **Falsos positivos** -->
 
-Porcentaje de negativos, clasificados por el modelo como positivos
+<!-- Porcentaje de negativos, clasificados por el modelo como positivos -->
+
+<!-- $$ -->
+<!-- FNR = \dfrac{}{} -->
+<!-- $$ -->
 
 
+<!-- ### **Falsos negarativos** -->
 
-### **Falsos negarativos**
-
-Porcentaje de positivos clasificados por el modelo como negativos
+<!-- Porcentaje de positivos clasificados por el modelo como negativos -->
 
 
 </br></br>
