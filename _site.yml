@@ -17,9 +17,9 @@ navbar:
           href: recurso300.html
         - text: "Modelo"
           href: recurso310.html
-        - text: "Estimación del modelo"
+        - text: "Estimación"
           href: recurso320.html
-        - text: "Evaluación del modelo"
+        - text: "Evaluación"
           href: recurso330.html
     - text: "AC"
       menu:
