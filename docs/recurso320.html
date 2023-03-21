@@ -505,6 +505,62 @@ nota          4.990891   9.394077</code></pre>
 <p></br></p>
 </div>
 </div>
+<div id="significancia-del-modelo" class="section level2">
+<h2><span style="color:#034A94"><strong>Significancia del
+modelo</strong></span></h2>
+<p>En este caso se plantean las hipótesis :</p>
+<p>$$ H_{0} : <em>{1} = </em>{2} = _{k} =0 \</p>
+<p>H_{a} : _{i} 0 $$</p>
+<p>El equivalente de la prueba global de significancia del modelo logit
+tiene como estadístico de prueba la chi-cuadrado que se obtiene restando
+la suma desviaciones del modelo nulo con la suma de las desviaciones de
+los residuales que se presentan en el resumen del modelo</p>
+<pre>
+Null deviance    : 1102.16  on 999  degrees of freedom
+Residual deviance:  440.94  on 998  degrees of freedom
+</pre>
+<p><span class="math display">\[
+X^2 = \text{ Null deviance} - \text{ Residual deviance} = 1122.468 -
+518.5805 = 663.88
+\]</span></p>
+<pre class="r"><code>with(modelo1, null.deviance - deviance )</code></pre>
+<pre><code>[1] 116.4206</code></pre>
+<p>Que tiene una distribución <span class="math inline">\(\chi^2 _{v:
+gl_{null} -gl_{residual}}\)</span></p>
+<pre class="r"><code>with(modelo1, pchisq(null.deviance - deviance , df.null-df.residual, lower.tail = FALSE))</code></pre>
+<pre><code>[1] 3.844624e-27</code></pre>
+<p>Lo cual indica que se rechaza <span
+class="math inline">\(H_0\)</span>, en favor de <span
+class="math inline">\(H_a\)</span>, el modelo es significativo</p>
+<div id="nota" class="section level3 content-box-yellow">
+<h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
+<p>Es importante examinar la significancia de los coeficientes estimados
+obtenidos mediante el metodo de máxima verosimilitud. En este caso en
+lugar de calcular el valor p para cada coeficiente, se utiliza el
+estadístico <strong>Z</strong> de la prueba <strong>chi-cuadrado de
+Wald</strong></p>
+<ul>
+<li><p>En este tipo de modelos la bondad de ajuste pasa a un segundo
+plano y cobra importancia el signo de los coeficientes y su
+significancia estadística.</p></li>
+<li><p>Tambien es condición que las observaciones deben ser
+independientes unas de otras</p></li>
+<li><p>Y la relación entre <span
+class="math inline">\(\ln(Odds)\)</span> y las variables independientes
+<span class="math inline">\(X_{1},\dots, X_{k} + \varepsilon\)</span>
+debe ser lineal</p></li>
+<li><p>Finalmente para convertir el valor estimado de probabilidad en
+una categoría se debe encontrar el valor de un punto de corte a partir
+del cual se considera que la variable <span
+class="math inline">\(Y\)</span> pertenece a una categoría. En caso de
+que este valor fuese p=0.5 (<span class="math inline">\(P(Y=1|X) &gt;
+0.50\)</span>), entonce si la estimación del modelo arroja un valor en
+el rango (0.50 - 1.0), se le asignará el valor de <span
+class="math inline">\(1\)</span>, en caso contrario tomará el valor de
+<span class="math inline">\(0\)</span>.</p></li>
+</ul>
+</div>
+</div>
 
 
 

@@ -97,7 +97,7 @@ Este valor cuenta como el $R^2$ , es decir que el modelo explica (clasifica de m
 </br></br>
 
 
-Este valor se puede obtener de la matriz de confusión 
+Este valor se puede obtener de la matriz de confusión que se obtiene con una data que no se ha empleado en la estimación del modelo
 
 </br></br>
 
@@ -183,7 +183,7 @@ A partir de la matriz de confusión se obtienen indicadores
 
 </br></br>
 
-#### <span style="color:#034a94">**Capacidad de clasificación del modelo**</span>
+## <span style="color:#034a94">**Capacidad de clasificación del modelo**</span>
 
 </br>
 
@@ -194,7 +194,7 @@ Existen adicionamente otros indicadores que pueden ser utilizados como es el est
 </br></br>
 
 
-### **Exactitud**
+### <span style="color:#FF7F00"> **Exactitud**</span>
 
 Porcentaje de casos correctamente clasificados
 
@@ -206,7 +206,19 @@ $$
 
 </br></br>
 
-### **Sensibilidad**
+### <span style="color:#FF7F00"> **Tasa de error**</span>
+
+
+Porcentaje de casos incorrectamente clasificados
+
+<div class="content-box-blue">
+$$
+\text{Exactitud} = \dfrac{\text{no aciertos en clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} = \dfrac{13+22}{400} = 0.0875
+$$
+
+</br></br>
+
+### <span style="color:#FF7F00"> **Sensibilidad**</span>
 
 Porcentaje de positivos que son clasificados por el modelo como positivos 
 
@@ -217,7 +229,7 @@ $$
 </div>
 </br></br>
 
-### **Especificidad**
+### <span style="color:#FF7F00"> **Especificidad**</span>
 
 Porcentaje de negativos que son clasificados por el modelo como negativos 
 
@@ -229,7 +241,7 @@ $$
 
 </br></br>
 
-### **Presición** 
+### <span style="color:#FF7F00"> **Presición**</span> 
 
 Porcentaje de positivos pronosticados de manera correcta
 
@@ -242,7 +254,7 @@ $$
 
 </br></br>
 
-### **Valor de predicción negativo** 
+### <span style="color:#FF7F00"> **Valor de predicción negativo**</span> 
 
 Porcentaje de negativos clasificados por el modelo como negativos
 
@@ -256,7 +268,7 @@ $$
 </br></br>
 
 
-#### **Resumen**
+### <span style="color:#686868"> **Resumen**</span>
 
 </br>
 
@@ -294,18 +306,48 @@ Valor predicción negativo  0.928
 <div class="content-box-yellow">
 ### <span style="color:#686868">**Nota:**</span> 
 
-Es importante examinar la significancia de los coeficientes estimados obtenidos mediante el metodo de máxima verosimilitud.  En este caso en lugar de calcular el valor p para cada coeficiente, se utiliza el estadístico **Z** de la prueba  **chi-cuadrado de Wald**
+* Interesa tener valores de 
 
-* En este tipo de modelos la bondad de ajuste pasa a un segundo plano y cobra importancia el signo de los coeficientes y su significancia estadística.
+|                            |                     |
+|:--------------------------:|:-------------------:|
+| Exactitud                  | alto                |
+| Tasa de Error              | bajo                |
+| Sensibilidad               | alto                |
+| Especificidad              | alto                |
+| Precisión                  | alto                |
+| Valor predicción negativo  | alto                |
 
-* Tambien es condición que las observaciones deben ser independientes unas de otras
+</br>
 
-* Y la relación entre $\ln(Odds)$  y las variables independientes $X_{1},\dots, X_{k} + \varepsilon$ debe ser lineal
+* El valor **c** de corte de la probabilidad, incide sobre los indicadores 
 
-* Finalmente para convertir el valor estimado de probabilidad en una categoría se debe encontrar el valor de un punto de corte a partir del cual se considera que la variable $Y$ pertenece a una categoría. En caso de que este valor fuese p=0.5 ($P(Y=1|X) > 0.50$), entonce si la estimación del modelo arroja un valor en el rango (0.50 - 1.0), se le asignará el valor de $1$, en caso contrario tomará el valor de $0$.
+</br>
+
+* El balanceo de los porcentajes de la variable dependiente es importante y afecta a los indicadores 
 
 </div>
 
 
 
 </br></br>
+
+
+
+### **Curva ROC**
+
+</br>
+
+```{r}
+library(pROC)
+curva_ROC <- roc(test$gana, valor_pronosticado)
+auc<- round(auc(curva_ROC, levels =c(0,1), direction = "<"),4) # 0.9177
+
+ggroc(curva_ROC, colour = "#FF7F00", size=2)+
+ggtitle(paste0("Curva ROC ", "(AUC = ", auc, ")"))+
+xlab("Especificidad")+
+ylab("Sensibilidad")  
+```
+
+El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.9234), indica un buen ajuste del modelo de predicción. 
+
+

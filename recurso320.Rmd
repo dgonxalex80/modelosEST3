@@ -208,5 +208,55 @@ confint(object = modelo1, level = 0.95 )
 ```
 </br>
 
+## <span style="color:#034A94">**Significancia del modelo**</span>
 
+En este caso se plantean las hipótesis :
+
+
+$$
+H_{0} : \beta_{1} = \beta_{2} = \dots \beta_{k} =0 \hspace{1cm}\\
+
+H_{a} : \text{Algún } \beta_{i} \text{ es diferente de }  0
+$$
+
+El equivalente de la prueba global de significancia del modelo logit tiene como estadístico de prueba la chi-cuadrado que se obtiene restando la suma desviaciones del modelo nulo con la suma de las desviaciones de los residuales que se presentan en el resumen del modelo
+
+<pre>
+Null deviance    : 1102.16  on 999  degrees of freedom
+Residual deviance:  440.94  on 998  degrees of freedom
+</pre>
+
+$$
+X^2 = \text{ Null deviance} - \text{ Residual deviance} = 1122.468 - 518.5805 = 663.88
+$$
+```{r}
+with(modelo1, null.deviance - deviance )
+```
+
+Que tiene una distribución $\chi^2 _{v: gl_{null} -gl_{residual}}$
+
+```{r}
+with(modelo1, pchisq(null.deviance - deviance , df.null-df.residual, lower.tail = FALSE))
+```
+
+Lo cual indica que se rechaza $H_0$, en favor de $H_a$, el modelo es significativo
+
+
+
+
+
+<div class="content-box-yellow">
+### <span style="color:#686868">**Nota:**</span> 
+
+Es importante examinar la significancia de los coeficientes estimados obtenidos mediante el metodo de máxima verosimilitud.  En este caso en lugar de calcular el valor p para cada coeficiente, se utiliza el estadístico **Z** de la prueba  **chi-cuadrado de Wald**
+
+* En este tipo de modelos la bondad de ajuste pasa a un segundo plano y cobra importancia el signo de los coeficientes y su significancia estadística.
+
+* Tambien es condición que las observaciones deben ser independientes unas de otras
+
+* Y la relación entre $\ln(Odds)$  y las variables independientes $X_{1},\dots, X_{k} + \varepsilon$ debe ser lineal
+
+* Finalmente para convertir el valor estimado de probabilidad en una categoría se debe encontrar el valor de un punto de corte a partir del cual se considera que la variable $Y$ pertenece a una categoría. En caso de que este valor fuese p=0.5 ($P(Y=1|X) > 0.50$), entonce si la estimación del modelo arroja un valor en el rango (0.50 - 1.0), se le asignará el valor de $1$, en caso contrario tomará el valor de $0$.
+
+</div>
 

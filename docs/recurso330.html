@@ -390,7 +390,8 @@ valor <span class="math inline">\(R^2\)</span></p>
 class="math inline">\(R^2\)</span> , es decir que el modelo explica
 (clasifica de manera adecuada) el 91% de los casos.</p>
 <p></br></br></p>
-<p>Este valor se puede obtener de la matriz de confusión</p>
+<p>Este valor se puede obtener de la matriz de confusión que se obtiene
+con una data que no se ha empleado en la estimación del modelo</p>
 <p></br></br></p>
 </div>
 <div id="matriz-de-confusión" class="section level2">
@@ -449,9 +450,10 @@ real    |  No     |   13  (FP) |     284  (VN)  |
 </blockquote>
 <p>A partir de la matriz de confusión se obtienen indicadores</p>
 <p></br></br></p>
-<div id="capacidad-de-clasificación-del-modelo" class="section level4">
-<h4><span style="color:#034a94"><strong>Capacidad de clasificación del
-modelo</strong></span></h4>
+</div>
+<div id="capacidad-de-clasificación-del-modelo" class="section level2">
+<h2><span style="color:#034a94"><strong>Capacidad de clasificación del
+modelo</strong></span></h2>
 <p></br></p>
 <p>En una de las características más importantes del modelo, pues
 permite valorar a través de la matriz de confusión las clasificaciones
@@ -462,9 +464,8 @@ Charasteristic) . Esta curva compara diferentes puntos de corte de la
 probabilidad que permite establecer la tasa de clasificaciones correcta
 de verdaderos positivos y de falsos positivos:</p>
 <p></br></br></p>
-</div>
 <div id="exactitud" class="section level3">
-<h3><strong>Exactitud</strong></h3>
+<h3><span style="color:#FF7F00"> <strong>Exactitud</strong></span></h3>
 <p>Porcentaje de casos correctamente clasificados</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
@@ -475,8 +476,21 @@ clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} =
 </div>
 <p></br></br></p>
 </div>
+<div id="tasa-de-error" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Tasa de
+error</strong></span></h3>
+<p>Porcentaje de casos incorrectamente clasificados</p>
+<div class="content-box-blue">
+<p><span class="math display">\[
+\text{Exactitud} = \dfrac{\text{no aciertos en
+clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} =
+\dfrac{13+22}{400} = 0.0875
+\]</span></p>
+<p></br></br></p>
+</div>
 <div id="sensibilidad" class="section level3">
-<h3><strong>Sensibilidad</strong></h3>
+<h3><span style="color:#FF7F00">
+<strong>Sensibilidad</strong></span></h3>
 <p>Porcentaje de positivos que son clasificados por el modelo como
 positivos</p>
 <div class="content-box-blue">
@@ -488,7 +502,8 @@ positivos</p>
 <p></br></br></p>
 </div>
 <div id="especificidad" class="section level3">
-<h3><strong>Especificidad</strong></h3>
+<h3><span style="color:#FF7F00">
+<strong>Especificidad</strong></span></h3>
 <p>Porcentaje de negativos que son clasificados por el modelo como
 negativos</p>
 <div class="content-box-blue">
@@ -500,7 +515,7 @@ negativos</p>
 <p></br></br></p>
 </div>
 <div id="presición" class="section level3">
-<h3><strong>Presición</strong></h3>
+<h3><span style="color:#FF7F00"> <strong>Presición</strong></span></h3>
 <p>Porcentaje de positivos pronosticados de manera correcta</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
@@ -511,7 +526,8 @@ positivos}} = \dfrac{81}{94} = 0.862
 <p></br></br></p>
 </div>
 <div id="valor-de-predicción-negativo" class="section level3">
-<h3><strong>Valor de predicción negativo</strong></h3>
+<h3><span style="color:#FF7F00"> <strong>Valor de predicción
+negativo</strong></span></h3>
 <p>Porcentaje de negativos clasificados por el modelo como negativos</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
@@ -520,8 +536,9 @@ clasificados negativos}} = \dfrac{284}{306} = 0.928
 \]</span></p>
 </div>
 <p></br></br></p>
-<div id="resumen" class="section level4">
-<h4><strong>Resumen</strong></h4>
+</div>
+<div id="resumen" class="section level3">
+<h3><span style="color:#686868"> <strong>Resumen</strong></span></h3>
 <p></br></p>
 <pre class="r"><code>library(tidyverse)
 Exactitud &lt;- (VP+VN)/Total
@@ -551,36 +568,66 @@ Valor predicción negativo  0.928
 </pre>
 <p></br></br></p>
 </div>
-</div>
 <div id="nota" class="section level3 content-box-yellow">
 <h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
-<p>Es importante examinar la significancia de los coeficientes estimados
-obtenidos mediante el metodo de máxima verosimilitud. En este caso en
-lugar de calcular el valor p para cada coeficiente, se utiliza el
-estadístico <strong>Z</strong> de la prueba <strong>chi-cuadrado de
-Wald</strong></p>
 <ul>
-<li><p>En este tipo de modelos la bondad de ajuste pasa a un segundo
-plano y cobra importancia el signo de los coeficientes y su
-significancia estadística.</p></li>
-<li><p>Tambien es condición que las observaciones deben ser
-independientes unas de otras</p></li>
-<li><p>Y la relación entre <span
-class="math inline">\(\ln(Odds)\)</span> y las variables independientes
-<span class="math inline">\(X_{1},\dots, X_{k} + \varepsilon\)</span>
-debe ser lineal</p></li>
-<li><p>Finalmente para convertir el valor estimado de probabilidad en
-una categoría se debe encontrar el valor de un punto de corte a partir
-del cual se considera que la variable <span
-class="math inline">\(Y\)</span> pertenece a una categoría. En caso de
-que este valor fuese p=0.5 (<span class="math inline">\(P(Y=1|X) &gt;
-0.50\)</span>), entonce si la estimación del modelo arroja un valor en
-el rango (0.50 - 1.0), se le asignará el valor de <span
-class="math inline">\(1\)</span>, en caso contrario tomará el valor de
-<span class="math inline">\(0\)</span>.</p></li>
+<li>Interesa tener valores de</li>
+</ul>
+<table>
+<tbody>
+<tr class="odd">
+<td align="center">Exactitud</td>
+<td align="center">alto</td>
+</tr>
+<tr class="even">
+<td align="center">Tasa de Error</td>
+<td align="center">bajo</td>
+</tr>
+<tr class="odd">
+<td align="center">Sensibilidad</td>
+<td align="center">alto</td>
+</tr>
+<tr class="even">
+<td align="center">Especificidad</td>
+<td align="center">alto</td>
+</tr>
+<tr class="odd">
+<td align="center">Precisión</td>
+<td align="center">alto</td>
+</tr>
+<tr class="even">
+<td align="center">Valor predicción negativo</td>
+<td align="center">alto</td>
+</tr>
+</tbody>
+</table>
+<p></br></p>
+<ul>
+<li>El valor <strong>c</strong> de corte de la probabilidad, incide
+sobre los indicadores</li>
+</ul>
+<p></br></p>
+<ul>
+<li>El balanceo de los porcentajes de la variable dependiente es
+importante y afecta a los indicadores</li>
 </ul>
 </div>
 <p></br></br></p>
+<div id="curva-roc" class="section level3">
+<h3><strong>Curva ROC</strong></h3>
+<p></br></p>
+<pre class="r"><code>library(pROC)
+curva_ROC &lt;- roc(test$gana, valor_pronosticado)
+auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
+
+ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=2)+
+ggtitle(paste0(&quot;Curva ROC &quot;, &quot;(AUC = &quot;, auc, &quot;)&quot;))+
+xlab(&quot;Especificidad&quot;)+
+ylab(&quot;Sensibilidad&quot;)  </code></pre>
+<p><img src="recurso330_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>El área comprendida entre la curva ROC y la diagonal del cuadrado
+(AUC = 0.9234), indica un buen ajuste del modelo de predicción.</p>
+</div>
 </div>
 
 
