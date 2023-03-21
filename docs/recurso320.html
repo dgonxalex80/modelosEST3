@@ -336,34 +336,13 @@ $(document).ready(function () {
 <p></br></br></p>
 <p>Para realizar la estimación del modelo logit utilizamos la función
 <code>glm()</code></p>
+<p></br></p>
 <pre class="r"><code>library(tidyverse)
 data(&quot;dataMat&quot;)
 dataMat %&gt;% 
 glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = .) -&gt; modelo1
 summary(modelo1) </code></pre>
-<pre><code>
-Call:
-glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
-    data = .)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.73548  -0.40492  -0.11740  -0.01932   2.68961  
-
-Coefficients:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
-nota           6.921      1.113   6.216 5.10e-10 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 222.71  on 199  degrees of freedom
-Residual deviance: 106.29  on 198  degrees of freedom
-AIC: 110.29
-
-Number of Fisher Scoring iterations: 7</code></pre>
+<p></br></p>
 <pre>
 Call:
 glm(formula = gana ~ nota, family = binomial(link = "logit"), 
@@ -390,11 +369,13 @@ Number of Fisher Scoring iterations: 7
 </pre>
 <p></br></br></p>
 <p>El modelo estimado en su forma original :</p>
+<p></br></p>
 <p><span class="math display">\[\ln \Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}}
 + \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -29.6819  + 8.5699
 \hspace{.2cm} x_{i}\]</span> </br></br></p>
 <p>Utilizamos la función inversa del logaritmo</p>
+<p></br></p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\bigg\{
 \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}
@@ -402,18 +383,21 @@ x_{i}}\bigg\}\]</span> </br></br></p>
 <p>En caso de ser <span class="math inline">\(P_{i} = 0.80\)</span>,
 entonces <span class="math inline">\(1-P_{i} = 0.20\)</span>, luego
 :</p>
+<p></br></p>
 <p><span class="math display">\[\Bigg( \dfrac{0.80}{0.20} \Bigg) = 4.0
 \]</span></p>
 <p>Indicando una razón entre las probabilidades de 4 a 1. Es cuatro
 veces mas problable que ocurra el evento sobre que no ocurra.</p>
 <p>En el modelo estimado esta relación para un valor específico de <span
 class="math inline">\(X\)</span> de la siguiente forma:</p>
+<p></br></p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
 -29.6819  + 8.5699 \hspace{.2cm}x_{i}}\big\}\]</span> </br></br></p>
 <p>Un estudiante con un puntaje de en matemáticas de <span
 class="math inline">\(60\)</span> tendrá una razón <span
 class="math inline">\(Odds\)</span> de :</p>
+<p></br></p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
 -29.6819  + 8.5699 \hspace{.2cm} \times 3.6}\big\}
@@ -425,6 +409,7 @@ comparación de no tenerla.</p>
 <div id="pruebas-de-significancia-individual" class="section level2">
 <h2><span style="color:#034A94"><strong>Pruebas de significancia
 individual</strong></span></h2>
+<p></br></p>
 <p>En este caso la significancia del modelo se determina por los valores
 del estadístico <strong>Wald chi-square</strong>, bajo la condición el
 tamaño de la muestra grande.</p>
@@ -450,7 +435,7 @@ con valor p de cero</p>
 <div id="interpretación-de-los-coeficientes" class="section level2">
 <h2><span style="color:#034A94"><strong>Interpretación de los
 coeficientes</strong></span></h2>
-<p></br></br></p>
+<p></br></p>
 <div id="beta_0" class="section level3">
 <h3><span style="color:#034A94"><span
 class="math inline">\(\beta_{0}\)</span></span></h3>
@@ -460,7 +445,8 @@ class="math inline">\(\widehat{\beta}_{0}\)</span> corresponde al valor
 esperado del logaritmo de la razón de probabilidades para un estudiante
 con nota cero en matemáticas. Para leerlo en términos de razón de
 probabilidades realizamos la siguiente transformación:</p>
-<pre><code>exp{b0} = exp{-29.6819} =  3.746073e-11</code></pre>
+<p></br></p>
+<pre><code>exp{b0} = exp{-29.6819} =  4.810186e-11</code></pre>
 <p></br></p>
 <p>Cuando <span class="math inline">\(x=0\)</span> el valor de la razón
 de probabilidades es de <span
@@ -481,7 +467,6 @@ nota de matemáticas sobre la probabilidad realizamos el siguiente
 cálculo:</p>
 <p></br></p>
 <!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
-<p></br></p>
 <pre><code>exp(8.5699) =  5270.603</code></pre>
 <p></br></br></p>
 <p><span class="math inline">\(\widehat{\beta}_{1}\)</span> indica el
@@ -492,29 +477,34 @@ exponencial (<code>exp()</code>)</p>
 <p>Por cada unidad de aumento de <span class="math inline">\(x\)</span>
 los <span class="math inline">\(odds\)</span> de obtener matricula se
 incrementan en : <span class="math inline">\(1.17\)</span> unidades</p>
-<pre><code>exp(b1) =  1013.677</code></pre>
+<pre><code>exp(b1) =  928.9494</code></pre>
 <p></br></p>
 <p>Un intervalo de confianza para los coeficientes se puede obtener
 mediante :</p>
 <p></br></p>
 <pre class="r"><code>library(MASS)
 confint(object = modelo1, level = 0.95 )</code></pre>
-<pre><code>                 2.5 %     97.5 %
-(Intercept) -32.394974 -17.481554
-nota          4.990891   9.394077</code></pre>
-<p></br></p>
+<pre><code>                2.5 %     97.5 %
+(Intercept) -27.27703 -20.614500
+nota          5.90493   7.873092</code></pre>
+<p></br></br></p>
 </div>
 </div>
 <div id="significancia-del-modelo" class="section level2">
 <h2><span style="color:#034A94"><strong>Significancia del
 modelo</strong></span></h2>
+<p></br></p>
 <p>En este caso se plantean las hipótesis :</p>
-<p>$$ H_{0} : <em>{1} = </em>{2} = _{k} =0 \</p>
-<p>H_{a} : _{i} 0 $$</p>
+<p></br></p>
+<p><span class="math display">\[H_{0} : \beta_{1} = \beta_{2} = \dots
+\beta_{k} =0 \hspace{1cm}\]</span> <span class="math display">\[H_{a} :
+\text{Algún } \beta_{i} \text{ es diferente de }  0\]</span></p>
+<p></br></p>
 <p>El equivalente de la prueba global de significancia del modelo logit
 tiene como estadístico de prueba la chi-cuadrado que se obtiene restando
 la suma desviaciones del modelo nulo con la suma de las desviaciones de
 los residuales que se presentan en el resumen del modelo</p>
+<p></br></p>
 <pre>
 Null deviance    : 1102.16  on 999  degrees of freedom
 Residual deviance:  440.94  on 998  degrees of freedom
@@ -524,16 +514,20 @@ X^2 = \text{ Null deviance} - \text{ Residual deviance} = 1122.468 -
 518.5805 = 663.88
 \]</span></p>
 <pre class="r"><code>with(modelo1, null.deviance - deviance )</code></pre>
-<pre><code>[1] 116.4206</code></pre>
+<pre><code>[1] 551.9053</code></pre>
+<p></br></p>
 <p>Que tiene una distribución <span class="math inline">\(\chi^2 _{v:
 gl_{null} -gl_{residual}}\)</span></p>
 <pre class="r"><code>with(modelo1, pchisq(null.deviance - deviance , df.null-df.residual, lower.tail = FALSE))</code></pre>
-<pre><code>[1] 3.844624e-27</code></pre>
+<pre><code>[1] 4.847337e-122</code></pre>
+<p></br></p>
 <p>Lo cual indica que se rechaza <span
 class="math inline">\(H_0\)</span>, en favor de <span
 class="math inline">\(H_a\)</span>, el modelo es significativo</p>
+<p></br></p>
 <div id="nota" class="section level3 content-box-yellow">
 <h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
+<p></br></p>
 <p>Es importante examinar la significancia de los coeficientes estimados
 obtenidos mediante el metodo de máxima verosimilitud. En este caso en
 lugar de calcular el valor p para cada coeficiente, se utiliza el

@@ -39,9 +39,12 @@ summary(modelo1)
 
 </br></br>
 
-Para realizar la estimación del modelo logit utilizamos la función `glm()`
+Para realizar la estimación del modelo logit utilizamos la función `glm()`  
 
-```{r, eval==FALSE}
+</br>
+
+
+```{r, eval=FALSE}
 library(tidyverse)
 data("dataMat")
 dataMat %>% 
@@ -49,6 +52,8 @@ glm(gana ~ nota , family = binomial(link = "logit"), data = .) -> modelo1
 summary(modelo1) 
 
 ```
+
+</br>
 
 <pre>
 Call:
@@ -74,20 +79,28 @@ AIC: 444.94
 
 Number of Fisher Scoring iterations: 7
 </pre>
+
 </br></br>
 
 El modelo estimado en su forma original :
+
+</br>
 
 $$\ln \Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -29.6819  + 8.5699 \hspace{.2cm} x_{i}$$
 </br></br>
 
 Utilizamos la función inversa del logaritmo
 
+</br>
+
+
 $$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\bigg\{ \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm} x_{i}}\bigg\}$$
 </br></br>
 
 
 En caso de ser $P_{i} = 0.80$, entonces $1-P_{i} = 0.20$, luego :
+
+</br>
 
 $$\Bigg( \dfrac{0.80}{0.20} \Bigg) = 4.0 $$
 
@@ -96,11 +109,15 @@ Indicando una razón entre las probabilidades de 4 a 1.  Es cuatro veces mas pro
 
 En el modelo estimado esta relación para un valor específico de $X$ de la siguiente forma:
 
+</br>
+
 $$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -29.6819  + 8.5699 \hspace{.2cm}x_{i}}\big\}$$
 </br></br>
 
 
 Un estudiante con un puntaje de en matemáticas de $60$ tendrá una razón $Odds$ de :
+
+</br>
 
 $$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -29.6819  + 8.5699 \hspace{.2cm} \times 3.6}\big\} =3.221155$$
 
@@ -112,6 +129,8 @@ Lo que indica que un estudiante con puntaje en matemáticas igual a 70, tiene 3.
 
 
 ## <span style="color:#034A94">**Pruebas de significancia individual**</span>
+
+</br>
 
 
 En este caso la significancia del modelo se determina por los valores del estadístico **Wald chi-square**, bajo la condición  el tamaño de la muestra grande. 
@@ -142,7 +161,7 @@ En el ejemplo ambos coeficientes son estadisticamente significativos, con valor 
 
 ## <span style="color:#034A94">**Interpretación de los coeficientes**</span>
 
-</br></br>
+</br>
 
 ### <span style="color:#034A94">$\beta_{0}$</span>
 
@@ -150,6 +169,7 @@ En el ejemplo ambos coeficientes son estadisticamente significativos, con valor 
 
 El coeficiente estimado $\widehat{\beta}_{0}$ corresponde al valor esperado del logaritmo de la razón de probabilidades para un estudiante con nota cero en matemáticas.  Para leerlo en términos de razón de probabilidades realizamos la siguiente transformación:
 
+</br>
 
 ```{r, echo=FALSE}
 # coeficientes estimados
@@ -179,7 +199,6 @@ Ahora para interpretar el aporte que genera un punto adicional en la nota de mat
 
 <!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
 
-</br>
 
 ```{r, echo=FALSE}
 cat("exp(8.5699) = ", exp(8.5699) )
@@ -206,20 +225,25 @@ Un intervalo de confianza para los coeficientes se puede obtener mediante :
 library(MASS)
 confint(object = modelo1, level = 0.95 )
 ```
-</br>
+</br></br>
 
 ## <span style="color:#034A94">**Significancia del modelo**</span>
 
+</br>
+
 En este caso se plantean las hipótesis :
 
+</br>
 
-$$
-H_{0} : \beta_{1} = \beta_{2} = \dots \beta_{k} =0 \hspace{1cm}\\
 
-H_{a} : \text{Algún } \beta_{i} \text{ es diferente de }  0
-$$
+$$H_{0} : \beta_{1} = \beta_{2} = \dots \beta_{k} =0 \hspace{1cm}$$
+$$H_{a} : \text{Algún } \beta_{i} \text{ es diferente de }  0$$
+
+</br>
 
 El equivalente de la prueba global de significancia del modelo logit tiene como estadístico de prueba la chi-cuadrado que se obtiene restando la suma desviaciones del modelo nulo con la suma de las desviaciones de los residuales que se presentan en el resumen del modelo
+
+</br>
 
 <pre>
 Null deviance    : 1102.16  on 999  degrees of freedom
@@ -233,20 +257,25 @@ $$
 with(modelo1, null.deviance - deviance )
 ```
 
+</br>
+
 Que tiene una distribución $\chi^2 _{v: gl_{null} -gl_{residual}}$
 
 ```{r}
 with(modelo1, pchisq(null.deviance - deviance , df.null-df.residual, lower.tail = FALSE))
 ```
 
+</br>
+
 Lo cual indica que se rechaza $H_0$, en favor de $H_a$, el modelo es significativo
 
 
-
-
+</br>
 
 <div class="content-box-yellow">
 ### <span style="color:#686868">**Nota:**</span> 
+
+</br>
 
 Es importante examinar la significancia de los coeficientes estimados obtenidos mediante el metodo de máxima verosimilitud.  En este caso en lugar de calcular el valor p para cada coeficiente, se utiliza el estadístico **Z** de la prueba  **chi-cuadrado de Wald**
 
