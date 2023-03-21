@@ -35,11 +35,11 @@ El análisis de conglomerados se basa en calcular distancias utilizando las comp
 
 </br>
 
-Existen dos tipos de clasificación automática: los metodos no jerarquicos los cuales se basan en encontrar la mejor partición del conjunto de individuos en q clases, en donde sus centros de gravedad se eligen en un inicio de forma aleatoria. Por otra parte están los métodos jerarquicos en los cuales se construye un dendograma en el cual se forman los grupos de individuos más parecidos, esto permite determinar el número de clases que se usarán en el método no jerarquico. 
+Existen dos tipos de clasificación automática: los métodos no jerárquicos los cuales se basan en encontrar la mejor partición del conjunto de individuos en q clases, en donde sus centros de gravedad se eligen en un inicio de forma aleatoria. Por otra parte están los métodos jerárquicos en los cuales se construye un dendograma en el cual se forman los grupos de individuos más parecidos, esto permite determinar el número de clases que se usarán en el método no jerárquico. 
 
 </br>
 
-Recordemos que mediante el análisis de conglomerados queremos clasificar a los distintos individuos u observaciones en grupos muy homogeneos, pero que entre los grupos sean muy heterogeneos entre sí. De esta forma podriamos encontrar una forma de calcular el grado de asociación (similitud o disimilitud) entre dos observaciones, en el caso de clustering lo más usado para esto es la distancia euclidiana entre los dos puntos, la cual está dado por:
+Recordemos que mediante el análisis de conglomerados queremos clasificar a los distintos individuos u observaciones en grupos muy homogeneos, pero que entre los grupos sean muy heterogeneos entre sí. De esta forma podríamos encontrar una forma de calcular el grado de asociación (similitud o disimilitud) entre dos observaciones, en el caso de clustering lo más usado para esto es la distancia euclidiana entre los dos puntos, la cual está dado por:
 
 </br>
 
@@ -49,7 +49,7 @@ $$
 
 </br>
 
-En donde x y y son individuos con p variables, de esta forma podremos obtener los dos primeros individuos que más se parezcan entre sí los cuales formarán el primer grupo, sean entonces $h = \{x, y\}$ un grupo y z un individuo, podemos calcular la distancia entre el grupo y el individuo de la forma $d(h, z) = min\{d(x,z), d(y, z)\}$. Además hay otras formas de medir la proximidad entre elementos como pueden ser el salto mínimo (single linkage), salto máximo, salto promedio y agregación de Ward. <br>
+En donde $x$ y $y$ son individuos con $p$ variables, de esta forma podremos obtener los dos primeros individuos que más se parezcan entre sí los cuales formarán el primer grupo, sean entonces $h = \{x, y\}$ un grupo y z un individuo, podemos calcular la distancia entre el grupo y el individuo de la forma $d(h, z) = min\{d(x,z), d(y, z)\}$. Además hay otras formas de medir la proximidad entre elementos como pueden ser el salto mínimo (single linkage), salto máximo, salto promedio y agregación de Ward. <br>
 
 El siguiente dendograma fue construido a apartir de 5 individuos:
 
@@ -75,9 +75,13 @@ Elegir el número óptimo de clusters es una decisión muy subjetiva, sin embarg
 Otro método de agrupamiento es el $k-means$ (o centros moviles), este se centra en dividir un conjunto de datos en $k$ grupos. En este se trata de minimizar la suma de los cuadrados de las distancias entre los puntos y su centroide correspondiente, los pasos en este algoritmo son:
 
 * 1) Selecciona $k$ centroides aleatorios de los puntos en el conjunto de datos.
+
 * 2) Asigna cada punto al centroide más cercano.
+
 * 3) Recalcula los centroides como la media de los puntos asignados a cada centroide.
+
 * 4) Repite los pasos $2$ y $3$ hasta que los centroides no cambien significativamente o se alcance un número máximo de iteraciones (es decir, el algoritmo converja).
+
 * 5) El número k de clusters se debe especificar antes de ejecutar el algoritmo.
 
 
@@ -89,14 +93,14 @@ Otro método de agrupamiento es el $k-means$ (o centros moviles), este se centra
 
 El siguiente ejemplo  en **R** cuenta con  un conjunto de datos sobre $35$ observaciones de `whiskys`, que contiene las variable `precio`, `proporción de alcohol`, `años de añejo` y la `nota` que le da el jurado a la calidad de estos.
 
-</br>
+</br></br>
 
 ```{r message = FALSE}
 data = read.table("whisky.txt", header = TRUE, row.names = 1)
 head(data)
 ```
 
-</br>
+</br></br>
 
 Mediante la libreria *factoextra* podemos calcular las distancias euclidianas de los individuos y gráficar el dendograma del conjunto de datos:
 
@@ -111,7 +115,7 @@ barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, main = "Agrega
         col = "lightblue", ylab = "Nodo", xlab = "Peso")
 ```
 
-</br>
+</br></br>
 
 Podemos observar que el mayor salto en las agregaciones se da en 60.38, por lo que se puede realizar un corte con este valor en el dendograma, quedando:
 
@@ -134,7 +138,7 @@ knitr::include_graphics("img/dendograma2.png")
 En este caso el número optimo de grupos o clusters será de 2. Con el siguiente código podemos ver en la primera fila los individuos y en la segunda los clusters a los que estos pertenecen.
 
 
-</br>
+</br></br>
 
 ```{r}
 grp <- cutree(dendograma, k = 2)
@@ -142,17 +146,19 @@ grp
 ```
 
 
-</br>
+</br></br>
 
 Podemos usar la libreria *FactoClass* para representar los clusters en el primer plano factorial, en la función `FactoClass` tenemos los siguientes argumentos: 
 
-</br>
+</br></br>
 
 * `nf`: número de componentes principales, recordemos que en el acp este será igual al número de variables. <br>
+
 * `nfcl`: número de componentes usadas para clasificación, en este caso será igual a` nf=p`. <br>
+
 * `k.clust`: número de clusters, en este caso mediante el dendograma elegimos dos clusters. 
 
-</br>
+</br></br>
 
 ```{r message = FALSE}
 library(FactoClass)
@@ -160,19 +166,19 @@ p = ncol(data)
 Cluster <- FactoClass(data, dudi.pca, nf = p, nfcl = p, k.clust = 2, scanFC = FALSE)
 ```
 
-</br>
+</br></br>
 
 ```{r,eval=FALSE}
-plotFactoClass(Cluster,titre="Análisis de conglomerados")
+plotFactoClass(Cluster,title="Análisis de conglomerados")
 ```
 
-</br>
+</br></br>
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("img/cluster1.png")
 ```
 
-</br>
+</br></br>
 
 A partir de ahora podemos realizar el análisis que hicimos anteriormente en un ACP, podemos observar que en el primer plano factorial se representa el $75.99$\% de la varianza total, quedando un $24.01$\% sin explicar mediante las dos primeras componentes. Se evidencia que el cluster 2 se caracteriza por tener porcentaje altos de alcohol, altos precios y mayores años de añejo, por otra parte el cluster 1 se caracteriza por tener precios mucho más economicos a costa de tener menor porcentaje de alcohol y pocos años de añejo.
 

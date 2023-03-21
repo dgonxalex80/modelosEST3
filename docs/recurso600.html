@@ -370,6 +370,7 @@ componentes explican la mayor parte de la variación de las <span
 class="math inline">\(p\)</span> variables iniciales. Si es así se
 pueden considerar estas dos componentes, reduciendo la dimensión de los
 datos y considerar su representación gráfica.</p>
+<p><br/><br/></p>
 <div id="nota" class="section level3">
 <h3><strong>Nota</strong></h3>
 <p>Los procedimientos anteriores están soportados en el supuesto de que
@@ -393,6 +394,7 @@ data.</p>
 <p>Para determinar la porción de la varianza total de la data explicada
 por el componente se define <span
 class="math inline">\(\Sigma\)</span></p>
+<p><br/></p>
 <p><span class="math display">\[
 \Sigma =
 \begin{equation}
@@ -406,31 +408,37 @@ class="math inline">\(\Sigma\)</span></p>
 \right)
 \end{equation}
 \]</span></p>
+<p><br/></p>
 <p>Enconces la varianza del primer componente será :</p>
 <p><span class="math display">\[V[CP_1] = V[b&#39;_1 X] = b&#39;_1
-\hspace{.1cm}\Sigma \hspace{.1cm} b_1\]</span> Bajo la restricción :</p>
+\hspace{.1cm}\Sigma \hspace{.1cm} b_1\]</span> <br/></p>
+<p>Bajo la restricción :</p>
 <p><span class="math display">\[\beta_{11}^2  + \beta_{12}^2 + \dots +
 \beta_{1p} = b&#39;_1 \hspace{.1cm}b_1= 1\]</span></p>
+<p><br/></p>
 <p>La solución a este sistema se obtiene mediante el método matemático
 Multiplicadores de Lagrange que maximiza el valor <span
 class="math inline">\(\lambda_1\)</span> para la siguiente función :</p>
 <p><span class="math display">\[b&#39;_1 \hspace{.1cm}\Sigma
 \hspace{.1cm}b_1 - \lambda_1 (b&#39;_1 \hspace{.1cm} b_1-1)
 \]</span></p>
+<p><br/></p>
 <p>Dando como resultados:</p>
 <p><span class="math display">\[CP_1 = b&#39;_1 X\]</span></p>
 <p>El segundo componenete estará determinado por una segunda ecuación de
 Lagrange con la que se obtiene:</p>
 <p><span class="math display">\[CP_2 = b&#39;_2X\]</span></p>
+<p><br/></p>
 <p>La varianza total de las <span class="math inline">\(p\)</span></p>
 <p><span class="math display">\[\displaystyle\sum_{i=1}^p V[X_i] =
-\sum_{i=1}^p V[CP_i] = \displaystyle\sum_{i=1}^p
-\lambda_{i}\]</span></p>
+\sum_{i=1}^p V[CP_i] = \displaystyle\sum_{i=1}^p \lambda_{i}\]</span>
+<br/></p>
 <p>De tal forma que la contribución total por cada componente se
 estimará como:</p>
 <p><span
 class="math display">\[\dfrac{\lambda_{i}}{\displaystyle\sum_{i=1}^p
 \lambda_{i}}\]</span></p>
+<p><br/></p>
 <p>Ahora, la contribución de los primeros tres componentes estará dado
 por :</p>
 <p><span class="math display">\[\dfrac{\lambda_{1} + \lambda_2 +
@@ -559,9 +567,9 @@ inercia total, seguida de la segunda componente con un 7.8% de la
 varianza explicada, de esta forma el porcentaje de inercia representado
 en el primer plano factorial es del 84.5%, perdiendo tan solo un 15.5%
 de la información. <br></p>
-<p><br/></p>
-<p>Gráficando las dos primeras componentes de las variables obtenemos el
-circulo de correlaciones:</p>
+<p><br/><br/></p>
+<p>Gratificando las dos primeras componentes de las variables obtenemos
+el circulo de correlaciones:</p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 fviz_pca_var(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
@@ -580,14 +588,14 @@ fviz_pca_biplot(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Recordemos que las variables están en puntajes. En este caso se puede
 decir que el tipo de café con la mejor calidad es el ex_o,
-caracterizandose más por el Aroma, Acidez y el cuerpo. Seguido de este
-se encuentra el ex_cl, el cual tiene buena puntuacion en todas las
+caracterizándose más por el Aroma, Acidez y el cuerpo. Seguido de este
+se encuentra el ex_cl, el cual tiene buena puntuación en todas las
 variables pero se caracteriza más por la astringencia y el aroma. Los
 cafés con peor calidad son los que se encuentran en dirección contraria
 a las variables, siendo estos o40m, cl40m, cl20m y cl40cb. Por otra
-parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad promedio.
-<br></p>
-<p><br/></p>
+parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad
+promedio.</p>
+<p></br> <br/></p>
 <p>Obteniendo las contribuciones a la varianza total de las componentes
 principales se tiene:</p>
 <p><br/></p>
@@ -618,7 +626,7 @@ AcidosCl 22.682254  0.3834721  0.9712505 46.3052304 20.0136006  9.64419265</code
 <p>Siendo la variable IAroma la que más contribuye a la varianza
 explicada por el primer eje (20%), mientras que Astring es la que más
 contribuye al segundo eje (63.8%). <br></p>
-<p><br/> Por ultimo podemos estudiar las contribuciones de cada
+<p><br/> Por último podemos estudiar las contribuciones de cada
 individuo a las componentes principales:</p>
 <p><br/></p>
 <pre class="r"><code>library(&quot;factoextra&quot;)

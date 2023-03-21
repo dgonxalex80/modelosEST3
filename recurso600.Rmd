@@ -43,6 +43,7 @@ y  $Cor[CP_i, CP_j] = 0$ para todo para de componentes $i \neq j$
 
 El objetivo principal del ACP es poder ver si las dos o tres primeras componentes explican la mayor parte de la variación de las $p$ variables iniciales. Si es así se pueden considerar estas dos componentes, reduciendo la dimensión de los datos y considerar su representación gráfica.
 
+<br/><br/>
 
 ### **Nota**
 
@@ -62,6 +63,8 @@ Donde $b'= (\beta_{11}, \beta_{12}, \dots , \beta_{1p})$ es el vector de coefici
 
 Para determinar la porción de la varianza total de la data explicada por el componente se define $\Sigma$  
 
+<br/>
+
 $$
 \Sigma =
 \begin{equation}
@@ -76,17 +79,24 @@ $$
 \end{equation}
 $$
 
+<br/>
 
 Enconces la varianza del primer componente será :
 
 $$V[CP_1] = V[b'_1 X] = b'_1 \hspace{.1cm}\Sigma \hspace{.1cm} b_1$$
+<br/>
+
 Bajo la restricción :
 
 $$\beta_{11}^2  + \beta_{12}^2 + \dots + \beta_{1p} = b'_1 \hspace{.1cm}b_1= 1$$
 
+<br/>
+
 La solución a este sistema se obtiene  mediante el método matemático Multiplicadores de Lagrange que maximiza el valor $\lambda_1$ para la siguiente función :
 
 $$b'_1 \hspace{.1cm}\Sigma \hspace{.1cm}b_1 - \lambda_1 (b'_1 \hspace{.1cm} b_1-1) $$
+
+<br/>
 
 Dando como resultados:
 
@@ -97,10 +107,12 @@ El segundo componenete estará determinado por una segunda ecuación de Lagrange
 
 $$CP_2 = b'_2X$$
 
+<br/>
 
 La varianza total de las $p$
 
 $$\displaystyle\sum_{i=1}^p V[X_i] = \sum_{i=1}^p V[CP_i] = \displaystyle\sum_{i=1}^p \lambda_{i}$$
+<br/>
 
 De tal forma que la contribución total por cada componente se estimará como:
 
@@ -108,6 +120,7 @@ De tal forma que la contribución total por cada componente se estimará como:
 $$\dfrac{\lambda_{i}}{\displaystyle\sum_{i=1}^p \lambda_{i}}$$
 
 
+<br/>
 
 Ahora, la contribución de los primeros tres componentes estará dado por :
 
@@ -228,9 +241,9 @@ fviz_screeplot(ACP, addlabels = TRUE)
 
 Se evidencia que la primera componente se lleva el 76.7\% de la inercia total, seguida de la segunda componente con un 7.8\% de la varianza explicada, de esta forma el porcentaje de inercia representado en el primer plano factorial es del 84.5\%, perdiendo tan solo un 15.5\% de la información. <br>
 
-<br/>
+<br/><br/>
 
-Gráficando las dos primeras componentes de las variables obtenemos el circulo de correlaciones:
+Gratificando las dos primeras componentes de las variables obtenemos el circulo de correlaciones:
 
 
 
@@ -250,9 +263,9 @@ library("factoextra")
 fviz_pca_biplot(ACP, repel = TRUE, col.var = "blue")
 ```
 
-Recordemos que las variables están en puntajes. En este caso se puede decir que el tipo de café con la mejor calidad es el ex_o, caracterizandose más por el Aroma, Acidez y el cuerpo. Seguido de este se encuentra el ex_cl, el cual tiene buena puntuacion en todas las variables pero se caracteriza más por la astringencia y el aroma. Los cafés con peor calidad son los que se encuentran en dirección contraria a las variables, siendo estos o40m, cl40m, cl20m y cl40cb. Por otra parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad promedio. <br>
+Recordemos que las variables están en puntajes. En este caso se puede decir que el tipo de café con la mejor calidad es el ex_o, caracterizándose más por el Aroma, Acidez y el cuerpo. Seguido de este se encuentra el ex_cl, el cual tiene buena puntuación en todas las variables pero se caracteriza más por la astringencia y el aroma. Los cafés con peor calidad son los que se encuentran en dirección contraria a las variables, siendo estos o40m, cl40m, cl20m y cl40cb. Por otra parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad promedio. 
 
-<br/>
+</br> <br/>
 
 Obteniendo las contribuciones a la varianza total de las componentes principales se tiene:
 
@@ -272,6 +285,7 @@ Las contribuciones de las variables a la varianza explicada de cada componente s
 
 
 <br/>
+
 ```{r}
 inercia.ACP$col.abs
 ```
@@ -279,7 +293,7 @@ inercia.ACP$col.abs
 Siendo la variable IAroma la que más contribuye a la varianza explicada por el primer eje (20\%), mientras que Astring es la que más contribuye al segundo eje (63.8\%). <br>
 
 <br/>
-Por ultimo podemos estudiar las contribuciones de cada individuo a las componentes principales:
+Por último podemos estudiar las contribuciones de cada individuo a las componentes principales:
 
 
 <br/>

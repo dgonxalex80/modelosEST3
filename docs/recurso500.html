@@ -366,18 +366,18 @@ principales.</p>
 <div id="modelo" class="section level2">
 <h2><span style="color:#034a94"><strong>Modelo</strong></span></h2>
 <p></br></p>
-<p>Existen dos tipos de clasificación automática: los metodos no
-jerarquicos los cuales se basan en encontrar la mejor partición del
+<p>Existen dos tipos de clasificación automática: los métodos no
+jerárquicos los cuales se basan en encontrar la mejor partición del
 conjunto de individuos en q clases, en donde sus centros de gravedad se
 eligen en un inicio de forma aleatoria. Por otra parte están los métodos
-jerarquicos en los cuales se construye un dendograma en el cual se
+jerárquicos en los cuales se construye un dendograma en el cual se
 forman los grupos de individuos más parecidos, esto permite determinar
-el número de clases que se usarán en el método no jerarquico.</p>
+el número de clases que se usarán en el método no jerárquico.</p>
 <p></br></p>
 <p>Recordemos que mediante el análisis de conglomerados queremos
 clasificar a los distintos individuos u observaciones en grupos muy
 homogeneos, pero que entre los grupos sean muy heterogeneos entre sí. De
-esta forma podriamos encontrar una forma de calcular el grado de
+esta forma podríamos encontrar una forma de calcular el grado de
 asociación (similitud o disimilitud) entre dos observaciones, en el caso
 de clustering lo más usado para esto es la distancia euclidiana entre
 los dos puntos, la cual está dado por:</p>
@@ -386,7 +386,9 @@ los dos puntos, la cual está dado por:</p>
 d(x, y) = \sqrt{\sum_{i=1}^{p} (x_i - y_i)^2}
 \]</span></p>
 <p></br></p>
-<p>En donde x y y son individuos con p variables, de esta forma podremos
+<p>En donde <span class="math inline">\(x\)</span> y <span
+class="math inline">\(y\)</span> son individuos con <span
+class="math inline">\(p\)</span> variables, de esta forma podremos
 obtener los dos primeros individuos que más se parezcan entre sí los
 cuales formarán el primer grupo, sean entonces <span
 class="math inline">\(h = \{x, y\}\)</span> un grupo y z un individuo,
@@ -452,7 +454,7 @@ datos sobre <span class="math inline">\(35\)</span> observaciones de
 <code>whiskys</code>, que contiene las variable <code>precio</code>,
 <code>proporción de alcohol</code>, <code>años de añejo</code> y la
 <code>nota</code> que le da el jurado a la calidad de estos.</p>
-<p></br></p>
+<p></br></br></p>
 <pre class="r"><code>data = read.table(&quot;whisky.txt&quot;, header = TRUE, row.names = 1)
 head(data)</code></pre>
 <pre><code>##   precio prop aniejo nota
@@ -462,7 +464,7 @@ head(data)</code></pre>
 ## 4     74   25   12.0    2
 ## 5     70   25   12.0    3
 ## 6     73   30    5.0    0</code></pre>
-<p></br></p>
+<p></br></br></p>
 <p>Mediante la libreria <em>factoextra</em> podemos calcular las
 distancias euclidianas de los individuos y gráficar el dendograma del
 conjunto de datos:</p>
@@ -475,7 +477,7 @@ plot(dendograma, cex = 0.6, hang = -1) </code></pre>
 <pre class="r"><code>barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, main = &quot;Agregaciones (distancias euclidianas)&quot;,
         col = &quot;lightblue&quot;, ylab = &quot;Nodo&quot;, xlab = &quot;Peso&quot;)</code></pre>
 <p><img src="recurso500_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
-<p></br></p>
+<p></br></br></p>
 <p>Podemos observar que el mayor salto en las agregaciones se da en
 60.38, por lo que se puede realizar un corte con este valor en el
 dendograma, quedando:</p>
@@ -489,27 +491,27 @@ dendograma, quedando:</p>
 <p>En este caso el número optimo de grupos o clusters será de 2. Con el
 siguiente código podemos ver en la primera fila los individuos y en la
 segunda los clusters a los que estos pertenecen.</p>
-<p></br></p>
+<p></br></br></p>
 <pre class="r"><code>grp &lt;- cutree(dendograma, k = 2)
 grp</code></pre>
 <pre><code>##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
 ##  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 
 ## 27 28 29 30 31 32 33 34 35 
 ##  1  1  2  2  2  2  2  2  2</code></pre>
-<p></br></p>
+<p></br></br></p>
 <p>Podemos usar la libreria <em>FactoClass</em> para representar los
 clusters en el primer plano factorial, en la función
 <code>FactoClass</code> tenemos los siguientes argumentos:</p>
-<p></br></p>
+<p></br></br></p>
 <ul>
-<li><code>nf</code>: número de componentes principales, recordemos que
-en el acp este será igual al número de variables. <br></li>
-<li><code>nfcl</code>: número de componentes usadas para clasificación,
-en este caso será igual a<code>nf=p</code>. <br></li>
-<li><code>k.clust</code>: número de clusters, en este caso mediante el
-dendograma elegimos dos clusters.</li>
+<li><p><code>nf</code>: número de componentes principales, recordemos
+que en el acp este será igual al número de variables. <br></p></li>
+<li><p><code>nfcl</code>: número de componentes usadas para
+clasificación, en este caso será igual a<code>nf=p</code>. <br></p></li>
+<li><p><code>k.clust</code>: número de clusters, en este caso mediante
+el dendograma elegimos dos clusters.</p></li>
 </ul>
-<p></br></p>
+<p></br></br></p>
 <pre class="r"><code>library(FactoClass)
 p = ncol(data)
 Cluster &lt;- FactoClass(data, dudi.pca, nf = p, nfcl = p, k.clust = 2, scanFC = FALSE)</code></pre>
@@ -518,11 +520,11 @@ Cluster &lt;- FactoClass(data, dudi.pca, nf = p, nfcl = p, k.clust = 2, scanFC =
 ## The number of axes for clustering is  4</code></pre>
 <pre><code>## Look the histogram of 25 indexes 
 ## Partition in  2  clusters</code></pre>
-<p></br></p>
-<pre class="r"><code>plotFactoClass(Cluster,titre=&quot;Análisis de conglomerados&quot;)</code></pre>
-<p></br></p>
+<p></br></br></p>
+<pre class="r"><code>plotFactoClass(Cluster,title=&quot;Análisis de conglomerados&quot;)</code></pre>
+<p></br></br></p>
 <p><img src="img/cluster1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p></br></p>
+<p></br></br></p>
 <p>A partir de ahora podemos realizar el análisis que hicimos
 anteriormente en un ACP, podemos observar que en el primer plano
 factorial se representa el <span class="math inline">\(75.99\)</span>%

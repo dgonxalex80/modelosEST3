@@ -337,38 +337,62 @@ $(document).ready(function () {
 <p>Para realizar la estimación del modelo logit utilizamos la función
 <code>glm()</code></p>
 <pre class="r"><code>library(tidyverse)
-data(matricular)
-matricular %&gt;% 
-  glm(matricula ~ matematicas , family = binomial(link = &quot;logit&quot;), data = .) -&gt; modelo1
+data(&quot;dataMat&quot;)
+dataMat %&gt;% 
+glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = .) -&gt; modelo1
 summary(modelo1) </code></pre>
 <pre><code>
 Call:
-glm(formula = matricula ~ matematicas, family = binomial(link = &quot;logit&quot;), 
+glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
     data = .)
 
 Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.0332  -0.6785  -0.3506  -0.1565   2.6143  
+     Min        1Q    Median        3Q       Max  
+-1.73548  -0.40492  -0.11740  -0.01932   2.68961  
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -9.79394    1.48174  -6.610 3.85e-11 ***
-matematicas  0.15634    0.02561   6.105 1.03e-09 ***
+(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
+nota           6.921      1.113   6.216 5.10e-10 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
     Null deviance: 222.71  on 199  degrees of freedom
-Residual deviance: 167.07  on 198  degrees of freedom
-AIC: 171.07
+Residual deviance: 106.29  on 198  degrees of freedom
+AIC: 110.29
 
-Number of Fisher Scoring iterations: 5</code></pre>
+Number of Fisher Scoring iterations: 7</code></pre>
+<pre>
+Call:
+glm(formula = gana ~ nota, family = binomial(link = "logit"), 
+    data = dataMat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.88808  -0.29466  -0.06645  -0.00780   2.97082  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
+nota          8.5699     0.6462   13.26   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+Null deviance: 1102.16  on 999  degrees of freedom
+Residual deviance:  440.94  on 998  degrees of freedom
+AIC: 444.94
+
+Number of Fisher Scoring iterations: 7
+</pre>
 <p></br></br></p>
 <p>El modelo estimado en su forma original :</p>
 <p><span class="math display">\[\ln \Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}}
-+ \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -9.79394  + 0.15634
++ \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -29.6819  + 8.5699
 \hspace{.2cm} x_{i}\]</span> </br></br></p>
 <p>Utilizamos la función inversa del logaritmo</p>
 <p><span class="math display">\[\Bigg(
@@ -386,14 +410,14 @@ veces mas problable que ocurra el evento sobre que no ocurra.</p>
 class="math inline">\(X\)</span> de la siguiente forma:</p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
--9.793942  + 0.1563404 \hspace{.2cm}x_{i}}\big\}\]</span> </br></br></p>
+-29.6819  + 8.5699 \hspace{.2cm}x_{i}}\big\}\]</span> </br></br></p>
 <p>Un estudiante con un puntaje de en matemáticas de <span
 class="math inline">\(60\)</span> tendrá una razón <span
 class="math inline">\(Odds\)</span> de :</p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
--9.793942  + 0.1563404 \hspace{.2cm} \times 70}\big\}
-=3.204108\]</span></p>
+-29.6819  + 8.5699 \hspace{.2cm} \times 3.6}\big\}
+=3.221155\]</span></p>
 <p>Lo que indica que un estudiante con puntaje en matemáticas igual a
 70, tiene 3.2 veces más probabilidad de obtener la matricula de honor en
 comparación de no tenerla.</p>
@@ -412,9 +436,9 @@ class="math inline">\(H_1 : \beta_{i} \neq 0\)</span></p>
 \]</span></p>
 <pre>
 Coefficients:
-              Estimate   Std. Error   z value    Pr(>|z|)    
-(Intercept)   -9.79394      1.48174  -6.610      3.85e-11 ***
-matematicas    0.15634      0.02561   6.105      1.03e-09 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
+nota          8.5699     0.6462   13.26   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre>
@@ -436,16 +460,16 @@ class="math inline">\(\widehat{\beta}_{0}\)</span> corresponde al valor
 esperado del logaritmo de la razón de probabilidades para un estudiante
 con nota cero en matemáticas. Para leerlo en términos de razón de
 probabilidades realizamos la siguiente transformación:</p>
-<pre><code>exp{b0} = exp{-9.793942} =  5.578854e-05</code></pre>
+<pre><code>exp{b0} = exp{-29.6819} =  3.746073e-11</code></pre>
 <p></br></p>
 <p>Cuando <span class="math inline">\(x=0\)</span> el valor de la razón
 de probabilidades es de <span
-class="math inline">\(0.0000557885\)</span>, indicando que la
+class="math inline">\(0.00000000000128\)</span>, indicando que la
 probabilidad <span class="math inline">\((1-P_{i})\)</span> es mucho mas
 grande que <span class="math inline">\(P_{i}\)</span> . Lo cual es
-consecuente, dado que obtener un puntaje en el examen de matemáticas
-<span class="math inline">\(x=0\)</span>, estima una probabilidad de
-obtener matricula de honor de</p>
+consecuente, dado que obtener una nota de <span
+class="math inline">\(x=0\)</span>, estima una probabilidad de ganar la
+asignatura casi nula.</p>
 <p></br></br></p>
 </div>
 <div id="beta_1" class="section level3">
@@ -458,7 +482,7 @@ cálculo:</p>
 <p></br></p>
 <!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
 <p></br></p>
-<pre><code>exp(0.1563404) =  1.169224</code></pre>
+<pre><code>exp(8.5699) =  5270.603</code></pre>
 <p></br></br></p>
 <p><span class="math inline">\(\widehat{\beta}_{1}\)</span> indica el
 cambio en <span class="math inline">\(ln(p/(1-p))\)</span> debido a un
@@ -468,35 +492,17 @@ exponencial (<code>exp()</code>)</p>
 <p>Por cada unidad de aumento de <span class="math inline">\(x\)</span>
 los <span class="math inline">\(odds\)</span> de obtener matricula se
 incrementan en : <span class="math inline">\(1.17\)</span> unidades</p>
-<pre><code>exp(b1) =  1.169224</code></pre>
+<pre><code>exp(b1) =  1013.677</code></pre>
 <p></br></p>
 <p>Un intervalo de confianza para los coeficientes se puede obtener
 mediante :</p>
 <p></br></p>
 <pre class="r"><code>library(MASS)
 confint(object = modelo1, level = 0.95 )</code></pre>
-<pre><code>                  2.5 %     97.5 %
-(Intercept) -12.9375208 -7.0938806
-matematicas   0.1093783  0.2103937</code></pre>
+<pre><code>                 2.5 %     97.5 %
+(Intercept) -32.394974 -17.481554
+nota          4.990891   9.394077</code></pre>
 <p></br></p>
-<pre class="r"><code>data(matricular)
-matricular$matricula &lt;- as.character(matricular$matricula)
-matricular$matematicas &lt;- as.numeric(matricular$matematicas)
-
-plot(matricula ~ matematicas, matricular, col = &quot;darkblue&quot;,
-     main = &quot;Modelo regresión logística&quot;,
-     ylab = &quot;P(matrícula=1|matemáticas)&quot;,
-     xlab = &quot;matemáticas&quot;, pch = &quot;I&quot;)
-
-# type = &quot;response&quot; devuelve las predicciones en forma de probabilidad en lugar de en log_ODDs
-curve(predict(modelo1, data.frame(matematicas = x), type = &quot;response&quot;),
-      col = &quot;#034A94&quot;, lwd = 3, add = TRUE)
-abline(h=.50, col=&quot;red&quot;)
-
-
-grid()</code></pre>
-<p><img src="recurso320_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p></br></br></br></p>
 </div>
 </div>
 

@@ -349,75 +349,110 @@ class="math inline">\(Y\)</span>, obtenemos:</p>
 <p></br></p>
 <pre>
         |                predicción    |  
-        |         |   0     |    1     |
+        |         |   No    |    Si    |
 --------|---------|---------|----------|   
-Estado  |  0      |     140 |      11  |
-real    |  1      |      27 |      22  |
+Estado  |  No     |     723 |      37  |
+real    |  Si     |      53 |     187  |
 
 </pre>
-<p></br></p>
+<p></br></br></p>
 <p>Representados por el siguiente gráfico de mosaico:</p>
 <p></br></p>
-<pre class="r"><code>library(vcd)
-predicciones &lt;- ifelse(test = modelo1$fitted.values &gt; 0.5, yes = 1, no = 0)
-mc &lt;- table(modelo1$model$matricula, predicciones,
-                          dnn = c(&quot;Estado real&quot;, &quot;Predicciones&quot;))
-mosaic(mc, shade = T, colorize = T,
-       gp = gpar(fill = matrix(c(&quot;#11224D&quot;, &quot;#F98125&quot;, &quot;#F5B841&quot;,&quot;#2C599D&quot;), 2, 2)))</code></pre>
 <p><img src="recurso330_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p></br></p>
+<p></br></br></p>
 <p>Los colores azules representan la proporción de clasificaciones
 correcta :</p>
+<p></br></p>
 <ul>
-<li>Siendo <span class="math inline">\(0\)</span>, lo clasifica como
-<span class="math inline">\(0\)</span> y</li>
-<li>Siendo <span class="math inline">\(1\)</span> lo clasifica como
-<span class="math inline">\(1\)</span></li>
+<li><p>Siendo <span class="math inline">\(No\)</span>, lo clasifica como
+<span class="math inline">\(No\)</span> : <strong>VN</strong></p></li>
+<li><p>Siendo <span class="math inline">\(Si\)</span> lo clasifica como
+<span class="math inline">\(Si\)</span> : <strong>VP</strong></p></li>
 </ul>
+<p></br></p>
 <p>Los colores naranjas corresponden a las proporciones de
 clasificaciones erradas por el modelo.</p>
 <ul>
-<li>Falsos positivos</li>
-<li>Falsos negativos</li>
+<li><p>Siendo <span class="math inline">\(Si\)</span>, lo clasifica
+incorrectamente como <span class="math inline">\(No\)</span> : Falsos
+Negativo : <strong>FN</strong></p></li>
+<li><p>Siendo <span class="math inline">\(No\)</span>, lo clasifica
+incorrectamente como <span class="math inline">\(Si\)</span> : Falso
+Positovo : <strong>FP</strong></p></li>
 </ul>
+<p></br></br></p>
 <p>La proporción de clasificaciones correctas dan una aproximación del
 valor <span class="math inline">\(R^2\)</span></p>
 <p></br></p>
 <p><span class="math display">\[
-\dfrac{140+22}{140+27+11+22} = \dfrac{162}{200} = 0.81
+\dfrac{723+187}{723+53+37+187} = \dfrac{910}{1000} = 0.910
 \]</span> Este valor cuenta como el <span
 class="math inline">\(R^2\)</span> , es decir que el modelo explica
-(clasifica de manera adecuada) el 81% de los casos</p>
+(clasifica de manera adecuada) el 91% de los casos.</p>
 <p></br></br></p>
 <p>Este valor se puede obtener de la matriz de confusión</p>
+<p></br></br></p>
 </div>
 <div id="matriz-de-confusión" class="section level2">
 <h2><span style="color:#034A94"><strong>Matriz de
 confusión</strong></span></h2>
-<pre class="r"><code>library(paqueteMOD)
-data(&quot;matricular&quot;)
-modelo1= glm(matricula ~ matematicas, data=matricular, family = &quot;binomial&quot;)
-# summary(modelo1)
-matricula.fit = as.numeric(modelo1$fitted.values&gt;0.5)  # clasificacion de las estimaciones en 0,1
-data1= data.frame(matricular$matricula, matricula.fit)
-matrizC=table(data1)
-matrizC   # matriz de confusión</code></pre>
-<pre>
-        |                predicción            |  
-        |         |   0        |    1          |
---------|---------|------------|---------------|   
-Estado  |  0      |     140 (a) |      11  (c) |
-real    |  1      |      27 (b) |      22  (d) |
+<p></br></p>
+<p>Consiste en un método de evaluación del modelo estimado, mediante la
+separación de la data en dos partes. Una primera para estimar el modelo
+(train) que puede corresponder entre el 60% y el 80% de los datos y el
+restante porcentaje para una muestra con la que se evalúa el poder de
+predicción del modelo (Test)</p>
+<p>Lo primero será estimar el modelo con la data.train y posteriormente
+valuar el modelo utilizando la data.test</p>
+<p>Con los resulados obtenidos por la predicción del modelo sobre la
+muestra.test se construye la matriz de confisión que tiene la siguiente
+forma:</p>
+<p></br></br></p>
+<p><img src="img/matriz_confusion.png" width="80%" style="display: block; margin: auto;" /></p>
+<p></br></br></p>
+<pre><code>[1] 600 400</code></pre>
+<p></br></br></p>
+<pre class="r"><code>library(tidyverse)
+valor_pronosticado &lt;- predict(modelo1,test,type = &quot;response&quot;)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+                             factor(.)
 
+rendimiento_data&lt;-data.frame(observados=test$gana,
+                             predicciones= niveles_pronosticados)
+
+Positivos &lt;- sum(rendimiento_data$observados==&quot;Si&quot;)
+Negativos &lt;- sum(rendimiento_data$observados==&quot;No&quot;)
+Positivos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;Si&quot;)
+Negativos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;No&quot;)
+Total &lt;- nrow(rendimiento_data)
+VP&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
+VN&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
+FP&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
+FN&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
+
+matriz_confusion=matrix(c(VP, FP, FN,VN), nrow=2)
+
+rownames(matriz_confusion) = c(&quot; No &quot;, &quot; Si    &quot;)
+colnames(matriz_confusion) = c(&quot;No&quot;, &quot;Si&quot;)
+# matriz_confusion</code></pre>
+<p></br></br></p>
+<pre>
+        |                predicción             |  
+        |         |   Si       |    No          |
+--------|---------|------------|----------------|   
+Estado  |  Si     |   81  (VP) |     22   (FN)  |
+real    |  No     |   13  (FP) |     284  (VN)  |
 </pre>
 <p></br></p>
 <blockquote>
 
 </blockquote>
 <p>A partir de la matriz de confusión se obtienen indicadores</p>
+<p></br></br></p>
 <div id="capacidad-de-clasificación-del-modelo" class="section level4">
 <h4><span style="color:#034a94"><strong>Capacidad de clasificación del
 modelo</strong></span></h4>
+<p></br></p>
 <p>En una de las características más importantes del modelo, pues
 permite valorar a través de la matriz de confusión las clasificaciones
 correctas por medio de las predicciones del modelo.</p>
@@ -431,35 +466,91 @@ de verdaderos positivos y de falsos positivos:</p>
 <div id="exactitud" class="section level3">
 <h3><strong>Exactitud</strong></h3>
 <p>Porcentaje de casos correctamente clasificados</p>
-<p>$$ = = </p>
-<p>$$</p>
+<div class="content-box-blue">
+<p><span class="math display">\[
+\text{Exactitud} = \dfrac{\text{aciertos en
+clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} =
+\dfrac{81+281}{400} = 0.905
+\]</span></p>
+</div>
+<p></br></br></p>
 </div>
 <div id="sensibilidad" class="section level3">
 <h3><strong>Sensibilidad</strong></h3>
 <p>Porcentaje de positivos que son clasificados por el modelo como
 positivos</p>
+<div class="content-box-blue">
 <p><span class="math display">\[
-TPR = \dfrac{\text{número de positivos correctamente
-pronosticados}}{\text{número de positivos reales totales}} =
-\dfrac{a}{a+c}
+\text{Sensibilidad} = \dfrac{VP}{\text{Total positivos}} =
+\dfrac{81}{103} = 0.786
 \]</span></p>
+</div>
+<p></br></br></p>
 </div>
 <div id="especificidad" class="section level3">
 <h3><strong>Especificidad</strong></h3>
 <p>Porcentaje de negativos que son clasificados por el modelo como
 negativos</p>
+<div class="content-box-blue">
 <p><span class="math display">\[
-FPR = \dfrac{\text{número de falsos positivos}}{\text{número de
-negativos reales totales}} = \dfrac{d}{b+d}
+\text{Especificidad} = \dfrac{\text{VN}}{\text{Total negativos}} =
+\dfrac{284}{297} = 0.956
 \]</span></p>
-<!-- ### **Falsos positivos** -->
-<!-- Porcentaje de negativos, clasificados por el modelo como positivos -->
-<!-- $$ -->
-<!-- FNR = \dfrac{}{} -->
-<!-- $$ -->
-<!-- ### **Falsos negarativos** -->
-<!-- Porcentaje de positivos clasificados por el modelo como negativos -->
+</div>
 <p></br></br></p>
+</div>
+<div id="presición" class="section level3">
+<h3><strong>Presición</strong></h3>
+<p>Porcentaje de positivos pronosticados de manera correcta</p>
+<div class="content-box-blue">
+<p><span class="math display">\[
+\text{Precision} = \dfrac{\text{VP}}{\text{Total clasificados
+positivos}} = \dfrac{81}{94} = 0.862
+\]</span></p>
+</div>
+<p></br></br></p>
+</div>
+<div id="valor-de-predicción-negativo" class="section level3">
+<h3><strong>Valor de predicción negativo</strong></h3>
+<p>Porcentaje de negativos clasificados por el modelo como negativos</p>
+<div class="content-box-blue">
+<p><span class="math display">\[
+\text{Valor de prediccion negativo} = \dfrac{\text{VN}}{\text{Total
+clasificados negativos}} = \dfrac{284}{306} = 0.928
+\]</span></p>
+</div>
+<p></br></br></p>
+<div id="resumen" class="section level4">
+<h4><strong>Resumen</strong></h4>
+<p></br></p>
+<pre class="r"><code>library(tidyverse)
+Exactitud &lt;- (VP+VN)/Total
+Tasa_de_Error &lt;- (FP+FN)/Total
+Sensibilidad &lt;- VP/Positivos
+Especificidad &lt;- VN/Negativos
+Precision &lt;- VP/Positivos_pronosticados
+Valor_prediccion_negativo &lt;- VN / Negativos_pronosticados
+
+indicadores &lt;- t(data.frame(Exactitud,Tasa_de_Error,Sensibilidad,Especificidad,Precision,Valor_prediccion_negativo))
+indicadores %&gt;% 
+  round(.,3)</code></pre>
+<pre>
+                           
+Exactitud                  0.912
+
+Tasa de Error              0.088
+
+Sensibilidad               0.786
+
+Especificidad              0.956
+
+Precisión                  0.862
+
+Valor predicción negativo  0.928
+
+</pre>
+<p></br></br></p>
+</div>
 </div>
 <div id="nota" class="section level3 content-box-yellow">
 <h3><span style="color:#686868"><strong>Nota:</strong></span></h3>

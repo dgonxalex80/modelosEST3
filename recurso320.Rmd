@@ -23,7 +23,11 @@ library(tidyverse)
 # install.packages("devtools")     # solo una vez
 # devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
 library(paqueteMOD)
-data("eleccion")
+library(paqueteMOD)
+data("dataMat")
+dataMat = sample(dataMat, 1000, replace = TRUE)
+glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
+summary(modelo1) 
 ```
 
 </br></br>
@@ -37,20 +41,44 @@ data("eleccion")
 
 Para realizar la estimación del modelo logit utilizamos la función `glm()`
 
-```{r}
+```{r, eval==FALSE}
 library(tidyverse)
-data(matricular)
-matricular %>% 
-  glm(matricula ~ matematicas , family = binomial(link = "logit"), data = .) -> modelo1
+data("dataMat")
+dataMat %>% 
+glm(gana ~ nota , family = binomial(link = "logit"), data = .) -> modelo1
 summary(modelo1) 
 
 ```
 
+<pre>
+Call:
+glm(formula = gana ~ nota, family = binomial(link = "logit"), 
+    data = dataMat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.88808  -0.29466  -0.06645  -0.00780   2.97082  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
+nota          8.5699     0.6462   13.26   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+Null deviance: 1102.16  on 999  degrees of freedom
+Residual deviance:  440.94  on 998  degrees of freedom
+AIC: 444.94
+
+Number of Fisher Scoring iterations: 7
+</pre>
 </br></br>
 
 El modelo estimado en su forma original :
 
-$$\ln \Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -9.79394  + 0.15634 \hspace{.2cm} x_{i}$$
+$$\ln \Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -29.6819  + 8.5699 \hspace{.2cm} x_{i}$$
 </br></br>
 
 Utilizamos la función inversa del logaritmo
@@ -68,13 +96,13 @@ Indicando una razón entre las probabilidades de 4 a 1.  Es cuatro veces mas pro
 
 En el modelo estimado esta relación para un valor específico de $X$ de la siguiente forma:
 
-$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.793942  + 0.1563404 \hspace{.2cm}x_{i}}\big\}$$
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -29.6819  + 8.5699 \hspace{.2cm}x_{i}}\big\}$$
 </br></br>
 
 
 Un estudiante con un puntaje de en matemáticas de $60$ tendrá una razón $Odds$ de :
 
-$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.793942  + 0.1563404 \hspace{.2cm} \times 70}\big\} =3.204108$$
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -29.6819  + 8.5699 \hspace{.2cm} \times 3.6}\big\} =3.221155$$
 
 Lo que indica que un estudiante con puntaje en matemáticas igual a 70, tiene 3.2 veces más probabilidad de obtener la matricula de honor en comparación de no tenerla.
 
@@ -98,9 +126,9 @@ $$W_{i} = \dfrac{\widehat{\beta}_{i}}{\sigma^2_{\beta_{i}}} \sim N(0,1) $$
 
 <pre>
 Coefficients:
-              Estimate   Std. Error   z value    Pr(>|z|)    
-(Intercept)   -9.79394      1.48174  -6.610      3.85e-11 ***
-matematicas    0.15634      0.02561   6.105      1.03e-09 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
+nota          8.5699     0.6462   13.26   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre>
@@ -133,11 +161,11 @@ x=0
 # exp(b0+b1*x)
 # exp(b0+b1*x)/(1-exp(b0+b1*x))
 
-cat("exp{b0} = exp{-9.793942} = ", exp(b0+b1*x))
+cat("exp{b0} = exp{-29.6819} = ", exp(b0+b1*x))
 ```
 </br>
 
-Cuando $x=0$ el valor de la razón de probabilidades es de $0.0000557885$, indicando que la probabilidad $(1-P_{i})$ es mucho mas grande que $P_{i}$ . Lo cual es consecuente, dado que obtener un puntaje en el examen de matemáticas $x=0$, estima una probabilidad de obtener matricula de honor de 
+Cuando $x=0$ el valor de la razón de probabilidades es de $0.00000000000128$, indicando que la probabilidad $(1-P_{i})$ es mucho mas grande que $P_{i}$ . Lo cual es consecuente, dado que obtener una nota de $x=0$, estima una probabilidad de ganar la asignatura casi nula.
 
 </br></br>
 
@@ -154,7 +182,7 @@ Ahora para interpretar el aporte que genera un punto adicional en la nota de mat
 </br>
 
 ```{r, echo=FALSE}
-cat("exp(0.1563404) = ", exp(0.1563404) )
+cat("exp(8.5699) = ", exp(8.5699) )
 ```
 
 
@@ -181,24 +209,4 @@ confint(object = modelo1, level = 0.95 )
 </br>
 
 
-```{r}
-data(matricular)
-matricular$matricula <- as.character(matricular$matricula)
-matricular$matematicas <- as.numeric(matricular$matematicas)
-
-plot(matricula ~ matematicas, matricular, col = "darkblue",
-     main = "Modelo regresión logística",
-     ylab = "P(matrícula=1|matemáticas)",
-     xlab = "matemáticas", pch = "I")
-
-# type = "response" devuelve las predicciones en forma de probabilidad en lugar de en log_ODDs
-curve(predict(modelo1, data.frame(matematicas = x), type = "response"),
-      col = "#034A94", lwd = 3, add = TRUE)
-abline(h=.50, col="red")
-
-
-grid()
-```
-
-</br></br></br>
 
