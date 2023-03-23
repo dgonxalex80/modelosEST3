@@ -338,41 +338,41 @@ $(document).ready(function () {
 <code>glm()</code></p>
 <p></br></p>
 <pre class="r"><code>library(tidyverse)
-data(&quot;dataMat&quot;)
-dataMat %&gt;% 
-glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = .) -&gt; modelo1
+data(&quot;matriculah&quot;)
+matriculah = sample(matriculah, 1000, replace = TRUE)  # se realiza un proceso bootstrap
+matriculah %&gt;% 
+glm(honor ~ matematicas , family = binomial(link = &quot;logit&quot;), data = .) -&gt; modelo1
 summary(modelo1) </code></pre>
-<p></br></p>
 <pre>
 Call:
-glm(formula = gana ~ nota, family = binomial(link = "logit"), 
-    data = dataMat)
+glm(formula = honor ~ matematicas, family = binomial(link = "logit"), 
+    data = .)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.88808  -0.29466  -0.06645  -0.00780   2.97082  
+    Min       1Q   Median       3Q      Max  
+-1.9618  -0.7065  -0.4140  -0.1652   2.5208  
 
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
-nota          8.5699     0.6462   13.26   <2e-16 ***
+(Intercept) -9.04461    0.63678  -14.20   <2e-16 ***
+matematicas  0.14415    0.01113   12.95   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-Null deviance: 1102.16  on 999  degrees of freedom
-Residual deviance:  440.94  on 998  degrees of freedom
-AIC: 444.94
+    Null deviance: 1113.55  on 999  degrees of freedom
+Residual deviance:  877.63  on 998  degrees of freedom
+AIC: 881.63
 
-Number of Fisher Scoring iterations: 7
+Number of Fisher Scoring iterations: 5
 </pre>
 <p></br></br></p>
 <p>El modelo estimado en su forma original :</p>
 <p></br></p>
 <p><span class="math display">\[\ln \Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}}
-+ \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -29.6819  + 8.5699
++ \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -9.04461  + 0.14415
 \hspace{.2cm} x_{i}\]</span> </br></br></p>
 <p>Utilizamos la función inversa del logaritmo</p>
 <p></br></p>
@@ -393,18 +393,18 @@ class="math inline">\(X\)</span> de la siguiente forma:</p>
 <p></br></p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
--29.6819  + 8.5699 \hspace{.2cm}x_{i}}\big\}\]</span> </br></br></p>
+-9.04461  + 0.14415 \hspace{.2cm}x_{i}}\big\}\]</span> </br></br></p>
 <p>Un estudiante con un puntaje de en matemáticas de <span
 class="math inline">\(60\)</span> tendrá una razón <span
 class="math inline">\(Odds\)</span> de :</p>
 <p></br></p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
--29.6819  + 8.5699 \hspace{.2cm} \times 3.6}\big\}
-=3.221155\]</span></p>
+-9.04461  + 0.14415 \hspace{.2cm} \times 70}\big\} =
+2.84593\]</span></p>
 <p>Lo que indica que un estudiante con puntaje en matemáticas igual a
-70, tiene 3.2 veces más probabilidad de obtener la matricula de honor en
-comparación de no tenerla.</p>
+70, tiene 2.85 veces más probabilidad de obtener la matricula de honor
+en comparación de no tenerla.</p>
 <p></br></br></p>
 <div id="pruebas-de-significancia-individual" class="section level2">
 <h2><span style="color:#034A94"><strong>Pruebas de significancia
@@ -422,8 +422,8 @@ class="math inline">\(H_1 : \beta_{i} \neq 0\)</span></p>
 <pre>
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
-nota          8.5699     0.6462   13.26   <2e-16 ***
+(Intercept) -9.04461    0.63678  -14.20   <2e-16 ***
+matematicas  0.14415    0.01113   12.95   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre>
@@ -446,11 +446,11 @@ esperado del logaritmo de la razón de probabilidades para un estudiante
 con nota cero en matemáticas. Para leerlo en términos de razón de
 probabilidades realizamos la siguiente transformación:</p>
 <p></br></p>
-<pre><code>exp{b0} = exp{-29.6819} =  4.810186e-11</code></pre>
+<pre><code>exp{b0} = exp{-9.04461} =  0.0001180255</code></pre>
 <p></br></p>
 <p>Cuando <span class="math inline">\(x=0\)</span> el valor de la razón
 de probabilidades es de <span
-class="math inline">\(0.00000000000128\)</span>, indicando que la
+class="math inline">\(0.0001180255\)</span>, indicando que la
 probabilidad <span class="math inline">\((1-P_{i})\)</span> es mucho mas
 grande que <span class="math inline">\(P_{i}\)</span> . Lo cual es
 consecuente, dado que obtener una nota de <span
@@ -467,7 +467,7 @@ nota de matemáticas sobre la probabilidad realizamos el siguiente
 cálculo:</p>
 <p></br></p>
 <!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
-<pre><code>exp(8.5699) =  5270.603</code></pre>
+<pre><code>exp(0.14415) =  1.155057</code></pre>
 <p></br></br></p>
 <p><span class="math inline">\(\widehat{\beta}_{1}\)</span> indica el
 cambio en <span class="math inline">\(ln(p/(1-p))\)</span> debido a un
@@ -476,17 +476,17 @@ que es necesario sacar la función inversa al logaritmo que es la función
 exponencial (<code>exp()</code>)</p>
 <p>Por cada unidad de aumento de <span class="math inline">\(x\)</span>
 los <span class="math inline">\(odds\)</span> de obtener matricula se
-incrementan en : <span class="math inline">\(1.17\)</span> unidades</p>
-<pre><code>exp(b1) =  928.9494</code></pre>
+incrementan en : <span class="math inline">\(1.16\)</span> unidades</p>
+<pre><code>exp(b1) =  2734.118</code></pre>
 <p></br></p>
 <p>Un intervalo de confianza para los coeficientes se puede obtener
 mediante :</p>
 <p></br></p>
 <pre class="r"><code>library(MASS)
 confint(object = modelo1, level = 0.95 )</code></pre>
-<pre><code>                2.5 %     97.5 %
-(Intercept) -27.27703 -20.614500
-nota          5.90493   7.873092</code></pre>
+<pre><code>                 2.5 %     97.5 %
+(Intercept) -31.566042 -23.785796
+nota          6.841565   9.123502</code></pre>
 <p></br></br></p>
 </div>
 </div>
@@ -506,20 +506,21 @@ la suma desviaciones del modelo nulo con la suma de las desviaciones de
 los residuales que se presentan en el resumen del modelo</p>
 <p></br></p>
 <pre>
-Null deviance    : 1102.16  on 999  degrees of freedom
-Residual deviance:  440.94  on 998  degrees of freedom
+    Null deviance: 1113.55  on 999  degrees of freedom
+Residual deviance:  877.63  on 998  degrees of freedom
+AIC: 881.63
 </pre>
 <p><span class="math display">\[
-X^2 = \text{ Null deviance} - \text{ Residual deviance} = 1122.468 -
-518.5805 = 663.88
+X^2 = \text{ Null deviance} - \text{ Residual deviance} = 1113.55 -
+877.63 = 235.92
 \]</span></p>
 <pre class="r"><code>with(modelo1, null.deviance - deviance )</code></pre>
-<pre><code>[1] 551.9053</code></pre>
+<pre><code>[1] 663.7366</code></pre>
 <p></br></p>
 <p>Que tiene una distribución <span class="math inline">\(\chi^2 _{v:
 gl_{null} -gl_{residual}}\)</span></p>
 <pre class="r"><code>with(modelo1, pchisq(null.deviance - deviance , df.null-df.residual, lower.tail = FALSE))</code></pre>
-<pre><code>[1] 4.847337e-122</code></pre>
+<pre><code>[1] 2.29994e-146</code></pre>
 <p></br></p>
 <p>Lo cual indica que se rechaza <span
 class="math inline">\(H_0\)</span>, en favor de <span

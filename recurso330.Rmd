@@ -23,10 +23,16 @@ library(tidyverse)
 # install.packages("devtools")     # solo una vez
 #devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
 library(paqueteMOD)
-data("dataMat")
-dataMat = sample(dataMat, 1000, replace = TRUE)
-glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
+# data("dataMat")
+# dataMat = sample(dataMat, 1000, replace = TRUE)
+# glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
+# summary(modelo1) 
+set.seed(123) 
+data("matriculah")
+matriculah = sample(matriculah, 1000, replace = TRUE)
+glm(honor ~ matematicas , family = binomial(link = "logit"), data = matriculah) -> modelo1
 summary(modelo1) 
+
 ```
 
  </br></br>
@@ -44,8 +50,8 @@ Para determinar la bondad de ajuste del modelo se utiliza el resultado de la pro
         |                predicción    |  
         |         |   No    |    Si    |
 --------|---------|---------|----------|   
-Estado  |  No     |     723 |      37  |
-real    |  Si     |      53 |     187  |
+Estado  |  No     |     708 |      50  |
+real    |  Si     |     127 |      115 |
 
 </pre>
 
@@ -59,10 +65,11 @@ Representados por el siguiente gráfico de mosaico:
 ```{r, echo=FALSE}
 library(vcd)
 predicciones <- ifelse(test = modelo1$fitted.values > 0.5, "Si" , "No")
-mc <- table(modelo1$model$gana, predicciones,
+mc <- table(matriculah$honor, predicciones,
                           dnn = c("Estado real", "Predicciones"))
 mosaic(mc, shade = T, colorize = T,
        gp = gpar(fill = matrix(c("#11224D", "#F98125", "#F5B841","#2C599D"), 2, 2)))
+mc
 ```
 
 </br></br>
@@ -90,9 +97,9 @@ La proporción de clasificaciones correctas dan una aproximación del valor $R^2
 </br>
 
 $$ 
-\dfrac{723+187}{723+53+37+187} = \dfrac{910}{1000} = 0.910
+\dfrac{708+115}{708+127+50+115} = \dfrac{823}{1000} = 0.823
 $$
-Este valor cuenta como el $R^2$ , es decir que el modelo explica (clasifica de manera adecuada) el 91% de los casos.
+Este valor cuenta como el $R^2$ , es decir que el modelo explica (clasifica de manera adecuada) el 82.3% de los casos.
 
 </br></br>
 
@@ -120,30 +127,39 @@ knitr::include_graphics("img/matriz_confusion.png")
 
 </br></br>
 
+Se procede a dividir la data en dos partes 
+
+* train con el 60% de los registros
+* test  con el 40% de los registros
 
 ```{r, echo=FALSE}
 # names(dataMat)
 # nrow(dataMat)
 
-ntrain <- nrow(dataMat)*0.6
-ntest <- nrow(dataMat)*0.4
-c(ntrain,ntest)
+ntrain <- nrow(matriculah)*0.6
+ntest <- nrow(matriculah)*0.4
+# c(ntrain,ntest)
 
 set.seed(123)
-index_train<-sample(1:nrow(dataMat),size = ntrain)
-train<-dataMat[index_train,]  # muestra de entrenamiento
-test<-dataMat[-index_train,]  # muestra de prueba
+index_train<-sample(1:nrow(matriculah),size = ntrain)
+train<-matriculah[index_train,]  # muestra de entrenamiento
+test<-matriculah[-index_train,]  # muestra de prueba
 ```
 
 </br></br>
 
+Se procede a estimar el modelo con la data train y luego emplearlo para realizar las predicciones con la data test, para finalmente evaluar el resultado utilizando para ello la matriz de confusión.
+
+
 ```{r}
 library(tidyverse)
-valor_pronosticado <- predict(modelo1,test,type = "response")
+glm(honor ~ matematicas , family = binomial(link = "logit"), data = train) -> modelo2
+
+valor_pronosticado <- predict(modelo2,test,type = "response")
 niveles_pronosticados <- ifelse(valor_pronosticado >0.5, "Si","No") %>%
                              factor(.)
 
-rendimiento_data<-data.frame(observados=test$gana,
+rendimiento_data<-data.frame(observados=test$honor,
                              predicciones= niveles_pronosticados)
 
 Positivos <- sum(rendimiento_data$observados=="Si")
@@ -158,9 +174,9 @@ FN<-sum(rendimiento_data$observados=="Si" & rendimiento_data$predicciones=="No")
 
 matriz_confusion=matrix(c(VP, FP, FN,VN), nrow=2)
 
-rownames(matriz_confusion) = c(" No ", " Si    ")
-colnames(matriz_confusion) = c("No", "Si")
-# matriz_confusion
+rownames(matriz_confusion) = c(" Si ", " No    ")
+colnames(matriz_confusion) = c("Si", "No")
+matriz_confusion
 ```
 
 
@@ -170,8 +186,8 @@ colnames(matriz_confusion) = c("No", "Si")
         |                predicción             |  
         |         |   Si       |    No          |
 --------|---------|------------|----------------|   
-Estado  |  Si     |   81  (VP) |     22   (FN)  |
-real    |  No     |   13  (FP) |     284  (VN)  |
+Estado  |  Si     |   48  (VP) |     57   (FN)  |
+real    |  No     |   23  (FP) |     272  (VN)  |
 </pre>
 
 
@@ -200,7 +216,7 @@ Porcentaje de casos correctamente clasificados
 
 <div class="content-box-blue">
 $$
-\text{Exactitud} = \dfrac{\text{aciertos en clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} = \dfrac{81+281}{400} = 0.905
+\text{Exactitud} = \dfrac{\text{aciertos en clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} = \dfrac{48+272}{400} = 0.80
 $$
 </div>
 
@@ -213,7 +229,7 @@ Porcentaje de casos incorrectamente clasificados
 
 <div class="content-box-blue">
 $$
-\text{Exactitud} = \dfrac{\text{no aciertos en clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} = \dfrac{13+22}{400} = 0.0875
+\text{Exactitud} = \dfrac{\text{no aciertos en clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} = \dfrac{23+57}{400} = 0.20
 $$
 
 </br></br>
@@ -224,7 +240,7 @@ Porcentaje de positivos que son clasificados por el modelo como positivos
 
 <div class="content-box-blue">
 $$
-\text{Sensibilidad} = \dfrac{VP}{\text{Total positivos}} = \dfrac{81}{103} = 0.786
+\text{Sensibilidad} = \dfrac{VP}{\text{Total positivos}} = \dfrac{48}{105} = 0.457
 $$
 </div>
 </br></br>
@@ -235,7 +251,7 @@ Porcentaje de negativos que son clasificados por el modelo como negativos
 
 <div class="content-box-blue">
 $$
-\text{Especificidad} = \dfrac{\text{VN}}{\text{Total negativos}} = \dfrac{284}{297} = 0.956
+\text{Especificidad} = \dfrac{\text{VN}}{\text{Total negativos}} = \dfrac{272}{295} = 0.922
 $$
 </div>
 
@@ -248,7 +264,7 @@ Porcentaje de positivos pronosticados de manera correcta
 
 <div class="content-box-blue">
 $$
-\text{Precision} = \dfrac{\text{VP}}{\text{Total clasificados positivos}} = \dfrac{81}{94} = 0.862 
+\text{Precision} = \dfrac{\text{VP}}{\text{Total clasificados positivos}} = \dfrac{48}{71} = 0.676 
 $$ 
 </div>
 
@@ -261,7 +277,7 @@ Porcentaje de negativos clasificados por el modelo como negativos
 
 <div class="content-box-blue">
 $$
-\text{Valor de prediccion negativo} = \dfrac{\text{VN}}{\text{Total clasificados negativos}} = \dfrac{284}{306} = 0.928 
+\text{Valor de prediccion negativo} = \dfrac{\text{VN}}{\text{Total clasificados negativos}} = \dfrac{272}{329} = 0.827 
 $$ 
 </div>
 
@@ -287,17 +303,17 @@ indicadores %>%
 ```
 <pre>
                            
-Exactitud                  0.912
+Exactitud                   0.800
 
-Tasa de Error              0.088
+Tasa de Error               0.200
 
-Sensibilidad               0.786
+Sensibilidad                0.457
 
-Especificidad              0.956
+Especificidad               0.922
 
-Precisión                  0.862
+Precisión                   0.676
 
-Valor predicción negativo  0.928
+Valor predicción negativo   0.827
 
 </pre>
 
@@ -339,7 +355,7 @@ Valor predicción negativo  0.928
 
 ```{r}
 library(pROC)
-curva_ROC <- roc(test$gana, valor_pronosticado)
+curva_ROC <- roc(test$honor, valor_pronosticado)
 auc<- round(auc(curva_ROC, levels =c(0,1), direction = "<"),4) # 0.9177
 
 ggroc(curva_ROC, colour = "#FF7F00", size=2)+
@@ -348,6 +364,6 @@ xlab("Especificidad")+
 ylab("Sensibilidad")  
 ```
 
-El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.9234), indica un buen ajuste del modelo de predicción. 
+El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.8292), indica un buen ajuste del modelo de predicción. 
 
 

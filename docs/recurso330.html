@@ -351,14 +351,18 @@ class="math inline">\(Y\)</span>, obtenemos:</p>
         |                predicción    |  
         |         |   No    |    Si    |
 --------|---------|---------|----------|   
-Estado  |  No     |     723 |      37  |
-real    |  Si     |      53 |     187  |
+Estado  |  No     |     708 |      50  |
+real    |  Si     |     127 |      115 |
 
 </pre>
 <p></br></br></p>
 <p>Representados por el siguiente gráfico de mosaico:</p>
 <p></br></p>
 <p><img src="recurso330_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre><code>           Predicciones
+Estado real  No  Si
+         No 708  50
+         Si 127 115</code></pre>
 <p></br></br></p>
 <p>Los colores azules representan la proporción de clasificaciones
 correcta :</p>
@@ -385,10 +389,10 @@ Positovo : <strong>FP</strong></p></li>
 valor <span class="math inline">\(R^2\)</span></p>
 <p></br></p>
 <p><span class="math display">\[
-\dfrac{723+187}{723+53+37+187} = \dfrac{910}{1000} = 0.910
+\dfrac{708+115}{708+127+50+115} = \dfrac{823}{1000} = 0.823
 \]</span> Este valor cuenta como el <span
 class="math inline">\(R^2\)</span> , es decir que el modelo explica
-(clasifica de manera adecuada) el 91% de los casos.</p>
+(clasifica de manera adecuada) el 82.3% de los casos.</p>
 <p></br></br></p>
 <p>Este valor se puede obtener de la matriz de confusión que se obtiene
 con una data que no se ha empleado en la estimación del modelo</p>
@@ -411,14 +415,23 @@ forma:</p>
 <p></br></br></p>
 <p><img src="img/matriz_confusion.png" width="80%" style="display: block; margin: auto;" /></p>
 <p></br></br></p>
-<pre><code>[1] 600 400</code></pre>
+<p>Se procede a dividir la data en dos partes</p>
+<ul>
+<li>train con el 60% de los registros</li>
+<li>test con el 40% de los registros</li>
+</ul>
 <p></br></br></p>
+<p>Se procede a estimar el modelo con la data train y luego emplearlo
+para realizar las predicciones con la data test, para finalmente evaluar
+el resultado utilizando para ello la matriz de confusión.</p>
 <pre class="r"><code>library(tidyverse)
-valor_pronosticado &lt;- predict(modelo1,test,type = &quot;response&quot;)
+glm(honor ~ matematicas , family = binomial(link = &quot;logit&quot;), data = train) -&gt; modelo2
+
+valor_pronosticado &lt;- predict(modelo2,test,type = &quot;response&quot;)
 niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
                              factor(.)
 
-rendimiento_data&lt;-data.frame(observados=test$gana,
+rendimiento_data&lt;-data.frame(observados=test$honor,
                              predicciones= niveles_pronosticados)
 
 Positivos &lt;- sum(rendimiento_data$observados==&quot;Si&quot;)
@@ -433,16 +446,19 @@ FN&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$pr
 
 matriz_confusion=matrix(c(VP, FP, FN,VN), nrow=2)
 
-rownames(matriz_confusion) = c(&quot; No &quot;, &quot; Si    &quot;)
-colnames(matriz_confusion) = c(&quot;No&quot;, &quot;Si&quot;)
-# matriz_confusion</code></pre>
+rownames(matriz_confusion) = c(&quot; Si &quot;, &quot; No    &quot;)
+colnames(matriz_confusion) = c(&quot;Si&quot;, &quot;No&quot;)
+matriz_confusion</code></pre>
+<pre><code>        Si  No
+ Si     48  57
+ No     23 272</code></pre>
 <p></br></br></p>
 <pre>
         |                predicción             |  
         |         |   Si       |    No          |
 --------|---------|------------|----------------|   
-Estado  |  Si     |   81  (VP) |     22   (FN)  |
-real    |  No     |   13  (FP) |     284  (VN)  |
+Estado  |  Si     |   48  (VP) |     57   (FN)  |
+real    |  No     |   23  (FP) |     272  (VN)  |
 </pre>
 <p></br></p>
 <blockquote>
@@ -471,7 +487,7 @@ de verdaderos positivos y de falsos positivos:</p>
 <p><span class="math display">\[
 \text{Exactitud} = \dfrac{\text{aciertos en
 clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} =
-\dfrac{81+281}{400} = 0.905
+\dfrac{48+272}{400} = 0.80
 \]</span></p>
 </div>
 <p></br></br></p>
@@ -484,7 +500,7 @@ error</strong></span></h3>
 <p><span class="math display">\[
 \text{Exactitud} = \dfrac{\text{no aciertos en
 clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} =
-\dfrac{13+22}{400} = 0.0875
+\dfrac{23+57}{400} = 0.20
 \]</span></p>
 <p></br></br></p>
 </div>
@@ -496,7 +512,7 @@ positivos</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Sensibilidad} = \dfrac{VP}{\text{Total positivos}} =
-\dfrac{81}{103} = 0.786
+\dfrac{48}{105} = 0.457
 \]</span></p>
 </div>
 <p></br></br></p>
@@ -509,7 +525,7 @@ negativos</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Especificidad} = \dfrac{\text{VN}}{\text{Total negativos}} =
-\dfrac{284}{297} = 0.956
+\dfrac{272}{295} = 0.922
 \]</span></p>
 </div>
 <p></br></br></p>
@@ -520,7 +536,7 @@ negativos</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Precision} = \dfrac{\text{VP}}{\text{Total clasificados
-positivos}} = \dfrac{81}{94} = 0.862
+positivos}} = \dfrac{48}{71} = 0.676
 \]</span></p>
 </div>
 <p></br></br></p>
@@ -532,7 +548,7 @@ negativo</strong></span></h3>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Valor de prediccion negativo} = \dfrac{\text{VN}}{\text{Total
-clasificados negativos}} = \dfrac{284}{306} = 0.928
+clasificados negativos}} = \dfrac{272}{329} = 0.827
 \]</span></p>
 </div>
 <p></br></br></p>
@@ -553,17 +569,17 @@ indicadores %&gt;%
   round(.,3)</code></pre>
 <pre>
                            
-Exactitud                  0.912
+Exactitud                   0.800
 
-Tasa de Error              0.088
+Tasa de Error               0.200
 
-Sensibilidad               0.786
+Sensibilidad                0.457
 
-Especificidad              0.956
+Especificidad               0.922
 
-Precisión                  0.862
+Precisión                   0.676
 
-Valor predicción negativo  0.928
+Valor predicción negativo   0.827
 
 </pre>
 <p></br></br></p>
@@ -617,7 +633,7 @@ importante y afecta a los indicadores</li>
 <h3><strong>Curva ROC</strong></h3>
 <p></br></p>
 <pre class="r"><code>library(pROC)
-curva_ROC &lt;- roc(test$gana, valor_pronosticado)
+curva_ROC &lt;- roc(test$honor, valor_pronosticado)
 auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
 
 ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=2)+
@@ -626,7 +642,7 @@ xlab(&quot;Especificidad&quot;)+
 ylab(&quot;Sensibilidad&quot;)  </code></pre>
 <p><img src="recurso330_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
-(AUC = 0.9234), indica un buen ajuste del modelo de predicción.</p>
+(AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
 </div>
 </div>
 

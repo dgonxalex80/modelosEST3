@@ -22,12 +22,17 @@ library(tidyverse)
 # install.packages("learnr")          # solo una vez
 # install.packages("devtools")     # solo una vez
 # devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
+set.seed(123) 
 library(paqueteMOD)
 library(paqueteMOD)
 data("dataMat")
 dataMat = sample(dataMat, 1000, replace = TRUE)
 glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
 summary(modelo1) 
+
+data("matriculah")
+matriculah = sample(matriculah, 1000, replace = TRUE)
+
 ```
 
 </br></br>
@@ -46,39 +51,41 @@ Para realizar la estimación del modelo logit utilizamos la función `glm()`
 
 ```{r, eval=FALSE}
 library(tidyverse)
-data("dataMat")
-dataMat %>% 
-glm(gana ~ nota , family = binomial(link = "logit"), data = .) -> modelo1
+data("matriculah")
+matriculah = sample(matriculah, 1000, replace = TRUE)  # se realiza un proceso bootstrap
+matriculah %>% 
+glm(honor ~ matematicas , family = binomial(link = "logit"), data = .) -> modelo1
 summary(modelo1) 
-
 ```
 
-</br>
+
+
 
 <pre>
 Call:
-glm(formula = gana ~ nota, family = binomial(link = "logit"), 
-    data = dataMat)
+glm(formula = honor ~ matematicas, family = binomial(link = "logit"), 
+    data = .)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.88808  -0.29466  -0.06645  -0.00780   2.97082  
+    Min       1Q   Median       3Q      Max  
+-1.9618  -0.7065  -0.4140  -0.1652   2.5208  
 
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
-nota          8.5699     0.6462   13.26   <2e-16 ***
+(Intercept) -9.04461    0.63678  -14.20   <2e-16 ***
+matematicas  0.14415    0.01113   12.95   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-Null deviance: 1102.16  on 999  degrees of freedom
-Residual deviance:  440.94  on 998  degrees of freedom
-AIC: 444.94
+    Null deviance: 1113.55  on 999  degrees of freedom
+Residual deviance:  877.63  on 998  degrees of freedom
+AIC: 881.63
 
-Number of Fisher Scoring iterations: 7
+Number of Fisher Scoring iterations: 5
 </pre>
+
 
 </br></br>
 
@@ -86,7 +93,7 @@ El modelo estimado en su forma original :
 
 </br>
 
-$$\ln \Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -29.6819  + 8.5699 \hspace{.2cm} x_{i}$$
+$$\ln \Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \widehat{\beta_{0}} + \widehat{\beta_{1}} \hspace{.2cm}x_{i} = -9.04461  + 0.14415 \hspace{.2cm} x_{i}$$
 </br></br>
 
 Utilizamos la función inversa del logaritmo
@@ -111,7 +118,7 @@ En el modelo estimado esta relación para un valor específico de $X$ de la sigu
 
 </br>
 
-$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -29.6819  + 8.5699 \hspace{.2cm}x_{i}}\big\}$$
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.04461  + 0.14415 \hspace{.2cm}x_{i}}\big\}$$
 </br></br>
 
 
@@ -119,9 +126,9 @@ Un estudiante con un puntaje de en matemáticas de $60$ tendrá una razón $Odds
 
 </br>
 
-$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -29.6819  + 8.5699 \hspace{.2cm} \times 3.6}\big\} =3.221155$$
+$$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.04461  + 0.14415 \hspace{.2cm} \times 70}\big\} = 2.84593$$
 
-Lo que indica que un estudiante con puntaje en matemáticas igual a 70, tiene 3.2 veces más probabilidad de obtener la matricula de honor en comparación de no tenerla.
+Lo que indica que un estudiante con puntaje en matemáticas igual a 70, tiene 2.85 veces más probabilidad de obtener la matricula de honor en comparación de no tenerla.
 
 </br></br>
 
@@ -146,8 +153,8 @@ $$W_{i} = \dfrac{\widehat{\beta}_{i}}{\sigma^2_{\beta_{i}}} \sim N(0,1) $$
 <pre>
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -29.6819     2.1978  -13.51   <2e-16 ***
-nota          8.5699     0.6462   13.26   <2e-16 ***
+(Intercept) -9.04461    0.63678  -14.20   <2e-16 ***
+matematicas  0.14415    0.01113   12.95   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre>
@@ -181,11 +188,11 @@ x=0
 # exp(b0+b1*x)
 # exp(b0+b1*x)/(1-exp(b0+b1*x))
 
-cat("exp{b0} = exp{-29.6819} = ", exp(b0+b1*x))
+cat("exp{b0} = exp{-9.04461} = ", exp(-9.04461))
 ```
 </br>
 
-Cuando $x=0$ el valor de la razón de probabilidades es de $0.00000000000128$, indicando que la probabilidad $(1-P_{i})$ es mucho mas grande que $P_{i}$ . Lo cual es consecuente, dado que obtener una nota de $x=0$, estima una probabilidad de ganar la asignatura casi nula.
+Cuando $x=0$ el valor de la razón de probabilidades es de $0.0001180255$, indicando que la probabilidad $(1-P_{i})$ es mucho mas grande que $P_{i}$ . Lo cual es consecuente, dado que obtener una nota de $x=0$, estima una probabilidad de ganar la asignatura casi nula.
 
 </br></br>
 
@@ -201,7 +208,7 @@ Ahora para interpretar el aporte que genera un punto adicional en la nota de mat
 
 
 ```{r, echo=FALSE}
-cat("exp(8.5699) = ", exp(8.5699) )
+cat("exp(0.14415) = ", exp(0.14415) )
 ```
 
 
@@ -209,7 +216,7 @@ cat("exp(8.5699) = ", exp(8.5699) )
 
 $\widehat{\beta}_{1}$ indica el cambio en $ln(p/(1-p))$  debido a un incremento unitario en $x$,   por lo que es necesario sacar la función inversa al logaritmo que es la función exponencial (`exp()`)
 
-Por cada unidad de aumento de $x$ los $odds$ de obtener matricula se  incrementan en : $1.17$ unidades
+Por cada unidad de aumento de $x$ los $odds$ de obtener matricula se  incrementan en : $1.16$ unidades
 
 ```{r, echo=FALSE}
 cat("exp(b1) = ", exp(b1))
@@ -246,12 +253,13 @@ El equivalente de la prueba global de significancia del modelo logit tiene como 
 </br>
 
 <pre>
-Null deviance    : 1102.16  on 999  degrees of freedom
-Residual deviance:  440.94  on 998  degrees of freedom
+    Null deviance: 1113.55  on 999  degrees of freedom
+Residual deviance:  877.63  on 998  degrees of freedom
+AIC: 881.63
 </pre>
 
 $$
-X^2 = \text{ Null deviance} - \text{ Residual deviance} = 1122.468 - 518.5805 = 663.88
+X^2 = \text{ Null deviance} - \text{ Residual deviance} = 1113.55 - 877.63 = 235.92
 $$
 ```{r}
 with(modelo1, null.deviance - deviance )

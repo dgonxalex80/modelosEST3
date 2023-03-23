@@ -41,7 +41,7 @@ La regresión logística tiene la misma estructura presentada en el modelo de re
 
 <br/>
 
-Este modelo esta relacionado con predicción y explicación de las decisiones de los consumidores, la clasificación de los clientes de un banco y presenta como función de ajuste la **función logit** que corresponde a una función en forma de s, en lugar de una linea recta como lo hace la regresión lineal simple.
+Este modelo está relacionado con predicción y explicación de las decisiones de los consumidores, la clasificación de los clientes de un banco y presenta como función de ajuste la **función logit** que corresponde a una función en forma de s, en lugar de una linea recta como lo hace la regresión lineal simple.
 
 <br/>
 
@@ -113,8 +113,8 @@ En este caso se debe contar con una variable categórica con dos niveles represe
 
 ```{r}
 library(paqueteMOD)
-data("matricular")
-summary(matricular)
+data("matriculah")
+summary(matriculah)
 ```
 
 </br></br>
@@ -139,7 +139,7 @@ Tambien podemos explorar el comportamiento de la variable cuantitativa (matemát
 
 ```{r}
 library(ggplot2)
-ggplot(data = matricular, aes(x = as.factor(matricula), y = matematicas, color = matricula)) +
+ggplot(data = matriculah, aes(x = as.factor(honor), y = matematicas, color = honor)) +
   geom_boxplot() +
   geom_jitter(width = 0.2)+
   scale_color_manual(values=c("#FF7F00","#034A94"))+

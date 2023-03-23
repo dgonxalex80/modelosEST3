@@ -26,7 +26,7 @@ biomasa$finca=as.factor(biomasa$finca)
 
 <br/>
 
-El modelo de diseño de experimentos forma parte del grupo de modelos que conforman los modelos lineales generales. En este caso la variable dependiente $Y$ es una variable cuantitativa, mientras que la variable independientes $X_1, X_2, \dots$ corresponden a una variables cualitativas con valores que permiten dividir la variable $Y$ en subgrupos.
+El modelo de diseño de experimentos forma parte del grupo de modelos que conforman los modelos lineales generales. En este caso la variable dependiente $Y$ es una variable cuantitativa, mientras que las variables independientes $X_1, X_2, \dots$ corresponden a una variables cualitativas con valores que permiten dividir la variable $Y$ en subgrupos.
 
 <div class="content-box-blue">
 $$ 
