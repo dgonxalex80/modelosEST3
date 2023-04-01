@@ -14,7 +14,7 @@
 
 <title> Validación cruzada</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -313,6 +313,21 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Tutoriales
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso700.html">Tutorial 301</a>
+    </li>
+    <li>
+      <a href="recurso701.html">Tutorial 302</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -332,140 +347,233 @@ $(document).ready(function () {
 </div>
 
 
-<p></br></br></p>
-<p>La validación cruzada es una metodología empleada para determinar si
-los resultados obtenidos es consistente para muestras diferentes a la
-muestra con que se estima el modelo</p>
-<p>Para realizarlo se parte la muestra en dos submuestras:</p>
-<ul>
-<li>muestra de entrenamiento</li>
-<li>muestra de prueba</li>
-</ul>
-<p>Una vez separadas las muestras se estima el modelo con la muestra de
-entrenamiento (modelo1) para después probar la capacidad de
-clasificación del modelo.</p>
-<p>El siguiente ejemplo ilustra su construcción y explicación.</p>
-<div id="ejemplo" class="section level3">
-<h3><strong>Ejemplo</strong></h3>
-<p>La data dataMat contiene <strong>notas</strong> de un examen de
-admisión y el resultado de de aprobación o no del resultado al finalizar
-el primer curso de matemáticas fundamentales para primer semestre de
-universidad (<strong>Gana</strong> o <strong>Pierde</strong>), que
-contiene el resultado obtenido por <span class="math inline">\(n =
-200\)</span> estudiantes.</p>
-<p></br></br></p>
-<pre class="r"><code>head(dataMat)</code></pre>
-<pre><code>    gana nota
-124   No 3.00
-80    No 3.30
-7     No 2.60
-45    No 2.70
-76    No 3.10
-25    No 2.95</code></pre>
-<p>Con esta información se pretende construir un modelo que permita la
-predicción del riesgo de perder el curso conociendo el resultado de la
-prueba de admisión</p>
-<p><span class="math display">\[
-\text{gana} \hspace{.2cm}= \hspace{.2cm} \beta_{0} + \beta_{1}
-\hspace{.2cm} \text{nota} \hspace{.3cm}+ \hspace{.2cm}\varepsilon
-\]</span> Inicialmente se divide la muestra en dos partes, una para
-realizar el entrenamiento del modelo y una segunda para realiza la
-prueba de los resultados</p>
-<pre class="r"><code>names(dataMat)</code></pre>
-<pre><code>[1] &quot;gana&quot; &quot;nota&quot;</code></pre>
-<pre class="r"><code>nrow(dataMat)</code></pre>
-<pre><code>[1] 1000</code></pre>
-<pre class="r"><code>ntrain &lt;- nrow(dataMat)*0.6
-ntest &lt;- nrow(dataMat)*0.4
-c(ntrain,ntest)</code></pre>
-<pre><code>[1] 600 400</code></pre>
-<pre class="r"><code>set.seed(123)
-index_train&lt;-sample(1:nrow(dataMat),size = ntrain)
-train&lt;-dataMat[index_train,]  # muestra de entrenamiento
-test&lt;-dataMat[-index_train,]  # muestra de prueba</code></pre>
-<p>Con la muestra de entrenamiento se estima el modelo</p>
-<pre class="r"><code>modelo1 &lt;- glm(gana~ nota,data = train,family = &quot;binomial&quot;)
-summary(modelo1)</code></pre>
+<pre class="r"><code>library(caret)
+table(dataMat$gana) %&gt;% 
+  prop.table()</code></pre>
+<pre><code>
+   No    Si 
+0.755 0.245 </code></pre>
+<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = dataMat) -&gt; modelo1
+summary(modelo1) </code></pre>
 <pre><code>
 Call:
-glm(formula = gana ~ nota, family = &quot;binomial&quot;, data = train)
+glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
+    data = dataMat)
 
 Deviance Residuals: 
      Min        1Q    Median        3Q       Max  
--1.84357  -0.28869  -0.07411  -0.01509   2.97937  
+-1.73548  -0.40492  -0.11740  -0.01932   2.68961  
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -29.3916     2.8244  -10.41   &lt;2e-16 ***
-nota          8.4628     0.8293   10.20   &lt;2e-16 ***
+(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
+nota           6.921      1.113   6.216 5.10e-10 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 644.71  on 599  degrees of freedom
-Residual deviance: 269.76  on 598  degrees of freedom
-AIC: 273.76
+    Null deviance: 222.71  on 199  degrees of freedom
+Residual deviance: 106.29  on 198  degrees of freedom
+AIC: 110.29
 
 Number of Fisher Scoring iterations: 7</code></pre>
-<p>Se utiliza la muestra de prueba para encontrar la estimación de las
-probabilidades para sus valores</p>
-<pre class="r"><code>library(tidyverse)
+<pre class="r"><code>library(caret)
+
+# separacion de muetras
+ntrain &lt;- nrow(dataMat)*0.6
+ntest &lt;- nrow(dataMat)*0.4
+
+set.seed(123)
+index_train&lt;-sample(1:nrow(dataMat),size = ntrain)
+train&lt;-dataMat[index_train,]  # muestra de entrenamiento
+test&lt;-dataMat[-index_train,]  # muestra de prueba
+
+# matriz de confucion
 valor_pronosticado &lt;- predict(modelo1,test,type = &quot;response&quot;)
-niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;% 
-                             factor(.)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+  factor(.)
 
-rendimiento_data&lt;-data.frame(observados=test$gana,
-                             predicciones= niveles_pronosticados)
+confusionMatrix(niveles_pronosticados, test$gana )</code></pre>
+<pre><code>Confusion Matrix and Statistics
 
-Positivos &lt;- sum(rendimiento_data$observados==&quot;Si&quot;)
-Negativos &lt;- sum(rendimiento_data$observados==&quot;No&quot;)
-Positivos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;Si&quot;)
-Negativos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;No&quot;)
-Total &lt;- nrow(rendimiento_data)
-VP&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
-VN&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
-FP&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
-FN&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
+          Reference
+Prediction No Si
+        No 67  4
+        Si  2  7
+                                         
+               Accuracy : 0.925          
+                 95% CI : (0.8439, 0.972)
+    No Information Rate : 0.8625         
+    P-Value [Acc &gt; NIR] : 0.06427        
+                                         
+                  Kappa : 0.6576         
+                                         
+ Mcnemar&#39;s Test P-Value : 0.68309        
+                                         
+            Sensitivity : 0.9710         
+            Specificity : 0.6364         
+         Pos Pred Value : 0.9437         
+         Neg Pred Value : 0.7778         
+             Prevalence : 0.8625         
+         Detection Rate : 0.8375         
+   Detection Prevalence : 0.8875         
+      Balanced Accuracy : 0.8037         
+                                         
+       &#39;Positive&#39; Class : No             
+                                         </code></pre>
+<pre class="r"><code>library(ROSE)
+# oversampling
+train.blc &lt;- ovun.sample(gana~., data=train, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data
 
-matriz_confusion=matrix(c(VN, FN, FP,VP), nrow=2)
+test.blc &lt;- ovun.sample(gana~., data=test, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data</code></pre>
+<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = train.blc) -&gt; modelo2
+summary(modelo1) </code></pre>
+<pre><code>
+Call:
+glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
+    data = dataMat)
 
-rownames(matriz_confusion) = c(&quot; No &quot;, &quot; Si    &quot;)
-colnames(matriz_confusion) = c(&quot;No&quot;, &quot;Si&quot;)
-matriz_confusion</code></pre>
-<pre><code>         No Si
- No     284 13
- Si      22 81</code></pre>
-<pre class="r"><code>Exactitud &lt;- (VP+VN)/Total
-Tasa_de_Error &lt;- (FP+FN)/Total
-Sensibilidad &lt;- VP/Positivos
-Especificidad &lt;- VN/Negativos
-Precision &lt;- VP/Positivos_pronosticados
-Valor_prediccion_negativo &lt;- VN / Negativos_pronosticados
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.73548  -0.40492  -0.11740  -0.01932   2.68961  
 
-indicadores &lt;- t(data.frame(Exactitud,Tasa_de_Error,Sensibilidad,Especificidad,Precision,Valor_prediccion_negativo))
-indicadores</code></pre>
-<pre><code>                               [,1]
-Exactitud                 0.9125000
-Tasa_de_Error             0.0875000
-Sensibilidad              0.7864078
-Especificidad             0.9562290
-Precision                 0.8617021
-Valor_prediccion_negativo 0.9281046</code></pre>
-</div>
-<div id="curva-roc" class="section level3">
-<h3><strong>Curva ROC</strong></h3>
-<pre class="r"><code>library(pROC)
-curva_ROC &lt;- roc(test$gana, valor_pronosticado)
-auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
+nota           6.921      1.113   6.216 5.10e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.71  on 199  degrees of freedom
+Residual deviance: 106.29  on 198  degrees of freedom
+AIC: 110.29
+
+Number of Fisher Scoring iterations: 7</code></pre>
+<pre class="r"><code># matriz de confucion
+valor_pronosticado &lt;- predict(modelo2,test.blc,type = &quot;response&quot;)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test.blc$gana )</code></pre>
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction No Si
+        No 64 12
+        Si  5 55
+                                          
+               Accuracy : 0.875           
+                 95% CI : (0.8074, 0.9255)
+    No Information Rate : 0.5074          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.7496          
+                                          
+ Mcnemar&#39;s Test P-Value : 0.1456          
+                                          
+            Sensitivity : 0.9275          
+            Specificity : 0.8209          
+         Pos Pred Value : 0.8421          
+         Neg Pred Value : 0.9167          
+             Prevalence : 0.5074          
+         Detection Rate : 0.4706          
+   Detection Prevalence : 0.5588          
+      Balanced Accuracy : 0.8742          
+                                          
+       &#39;Positive&#39; Class : No              
+                                          </code></pre>
+<pre class="r"><code>library(paqueteMOD)
+library(tidyverse)
+data(&quot;dataMat&quot;)
+dataMat = sample(dataMat, 2000, replace = TRUE)
 
 
-ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=2)+
-ggtitle(paste0(&quot;Curva ROC &quot;, &quot;(AUC = &quot;, auc, &quot;)&quot;))+
-xlab(&quot;Especificidad&quot;)+
-ylab(&quot;Sensibilidad&quot;)  </code></pre>
-<p><img src="recurso340_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-</div>
+# separacion de muetras
+ntrain &lt;- nrow(dataMat)*0.6
+ntest &lt;- nrow(dataMat)*0.4
+
+set.seed(123)
+index_train&lt;-sample(1:nrow(dataMat),size = ntrain)
+train&lt;-dataMat[index_train,]  # muestra de entrenamiento
+test&lt;-dataMat[-index_train,]  # muestra de prueba
+
+
+
+
+library(ROSE)
+# oversampling
+train.blc &lt;- ovun.sample(gana~., data=train, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data
+
+test.blc &lt;- ovun.sample(gana~., data=test, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data</code></pre>
+<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = train.blc) -&gt; modelo2
+summary(modelo1) </code></pre>
+<pre><code>
+Call:
+glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
+    data = dataMat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.73548  -0.40492  -0.11740  -0.01932   2.68961  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
+nota           6.921      1.113   6.216 5.10e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.71  on 199  degrees of freedom
+Residual deviance: 106.29  on 198  degrees of freedom
+AIC: 110.29
+
+Number of Fisher Scoring iterations: 7</code></pre>
+<pre class="r"><code># matriz de confucion
+valor_pronosticado &lt;- predict(modelo2,test.blc,type = &quot;response&quot;)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test.blc$gana )</code></pre>
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction  No  Si
+        No 518 101
+        Si  95 486
+                                          
+               Accuracy : 0.8367          
+                 95% CI : (0.8145, 0.8572)
+    No Information Rate : 0.5108          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.6731          
+                                          
+ Mcnemar&#39;s Test P-Value : 0.721           
+                                          
+            Sensitivity : 0.8450          
+            Specificity : 0.8279          
+         Pos Pred Value : 0.8368          
+         Neg Pred Value : 0.8365          
+             Prevalence : 0.5108          
+         Detection Rate : 0.4317          
+   Detection Prevalence : 0.5158          
+      Balanced Accuracy : 0.8365          
+                                          
+       &#39;Positive&#39; Class : No              
+                                          </code></pre>
 
 
 

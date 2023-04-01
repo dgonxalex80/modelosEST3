@@ -41,36 +41,6 @@ summary(modelo1)
 
 </br>
 
-Para determinar la bondad de ajuste del modelo se utiliza el resultado de la probabilidad que estima el modelo y se asigna un valor de cero para los individuos que tengan valores menores o iguales a un punto $c$, que en este caso tomamos como $0.50$. Para valores mayores a $0.5$ se asigna un valor de $1$. Al construir una tabla con los resultados de la predicción contra los valores reales de $Y$, obtenemos:
-
-</br>
-
-
-<pre>
-        |                predicción    |  
-        |         |   No    |    Si    |
---------|---------|---------|----------|   
-Estado  |  No     |     708 |      50  |
-real    |  Si     |     127 |      115 |
-
-</pre>
-
-</br></br>
-
-Representados por el siguiente gráfico de mosaico:
-
-</br>
-
-
-```{r, echo=FALSE}
-library(vcd)
-predicciones <- ifelse(test = modelo1$fitted.values > 0.5, "Si" , "No")
-mc <- table(matriculah$honor, predicciones,
-                          dnn = c("Estado real", "Predicciones"))
-mosaic(mc, shade = T, colorize = T,
-       gp = gpar(fill = matrix(c("#11224D", "#F98125", "#F5B841","#2C599D"), 2, 2)))
-mc
-```
 
 </br></br>
 
@@ -224,6 +194,9 @@ $$
 
 ### <span style="color:#FF7F00"> **Tasa de error**</span>
 
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("img/matriz_confusion.png")
+```
 
 Porcentaje de casos incorrectamente clasificados
 
@@ -349,9 +322,15 @@ Valor predicción negativo   0.827
 
 
 
-### **Curva ROC**
+### **Curva ROC y valor AUC**
 
 </br>
+
+Como se ha indicado la capacidad que tiene el modelo para distinguir entre dos grupos ( matricila de honor/ sin matriculade honor;  no paga/ paga; compra/no compra..) en función de la probabilidad estimada se valora a través de la matriz de confusión, a parir de la cual se construye varios indicadores, la curva ROC (Receiver Operating Characteristic, o Característica Operativa del Receptor)
+y el indicador AUC (area under the curve o área bajo la curva ROC)
+
+</br>
+
 
 ```{r}
 library(pROC)
@@ -366,4 +345,16 @@ ylab("Sensibilidad")
 
 El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.8292), indica un buen ajuste del modelo de predicción. 
 
+</br></br>
+
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("img/ROC.png")
+```
+
+El mejor valor ocurre cuando la tasa de positivos verdaderos (TPR) es 1 y la tasa de falsos positivos (FPR) es cero, caso que se denomina perfecta clasificación.  
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("img/AUC.png")
+```
 

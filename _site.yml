@@ -29,6 +29,12 @@ navbar:
       menu:
         - text: "Análisis de Componentes Principales"
           href: recurso600.html
+    - text: "Tutoriales"
+      menu:
+        - text: "Tutorial 301"
+          href: recurso700.html          
+        - text: "Tutorial 302"
+          href: recurso701.html 
 output:
   html_document:
     css: style.css

@@ -160,7 +160,7 @@ $$\ln \Bigg(\dfrac{P_{i}}{1-P_{i}} \Bigg) = \ln (Odds) =\beta_{0} + \beta_{1} \h
 
 Donde :
 
-* $odds = \dfrac{P_{i}}{1-P_{i}} = \dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}$, llamada tambien **razón de probabilida** o **ratio ODDS**
+* $odds = \dfrac{P_{i}}{1-P_{i}} = \dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}$, llamada también **razón de probabilidad** o **ODDS ratio**
 
 
 </br>

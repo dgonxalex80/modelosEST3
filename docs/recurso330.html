@@ -14,7 +14,7 @@
 
 <title> Evaluación del modelo</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -313,6 +313,21 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Tutoriales
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso700.html">Tutorial 301</a>
+    </li>
+    <li>
+      <a href="recurso701.html">Tutorial 302</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -337,32 +352,6 @@ $(document).ready(function () {
 <h2><span style="color:#034A94"><strong>Bondad de ajuste del
 modelo</strong></span></h2>
 <p></br></p>
-<p>Para determinar la bondad de ajuste del modelo se utiliza el
-resultado de la probabilidad que estima el modelo y se asigna un valor
-de cero para los individuos que tengan valores menores o iguales a un
-punto <span class="math inline">\(c\)</span>, que en este caso tomamos
-como <span class="math inline">\(0.50\)</span>. Para valores mayores a
-<span class="math inline">\(0.5\)</span> se asigna un valor de <span
-class="math inline">\(1\)</span>. Al construir una tabla con los
-resultados de la predicción contra los valores reales de <span
-class="math inline">\(Y\)</span>, obtenemos:</p>
-<p></br></p>
-<pre>
-        |                predicción    |  
-        |         |   No    |    Si    |
---------|---------|---------|----------|   
-Estado  |  No     |     708 |      50  |
-real    |  Si     |     127 |      115 |
-
-</pre>
-<p></br></br></p>
-<p>Representados por el siguiente gráfico de mosaico:</p>
-<p></br></p>
-<p><img src="recurso330_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<pre><code>           Predicciones
-Estado real  No  Si
-         No 708  50
-         Si 127 115</code></pre>
 <p></br></br></p>
 <p>Los colores azules representan la proporción de clasificaciones
 correcta :</p>
@@ -495,6 +484,7 @@ clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} =
 <div id="tasa-de-error" class="section level3">
 <h3><span style="color:#FF7F00"> <strong>Tasa de
 error</strong></span></h3>
+<p><img src="img/matriz_confusion.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Porcentaje de casos incorrectamente clasificados</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
@@ -629,8 +619,16 @@ importante y afecta a los indicadores</li>
 </ul>
 </div>
 <p></br></br></p>
-<div id="curva-roc" class="section level3">
-<h3><strong>Curva ROC</strong></h3>
+<div id="curva-roc-y-valor-auc" class="section level3">
+<h3><strong>Curva ROC y valor AUC</strong></h3>
+<p></br></p>
+<p>Como se ha indicado la capacidad que tiene el modelo para distinguir
+entre dos grupos ( matricila de honor/ sin matriculade honor; no paga/
+paga; compra/no compra..) en función de la probabilidad estimada se
+valora a través de la matriz de confusión, a parir de la cual se
+construye varios indicadores, la curva ROC (Receiver Operating
+Characteristic, o Característica Operativa del Receptor) y el indicador
+AUC (area under the curve o área bajo la curva ROC)</p>
 <p></br></p>
 <pre class="r"><code>library(pROC)
 curva_ROC &lt;- roc(test$honor, valor_pronosticado)
@@ -643,6 +641,12 @@ ylab(&quot;Sensibilidad&quot;)  </code></pre>
 <p><img src="recurso330_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
 (AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
+<p></br></br></p>
+<p><img src="img/ROC.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>El mejor valor ocurre cuando la tasa de positivos verdaderos (TPR) es
+1 y la tasa de falsos positivos (FPR) es cero, caso que se denomina
+perfecta clasificación.</p>
+<p><img src="img/AUC.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 

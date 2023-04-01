@@ -14,7 +14,7 @@
 
 <title> Modelo Lineal General - Logit binomial</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -313,6 +313,21 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Tutoriales
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso700.html">Tutorial 301</a>
+    </li>
+    <li>
+      <a href="recurso701.html">Tutorial 302</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -342,7 +357,7 @@ modelo de regresión lineal múltiple, solo que la variable dependiente es
 no numérica y corresponde a una variable cualitativa con dos valores
 (bivariada). En este caso el modelo se denomina Logit binomial.</p>
 <p><br/></p>
-<p>Este modelo esta relacionado con predicción y explicación de las
+<p>Este modelo está relacionado con predicción y explicación de las
 decisiones de los consumidores, la clasificación de los clientes de un
 banco y presenta como función de ajuste la <strong>función
 logit</strong> que corresponde a una función en forma de s, en lugar de
@@ -411,7 +426,7 @@ caracteristicas de los datos</p>
 <div id="datos" class="section level3">
 <h3><span style="color:#686868"><strong>Datos</strong></span></h3>
 <p></br></p>
-<p>La data: <code>matricular</code> de <code>paqueteMOD</code>, contiene
+<p>La data: <code>matriculah</code> de <code>paqueteMOD</code>, contiene
 los datos de un conjunto de estudiantes que han obtenido matricula de
 honor (<code>matricula = 1</code>) y un grupo de no la han conseguido
 (<code>matricula = 0</code>) y sus respectivas notas obtenidas en
@@ -425,23 +440,23 @@ variable dependiente y por lo menos una variable cuantitativa que tome
 diferentes valores (en este caso la nota de matemáticas).</p>
 <p></br></p>
 <pre class="r"><code>library(paqueteMOD)
-data(&quot;matricular&quot;)
-summary(matricular)</code></pre>
-<pre><code> matricula  matematicas   
- 0:151     Min.   :33.00  
- 1: 49     1st Qu.:45.00  
-           Median :52.00  
-           Mean   :52.65  
-           3rd Qu.:59.00  
-           Max.   :75.00  </code></pre>
+data(&quot;matriculah&quot;)
+summary(matricula)</code></pre>
+<pre><code>    honor            matematicas   
+ Length:200         Min.   :33.00  
+ Class :character   1st Qu.:45.00  
+ Mode  :character   Median :52.00  
+                    Mean   :52.65  
+                    3rd Qu.:59.00  
+                    Max.   :75.00  </code></pre>
 <p></br></br></p>
 <p>Distribución de matriculados:</p>
 <p>Utilizamos la función <code>table()</code> para encontrar la
 distribución de la variable categórica matricula:</p>
 <p></br></p>
-<pre class="r"><code>table(matricular$matricula)</code></pre>
+<pre class="r"><code>table(matriculah$honor)</code></pre>
 <pre><code>
-  0   1 
+ No  Si 
 151  49 </code></pre>
 <p></br></br></p>
 <p>Distribución del puntaje en matemáticas por tipo de matricula</p>
@@ -450,7 +465,7 @@ distribución de la variable categórica matricula:</p>
 cuantitativa (matemáticas) para las dos categorías, que en este caso
 corresponde a la distribución de las notas por tipo de matricula :</p>
 <pre class="r"><code>library(ggplot2)
-ggplot(data = matricular, aes(x = as.factor(matricula), y = matematicas, color = matricula)) +
+ggplot(data = matriculah, aes(x = as.factor(honor), y = matematicas, color = honor)) +
   geom_boxplot() +
   geom_jitter(width = 0.2)+
   scale_color_manual(values=c(&quot;#FF7F00&quot;,&quot;#034A94&quot;))+

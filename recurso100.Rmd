@@ -189,12 +189,9 @@ TukeyHSD(anova)
 
 <br/>
 
-Al examinar los resultados de las pruebas de comparaciones multiples de Tukey se observa que solo se presentan diferencias estadisticas entre las medias de los tratamiento D-C y E-D
+Al examinar los resultados de las pruebas de comparaciones múltiples de Tukey se observa que solo se presentan diferencias estadísticas entre las medias de los tratamiento D-C y E-D
 
 <br/><br/>
-
-
-## 
 
 
 

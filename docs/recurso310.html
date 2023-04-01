@@ -14,7 +14,7 @@
 
 <title> Modelo</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -313,6 +313,21 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Tutoriales
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso700.html">Tutorial 301</a>
+    </li>
+    <li>
+      <a href="recurso701.html">Tutorial 302</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -353,14 +368,14 @@ por el método de mínimos cuadrados ordinarios.</p>
 <p></br></p>
 <pre class="r"><code>library(tidyverse)
 
-matricular$matricula=as.numeric(matricular$matricula)
+matriculah$honor=as.numeric(matriculah$honor)
 
-matricular %&gt;% 
-   lm(matricula ~ matematicas ,  data = .) -&gt; modelo0
+matriculah %&gt;% 
+   lm(honor ~ matematicas ,  data = .) -&gt; modelo0
 summary(modelo0) </code></pre>
 <pre><code>
 Call:
-lm(formula = matricula ~ matematicas, data = .)
+lm(formula = honor ~ matematicas, data = .)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -384,10 +399,10 @@ class="math inline">\(Y=1\)</span></p>
 <p></br></p>
 <pre class="r"><code>library(ggplot2)
 # data(matricular)
-matricular1=matricular
-matricular1$matricula = as.numeric(matricular1$matricula)
+matriculah1=matriculah
+matriculah1$honor = as.numeric(matriculah1$honor)
 
-g3=ggplot(data = matricular1, mapping = aes(x=matematicas, y=matricula)) + 
+g3=ggplot(data = matriculah1, mapping = aes(x=matematicas, y=honor)) + 
            geom_point() + 
            geom_smooth(method = &quot;lm&quot;, se=FALSE) +         
            labs(y = &quot;matricula de honor&quot;, x = &quot;puntaje matemáticas&quot;) +
@@ -475,8 +490,8 @@ independientes :</p>
 <p>Donde :</p>
 <ul>
 <li><span class="math inline">\(odds = \dfrac{P_{i}}{1-P_{i}} =
-\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\)</span>, llamada tambien <strong>razón
-de probabilida</strong> o <strong>ratio ODDS</strong></li>
+\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\)</span>, llamada también <strong>razón
+de probabilidad</strong> o <strong>ODDS ratio</strong></li>
 </ul>
 <p></br></p>
 <ul>

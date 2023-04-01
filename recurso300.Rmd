@@ -103,7 +103,7 @@ Con el prósito de responder a esta preguntas, empezaremos con las caracteristic
 
 </br>
 
-La  data: `matricular` de `paqueteMOD`,  contiene los datos de un conjunto de estudiantes que han obtenido matricula de honor (`matricula = 1`) y un grupo de no la han conseguido (`matricula = 0`) y sus respectivas notas obtenidas en matemáticas
+La  data: `matriculah` de `paqueteMOD`,  contiene los datos de un conjunto de estudiantes que han obtenido matricula de honor (`matricula = 1`) y un grupo de no la han conseguido (`matricula = 0`) y sus respectivas notas obtenidas en matemáticas
 
 </br>
 
@@ -114,7 +114,7 @@ En este caso se debe contar con una variable categórica con dos niveles represe
 ```{r}
 library(paqueteMOD)
 data("matriculah")
-summary(matriculah)
+summary(matricula)
 ```
 
 </br></br>
@@ -126,7 +126,7 @@ Utilizamos la función  `table()` para encontrar la distribución de la variable
 </br>
 
 ```{r}
-table(matricular$matricula)
+table(matriculah$honor)
 ```
 
 </br></br>
