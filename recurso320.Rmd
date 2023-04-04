@@ -280,7 +280,7 @@ Lo cual indica que se rechaza $H_0$, en favor de $H_a$, el modelo es significati
 
 </br>
 
-<div class="content-box-yellow">
+<div class="content-box-gray">
 ### <span style="color:#686868">**Nota:**</span> 
 
 </br>

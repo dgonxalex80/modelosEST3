@@ -45,9 +45,12 @@ El objetivo principal del ACP es poder ver si las dos o tres primeras componente
 
 <br/><br/>
 
-### **Nota**
+<div class="content-box-gray">
+### <span style="color:#686868">**Nota**</span> 
 
 Los procedimientos anteriores están soportados en el supuesto de que las p variables son una combinación lineal de un base que se desea encontrar.
+
+</div>
 
 <br/><br/>
 

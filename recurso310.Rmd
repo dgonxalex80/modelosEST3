@@ -194,7 +194,7 @@ El resultado se puede interpretar como:
 
 </br>
 
-<div class="content-box-yellow">
+<div class="content-box-gray">
 ### <span style="color:#686868">**Nota:**</span> 
 
 * $P_{i}$ : probabilidad de recibir matricula de honor

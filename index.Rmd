@@ -1,5 +1,5 @@
 ---
-title : <span style="color:#686868"> **Experiencia**</span>
+title : <span style="color:#034A94"> **Experiencia**</span>
 output: html_document
 css: style.css
 ---
@@ -25,24 +25,24 @@ knitr::include_graphics("img/banner_presentacion.png")
 
 </br></br>
 
-# **Introducción**
+# <span style="color:#034A94"> **Introducción**</span>
 
 </br>
 
 En esta unidad se presentan los siguientes modelos :
 
-* Modelo diseño de experimentos **MDE**
-* Modelo de Regresión Logiística binomial **ML**
-* Análisis de cluster  **AC** 
-* Análisis de componentes principales **ACP** 
+* Modelo diseño de experimentos <span style="color:#034A94">**MDE**</span>
+* Modelo de Regresión Logiística binomial <span style="color:#034A94"> **ML**</span>
+* Análisis de cluster  <span style="color:#034A94">**AC**</span> 
+* Análisis de componentes principales <span style="color:#034A94">**ACP**</span> 
 
 </br>
 
 Los dos primero están basados en el modelo lineal general y su estructura es similar a la del modelo de regresión, tratado en las unidades 1 y 2
 
-El **Análisis de Cluster** realiza una clasificación de los objetos o individuos de una base de datos en grupo teniendo en cuenta todas la variables, empleando métricas de distancias
+El <span style="color:#034A94"> **Análisis de Cluster**</span> realiza una clasificación de los objetos o individuos de una base de datos en grupo teniendo en cuenta todas la variables, empleando métricas de distancias
 
-Finalmente el **Análisis de Componente Principales** es un análisis complementario que permite resumir en pocas variables independientes un gran número de variables. Esta herramienta es útil en el caso de tener muchas variables y poder las emplear un modelo de regresión como variables independientes
+Finalmente el <span style="color:#034A94">**Análisis de Componente Principales**</span> es un análisis complementario que permite resumir en pocas variables independientes un gran número de variables. Esta herramienta es útil en el caso de tener muchas variables y poder las emplear un modelo de regresión como variables independientes
 
 
 

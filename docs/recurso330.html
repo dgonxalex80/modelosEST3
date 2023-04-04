@@ -470,7 +470,7 @@ probabilidad que permite establecer la tasa de clasificaciones correcta
 de verdaderos positivos y de falsos positivos:</p>
 <p></br></br></p>
 <div id="exactitud" class="section level3">
-<h3><span style="color:#FF7F00"> <strong>Exactitud</strong></span></h3>
+<h3><span style="color:#034A94"> <strong>Exactitud</strong></span></h3>
 <p>Porcentaje de casos correctamente clasificados</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
@@ -482,20 +482,22 @@ clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} =
 <p></br></br></p>
 </div>
 <div id="tasa-de-error" class="section level3">
-<h3><span style="color:#FF7F00"> <strong>Tasa de
+<h3><span style="color:#034A94"> <strong>Tasa de
 error</strong></span></h3>
-<p><img src="img/matriz_confusion.png" width="80%" style="display: block; margin: auto;" /></p>
+<!-- ```{r, echo=FALSE, out.width="80%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/matriz_confusion.png") -->
+<!-- ``` -->
 <p>Porcentaje de casos incorrectamente clasificados</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
-\text{Exactitud} = \dfrac{\text{no aciertos en
+\text{Tasa de Error} = \dfrac{\text{no aciertos en
 clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} =
 \dfrac{23+57}{400} = 0.20
 \]</span></p>
 <p></br></br></p>
 </div>
 <div id="sensibilidad" class="section level3">
-<h3><span style="color:#FF7F00">
+<h3><span style="color:#034A94">
 <strong>Sensibilidad</strong></span></h3>
 <p>Porcentaje de positivos que son clasificados por el modelo como
 positivos</p>
@@ -508,7 +510,7 @@ positivos</p>
 <p></br></br></p>
 </div>
 <div id="especificidad" class="section level3">
-<h3><span style="color:#FF7F00">
+<h3><span style="color:#034A94">
 <strong>Especificidad</strong></span></h3>
 <p>Porcentaje de negativos que son clasificados por el modelo como
 negativos</p>
@@ -521,7 +523,7 @@ negativos</p>
 <p></br></br></p>
 </div>
 <div id="presición" class="section level3">
-<h3><span style="color:#FF7F00"> <strong>Presición</strong></span></h3>
+<h3><span style="color:#034A94"> <strong>Presición</strong></span></h3>
 <p>Porcentaje de positivos pronosticados de manera correcta</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
@@ -532,7 +534,7 @@ positivos}} = \dfrac{48}{71} = 0.676
 <p></br></br></p>
 </div>
 <div id="valor-de-predicción-negativo" class="section level3">
-<h3><span style="color:#FF7F00"> <strong>Valor de predicción
+<h3><span style="color:#034A94"> <strong>Valor de predicción
 negativo</strong></span></h3>
 <p>Porcentaje de negativos clasificados por el modelo como negativos</p>
 <div class="content-box-blue">
@@ -574,7 +576,7 @@ Valor predicción negativo   0.827
 </pre>
 <p></br></br></p>
 </div>
-<div id="nota" class="section level3 content-box-yellow">
+<div id="nota" class="section level3 content-box-gray">
 <h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
 <ul>
 <li>Interesa tener valores de</li>
@@ -620,7 +622,8 @@ importante y afecta a los indicadores</li>
 </div>
 <p></br></br></p>
 <div id="curva-roc-y-valor-auc" class="section level3">
-<h3><strong>Curva ROC y valor AUC</strong></h3>
+<h3><span style="color:#034A94"><strong>Curva ROC y valor
+AUC</strong></span></h3>
 <p></br></p>
 <p>Como se ha indicado la capacidad que tiene el modelo para distinguir
 entre dos grupos ( matricila de honor/ sin matriculade honor; no paga/
@@ -634,19 +637,23 @@ AUC (area under the curve o área bajo la curva ROC)</p>
 curva_ROC &lt;- roc(test$honor, valor_pronosticado)
 auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
 
-ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=2)+
+ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=1)+
 ggtitle(paste0(&quot;Curva ROC &quot;, &quot;(AUC = &quot;, auc, &quot;)&quot;))+
 xlab(&quot;Especificidad&quot;)+
 ylab(&quot;Sensibilidad&quot;)  </code></pre>
-<p><img src="recurso330_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="recurso330_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
 (AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
 <p></br></br></p>
-<p><img src="img/ROC.png" width="80%" style="display: block; margin: auto;" /></p>
+<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/ROC.png") -->
+<!-- ``` -->
 <p>El mejor valor ocurre cuando la tasa de positivos verdaderos (TPR) es
 1 y la tasa de falsos positivos (FPR) es cero, caso que se denomina
 perfecta clasificación.</p>
-<p><img src="img/AUC.png" width="80%" style="display: block; margin: auto;" /></p>
+<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/AUC.png") -->
+<!-- ``` -->
 </div>
 </div>
 

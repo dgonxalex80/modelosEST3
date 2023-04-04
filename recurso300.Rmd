@@ -45,7 +45,7 @@ Este modelo está relacionado con predicción y explicación de las decisiones d
 
 <br/>
 
-El objetivo de la **regresiòn logística** es la de predecir la probabilidad de que una variable binaria (dicotómica) tome los valores posibles en la que esta está definida ($R_Y= \{0,1 \}$, mediante la combinación lineal de una o varias variables independientes cuantitativas o cualitativas. La regresiòn logistica hace parte de los modelos lineales generalizados en donde se usa una función de enlace llamada logit.
+El objetivo de la **regresión logística** es la de predecir la probabilidad de que una variable binaria (dicotómica) tome los valores posibles en la que esta está definida ($R_Y= \{0,1 \}$, mediante la combinación lineal de una o varias variables independientes cuantitativas o cualitativas. La regresiòn logistica hace parte de los modelos lineales generalizados en donde se usa una función de enlace llamada logit.
 
 </br>
 
@@ -99,7 +99,7 @@ Con el prósito de responder a esta preguntas, empezaremos con las caracteristic
 
 </br></br>
 
-### <span style="color:#686868">**Datos**</span>
+### <span style="color:#034A94">**Datos**</span>
 
 </br>
 

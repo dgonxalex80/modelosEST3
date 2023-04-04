@@ -180,7 +180,7 @@ Existen adicionamente otros indicadores que pueden ser utilizados como es el est
 </br></br>
 
 
-### <span style="color:#FF7F00"> **Exactitud**</span>
+### <span style="color:#034A94"> **Exactitud**</span>
 
 Porcentaje de casos correctamente clasificados
 
@@ -192,22 +192,22 @@ $$
 
 </br></br>
 
-### <span style="color:#FF7F00"> **Tasa de error**</span>
+### <span style="color:#034A94"> **Tasa de error**</span>
 
-```{r, echo=FALSE, out.width="80%", fig.align = "center"}
-knitr::include_graphics("img/matriz_confusion.png")
-```
+<!-- ```{r, echo=FALSE, out.width="80%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/matriz_confusion.png") -->
+<!-- ``` -->
 
 Porcentaje de casos incorrectamente clasificados
 
 <div class="content-box-blue">
 $$
-\text{Exactitud} = \dfrac{\text{no aciertos en clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} = \dfrac{23+57}{400} = 0.20
+\text{Tasa de Error} = \dfrac{\text{no aciertos en clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} = \dfrac{23+57}{400} = 0.20
 $$
 
 </br></br>
 
-### <span style="color:#FF7F00"> **Sensibilidad**</span>
+### <span style="color:#034A94"> **Sensibilidad**</span>
 
 Porcentaje de positivos que son clasificados por el modelo como positivos 
 
@@ -218,7 +218,7 @@ $$
 </div>
 </br></br>
 
-### <span style="color:#FF7F00"> **Especificidad**</span>
+### <span style="color:#034A94"> **Especificidad**</span>
 
 Porcentaje de negativos que son clasificados por el modelo como negativos 
 
@@ -230,7 +230,7 @@ $$
 
 </br></br>
 
-### <span style="color:#FF7F00"> **Presición**</span> 
+### <span style="color:#034A94"> **Presición**</span> 
 
 Porcentaje de positivos pronosticados de manera correcta
 
@@ -243,7 +243,7 @@ $$
 
 </br></br>
 
-### <span style="color:#FF7F00"> **Valor de predicción negativo**</span> 
+### <span style="color:#034A94"> **Valor de predicción negativo**</span> 
 
 Porcentaje de negativos clasificados por el modelo como negativos
 
@@ -292,7 +292,7 @@ Valor predicción negativo   0.827
 
 </br></br>
 
-<div class="content-box-yellow">
+<div class="content-box-gray">
 ### <span style="color:#686868">**Nota:**</span> 
 
 * Interesa tener valores de 
@@ -322,7 +322,7 @@ Valor predicción negativo   0.827
 
 
 
-### **Curva ROC y valor AUC**
+### <span style="color:#034A94">**Curva ROC y valor AUC**</span>
 
 </br>
 
@@ -337,7 +337,7 @@ library(pROC)
 curva_ROC <- roc(test$honor, valor_pronosticado)
 auc<- round(auc(curva_ROC, levels =c(0,1), direction = "<"),4) # 0.9177
 
-ggroc(curva_ROC, colour = "#FF7F00", size=2)+
+ggroc(curva_ROC, colour = "#FF7F00", size=1)+
 ggtitle(paste0("Curva ROC ", "(AUC = ", auc, ")"))+
 xlab("Especificidad")+
 ylab("Sensibilidad")  
@@ -348,13 +348,13 @@ El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.829
 </br></br>
 
 
-```{r, echo=FALSE, out.width="80%", fig.align = "center"}
-knitr::include_graphics("img/ROC.png")
-```
+<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/ROC.png") -->
+<!-- ``` -->
 
 El mejor valor ocurre cuando la tasa de positivos verdaderos (TPR) es 1 y la tasa de falsos positivos (FPR) es cero, caso que se denomina perfecta clasificación.  
 
-```{r, echo=FALSE, out.width="80%", fig.align = "center"}
-knitr::include_graphics("img/AUC.png")
-```
+<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/AUC.png") -->
+<!-- ``` -->
 

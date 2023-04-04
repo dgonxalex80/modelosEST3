@@ -188,7 +188,7 @@ summary(anova2)
 
 <br/><br/>
 
-### **Modelo 1**
+### <span style="color:#034A94"> **Modelo 1**</span>
 
 <br/>
 
@@ -222,7 +222,7 @@ Lo anterior ratifica lo observado en la gráfica 2, indicando que el mayor valor
 
 <br/><br/> 
 
-### **Modelos 2**
+### <span style="color:#034A94"> **Modelos 2**</span>
 
 <br/>
 
@@ -270,7 +270,7 @@ Number of Fisher Scoring iterations: 2
 
 <br/><br/>
 
-### **Modelo 3**
+### <span style="color:#034A94"> **Modelo 3**</span>
 
 <br/>
 
