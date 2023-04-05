@@ -322,14 +322,64 @@ Valor predicción negativo   0.827
 
 
 
-### <span style="color:#034A94">**Curva ROC y valor AUC**</span>
+# <span style="color:#034A94">**Curva ROC y valor AUC**</span>
 
 </br>
 
-Como se ha indicado la capacidad que tiene el modelo para distinguir entre dos grupos ( matricila de honor/ sin matriculade honor;  no paga/ paga; compra/no compra..) en función de la probabilidad estimada se valora a través de la matriz de confusión, a parir de la cual se construye varios indicadores, la curva ROC (Receiver Operating Characteristic, o Característica Operativa del Receptor)
-y el indicador AUC (area under the curve o área bajo la curva ROC)
+La curva ROC es una representación gráfica de los valores de 
+la tasa de falsos positivos (TFP o FPR) o **1-especificidad** y en el eje de las ordenadas  la tasa de verdaderos positivos (TVP o TPR) o también llamada **sensibilidad**,  para diferentes valores del umbral de clasificación.
+
+Esta curva permite evaluar la capacidad predictiva de un modelo de clasificación binaria (en este caso del modelo logit binomial) mediante el calculo del área bajo la curva denominado **AUC**
 
 </br>
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("img/ROC.png")
+```
+<center>
+Curvas ROC - Receiver Operating Characteristic
+</center>
+
+</br></br>
+
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("img/AUC.png")
+```
+<center>
+Rango de valores de AUC - Area Under the Curve
+</center>
+
+</br></br>
+
+La **clasificación perfecta** ocurre cuando la curva pasa por el punto (0,1):
+
+* Tasa de positivos verdaderos = 1
+* Tasa de falsos positivos = 0
+
+Indicando que todos los valores positivos fueron bien clasificados como se indica en la figura (a) y corresponde a un valor AUC = 1.0
+
+
+</br>
+
+La **clasificacion excelente** se presenta cuando la curva ROC pasa cerca del punto (0,1), indicando que el modelo tienen una alta capacidad para clasificar  correctamente los valores positivos del modelo y los verdaderos negativos. En este caso el valor del área bajo la curva ROC, AUC > 0.5, representada por la figura (b)
+
+</br>
+
+La **clasificación aceptable** ocurre cuando el modelo presenta una capacidad limitada para clasificar y es equibalente a una asignación aleatoria. En este caso la curva ROC corresponde a una linea diagonal y el valor del area bajo la curva AUC = 0.5
+
+
+</br></br>
+
+
+En el caso del modelo 
+
+$$
+\widehat{\text{honor}} = \widehat{\beta_{0}} + \widehat{\beta_{1}}  \hspace{.3cm} \text{matematicas} 
+$$
+</br>
+
+Presenta la curva ROC y su área bajo la curva AUC 
 
 
 ```{r}
@@ -348,13 +398,5 @@ El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.829
 </br></br>
 
 
-<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
-<!-- knitr::include_graphics("img/ROC.png") -->
-<!-- ``` -->
 
-El mejor valor ocurre cuando la tasa de positivos verdaderos (TPR) es 1 y la tasa de falsos positivos (FPR) es cero, caso que se denomina perfecta clasificación.  
-
-<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
-<!-- knitr::include_graphics("img/AUC.png") -->
-<!-- ``` -->
 

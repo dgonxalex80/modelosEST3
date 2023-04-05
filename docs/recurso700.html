@@ -861,8 +861,9 @@ un error en su ejecución.</p>
 podrá visualizar el resultado requerido</p>
 <p></br></br></p>
 <pre class="r"><code>library(paqueteMOD)
-library(ROSE)
-data(&quot;datosR&quot;)
+library(ROSE)</code></pre>
+<pre><code>Loaded ROSE 0.0-4</code></pre>
+<pre class="r"><code>data(&quot;datosR&quot;)
 names(datosR) = c(&quot;rotacion&quot;, &quot;edad&quot;, &quot;viaje.negocios_&quot;, &quot;departamento_&quot;, &quot;distancia.casa&quot;)
 datosR$rotacion = factor(datosR$rotacion)
 
@@ -931,8 +932,18 @@ un error en su ejecución.</p>
 podrá visualizar el resultado requerido</p>
 <p></br></br></p>
 <pre class="r"><code>library(paqueteMOD)
-library(tidyverse)
-library(ROSE)
+library(tidyverse)</code></pre>
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.1     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(ROSE)
 data(&quot;datosR&quot;)
 names(datosR) = c(&quot;rotacion&quot;, &quot;edad&quot;, &quot;viaje.negocios_&quot;, &quot;departamento_&quot;, &quot;distancia.casa&quot;)
 datosR$rotacion = factor(datosR$rotacion)

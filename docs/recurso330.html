@@ -621,18 +621,56 @@ importante y afecta a los indicadores</li>
 </ul>
 </div>
 <p></br></br></p>
-<div id="curva-roc-y-valor-auc" class="section level3">
-<h3><span style="color:#034A94"><strong>Curva ROC y valor
-AUC</strong></span></h3>
+</div>
+<div id="curva-roc-y-valor-auc" class="section level1">
+<h1><span style="color:#034A94"><strong>Curva ROC y valor
+AUC</strong></span></h1>
 <p></br></p>
-<p>Como se ha indicado la capacidad que tiene el modelo para distinguir
-entre dos grupos ( matricila de honor/ sin matriculade honor; no paga/
-paga; compra/no compra..) en función de la probabilidad estimada se
-valora a través de la matriz de confusión, a parir de la cual se
-construye varios indicadores, la curva ROC (Receiver Operating
-Characteristic, o Característica Operativa del Receptor) y el indicador
-AUC (area under the curve o área bajo la curva ROC)</p>
+<p>La curva ROC es una representación gráfica de los valores de la tasa
+de falsos positivos (TFP o FPR) o <strong>1-especificidad</strong> y en
+el eje de las ordenadas la tasa de verdaderos positivos (TVP o TPR) o
+también llamada <strong>sensibilidad</strong>, para diferentes valores
+del umbral de clasificación.</p>
+<p>Esta curva permite evaluar la capacidad predictiva de un modelo de
+clasificación binaria (en este caso del modelo logit binomial) mediante
+el calculo del área bajo la curva denominado <strong>AUC</strong></p>
 <p></br></p>
+<img src="img/ROC.png" width="80%" style="display: block; margin: auto;" />
+<center>
+Curvas ROC - Receiver Operating Characteristic
+</center>
+<p></br></br></p>
+<img src="img/AUC.png" width="80%" style="display: block; margin: auto;" />
+<center>
+Rango de valores de AUC - Area Under the Curve
+</center>
+<p></br></br></p>
+<p>La <strong>clasificación perfecta</strong> ocurre cuando la curva
+pasa por el punto (0,1):</p>
+<ul>
+<li>Tasa de positivos verdaderos = 1</li>
+<li>Tasa de falsos positivos = 0</li>
+</ul>
+<p>Indicando que todos los valores positivos fueron bien clasificados
+como se indica en la figura (a) y corresponde a un valor AUC = 1.0</p>
+<p></br></p>
+<p>La <strong>clasificacion excelente</strong> se presenta cuando la
+curva ROC pasa cerca del punto (0,1), indicando que el modelo tienen una
+alta capacidad para clasificar correctamente los valores positivos del
+modelo y los verdaderos negativos. En este caso el valor del área bajo
+la curva ROC, AUC &gt; 0.5, representada por la figura (b)</p>
+<p></br></p>
+<p>La <strong>clasificación aceptable</strong> ocurre cuando el modelo
+presenta una capacidad limitada para clasificar y es equibalente a una
+asignación aleatoria. En este caso la curva ROC corresponde a una linea
+diagonal y el valor del area bajo la curva AUC = 0.5</p>
+<p></br></br></p>
+<p>En el caso del modelo</p>
+<p><span class="math display">\[
+\widehat{\text{honor}} = \widehat{\beta_{0}} +
+\widehat{\beta_{1}}  \hspace{.3cm} \text{matematicas}
+\]</span> </br></p>
+<p>Presenta la curva ROC y su área bajo la curva AUC</p>
 <pre class="r"><code>library(pROC)
 curva_ROC &lt;- roc(test$honor, valor_pronosticado)
 auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
@@ -641,20 +679,10 @@ ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=1)+
 ggtitle(paste0(&quot;Curva ROC &quot;, &quot;(AUC = &quot;, auc, &quot;)&quot;))+
 xlab(&quot;Especificidad&quot;)+
 ylab(&quot;Sensibilidad&quot;)  </code></pre>
-<p><img src="recurso330_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="recurso330_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
 (AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
 <p></br></br></p>
-<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
-<!-- knitr::include_graphics("img/ROC.png") -->
-<!-- ``` -->
-<p>El mejor valor ocurre cuando la tasa de positivos verdaderos (TPR) es
-1 y la tasa de falsos positivos (FPR) es cero, caso que se denomina
-perfecta clasificación.</p>
-<!-- ```{r, echo=FALSE, out.width="60%", fig.align = "center"} -->
-<!-- knitr::include_graphics("img/AUC.png") -->
-<!-- ``` -->
-</div>
 </div>
 
 
