@@ -41,6 +41,8 @@ Las componente se pueden representar por $CP1$, $CP2$, $CP3$ $\dots$ construidas
 $$V[CP_1] > V[CP_2] > V[CP_3] > \dots > V[CP_p]$$
 y  $Cor[CP_i, CP_j] = 0$ para todo para de componentes $i \neq j$
 
+<br/>
+
 El objetivo principal del ACP es poder ver si las dos o tres primeras componentes explican la mayor parte de la variación de las $p$ variables iniciales. Si es así se pueden considerar estas dos componentes, reduciendo la dimensión de los datos y considerar su representación gráfica.
 
 <br/><br/>
@@ -61,6 +63,7 @@ Los procedimientos anteriores están soportados en el supuesto de que las p vari
 El primer componente tiene la forma :
 
 $$CP_{1}  = \beta_{11}X_1+ \beta_{12}X_2 + \dots + \beta_{1p}X_{p} = \displaystyle\sum_{i=1}^{p} \beta_{1i} X_{i} = b'_{1}X$$
+<br/>
 
 Donde $b'= (\beta_{11}, \beta_{12}, \dots , \beta_{1p})$ es el vector de coeficientes a estimar y $X'$ el vector de variables $(X_1, X_2, \dots, X_p)$ que conforma la data.
 
@@ -153,20 +156,31 @@ decathlon2.active <- decathlon2[1:23, 1:10]
 head(decathlon2.active[, 1:6])
 res.pca <- prcomp(decathlon2.active, scale = TRUE)
 fviz_eig(res.pca)
+```
 
+<br/><br/>
+
+```{r}
 fviz_pca_ind(res.pca,
              col.ind = "cos2", # Color by the quality of representation
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE     # Avoid text overlapping
              )
+```
 
+<br/><br/>
 
+```{r}
 fviz_pca_var(res.pca,
              col.var = "contrib", # Color by contributions to the PC
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE     # Avoid text overlapping
              )
+```
 
+<br/><br/>
+
+```{r}
 fviz_pca_biplot(res.pca, repel = TRUE,
                 col.var = "#2E9FDF", # Variables color
                 col.ind = "#696969"  # Individuals color

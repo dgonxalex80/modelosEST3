@@ -380,6 +380,7 @@ de <span class="math inline">\(p\)</span> variables, de forma que:</p>
 \dots &gt; V[CP_p]\]</span> y <span class="math inline">\(Cor[CP_i,
 CP_j] = 0\)</span> para todo para de componentes <span
 class="math inline">\(i \neq j\)</span></p>
+<p><br/></p>
 <p>El objetivo principal del ACP es poder ver si las dos o tres primeras
 componentes explican la mayor parte de la variación de las <span
 class="math inline">\(p\)</span> variables iniciales. Si es así se
@@ -400,7 +401,7 @@ componentes</strong></span></h2>
 <p>El primer componente tiene la forma :</p>
 <p><span class="math display">\[CP_{1}  = \beta_{11}X_1+ \beta_{12}X_2 +
 \dots + \beta_{1p}X_{p} = \displaystyle\sum_{i=1}^{p} \beta_{1i} X_{i} =
-b&#39;_{1}X\]</span></p>
+b&#39;_{1}X\]</span> <br/></p>
 <p>Donde <span class="math inline">\(b&#39;= (\beta_{11}, \beta_{12},
 \dots , \beta_{1p})\)</span> es el vector de coeficientes a estimar y
 <span class="math inline">\(X&#39;\)</span> el vector de variables <span
@@ -495,23 +496,26 @@ McMULLEN  10.83      7.31    13.76      2.13 49.91        14.38</code></pre>
 <pre class="r"><code>res.pca &lt;- prcomp(decathlon2.active, scale = TRUE)
 fviz_eig(res.pca)</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><br/><br/></p>
 <pre class="r"><code>fviz_pca_ind(res.pca,
              col.ind = &quot;cos2&quot;, # Color by the quality of representation
              gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;),
              repel = TRUE     # Avoid text overlapping
              )</code></pre>
-<p><img src="recurso600_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><br/><br/></p>
 <pre class="r"><code>fviz_pca_var(res.pca,
              col.var = &quot;contrib&quot;, # Color by contributions to the PC
              gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;),
              repel = TRUE     # Avoid text overlapping
              )</code></pre>
-<p><img src="recurso600_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><br/><br/></p>
 <pre class="r"><code>fviz_pca_biplot(res.pca, repel = TRUE,
                 col.var = &quot;#2E9FDF&quot;, # Variables color
                 col.ind = &quot;#696969&quot;  # Individuals color
                 )</code></pre>
-<p><img src="recurso600_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p><br/><br/></p>
 <div id="ejemplo-1" class="section level3">
 <h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
@@ -575,7 +579,7 @@ AcidosCl -0.032024168</code></pre>
 valores propios del ACP.</p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 fviz_screeplot(ACP, addlabels = TRUE)</code></pre>
-<p><img src="recurso600_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p><br/></p>
 <p>Se evidencia que la primera componente se lleva el 76.7% de la
 inercia total, seguida de la segunda componente con un 7.8% de la
@@ -587,7 +591,7 @@ de la información. <br></p>
 el circulo de correlaciones:</p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 fviz_pca_var(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
-<p><img src="recurso600_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p><br/> Se puede observar que todas las variables son bastante
 excentricas, por lo que cuentan con una buena calidad de la
 representación mediante el ACP, podemos ver que las variables que más
@@ -600,7 +604,7 @@ y variables para poder caracterizar los tipos de café:</p>
 <p><br/></p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 fviz_pca_biplot(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
-<p><img src="recurso600_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="recurso600_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Recordemos que las variables están en puntajes. En este caso se puede
 decir que el tipo de café con la mejor calidad es el ex_o,
 caracterizándose más por el Aroma, Acidez y el cuerpo. Seguido de este
