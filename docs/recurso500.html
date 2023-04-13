@@ -291,18 +291,6 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    AC
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso500.html">Análisis de conglomerados</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     ACP
      
     <span class="caret"></span>
@@ -310,6 +298,18 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="recurso600.html">Análisis de Componentes Principales</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    AC
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso500.html">Análisis de conglomerados</a>
     </li>
   </ul>
 </li>
@@ -354,16 +354,16 @@ style="color:#034a94"><strong>Introducción</strong></span></h1>
 <p></br></p>
 <p>El análisis de conglomerados, también conocido como
 <strong>clustering</strong>, es un método estadístico usado para agrupar
-objetos similares en función de sus características. Mediante este se
-logra identificar grupos muy parecidos (homogéneos) de objetos o
-individuos, donde estos dentro de cada grupo son más similares entre sí
-que con los de otros grupos. El análisis de conglomerados implica la
-selección de un conjunto de variables para medir las características de
-los objetos o individuos, y luego aplicar un algoritmo de agrupamiento
-para clasificarlos en conglomerados Los algoritmos de agrupamiento
-utilizados pueden ser jerárquicos o no jerárquicos, dependiendo de si
-los grupos se construyen de forma iterativa a partir de subgrupos más
-pequeños.</p>
+objetos similares en función de sus características. Mediante este
+análisis se logra identificar grupos muy parecidos (homogéneos) de
+objetos o individuos. Dentro de cada grupo los objetos son más similares
+entre sí que con los de otros grupos. El análisis de conglomerados
+implica la selección de un conjunto de variables para medir las
+características de los objetos o individuos, y luego aplicar un
+algoritmo de agrupamiento para clasificarlos en conglomerados. Los
+algoritmos de agrupamiento utilizados pueden ser jerárquicos o no
+jerárquicos, dependiendo de si los grupos se construyen de forma
+iterativa a partir de subgrupos más pequeños.</p>
 <p></br></br></p>
 </div>
 <div id="supuestos-y-requisitos" class="section level1">
@@ -373,61 +373,69 @@ requisitos</strong></span></h1>
 <p>El análisis de conglomerados se basa en calcular distancias
 utilizando las componentes principales calculadas mediante ACP, estas
 distancias serán equivalentes a calcularlas mediante la matriz original
-X, una vez encontrados los conglomerados o grupos se procede a
-representar el primer plano factorial, por lo que los supuestos del
-análisis de conglomerados serán los mismos del análisis de componentes
-principales.</p>
+<span class="math inline">\(X\)</span>, una vez encontrados los
+conglomerados o grupos se procede a representar el primer plano
+factorial, por lo que los supuestos del análisis de conglomerados serán
+los mismos del análisis de componentes principales.</p>
 <p></br></br></p>
 <div id="modelo" class="section level2">
 <h2><span style="color:#034a94"><strong>Modelo</strong></span></h2>
 <p></br></p>
 <p>Existen dos tipos de clasificación automática: los métodos no
 jerárquicos los cuales se basan en encontrar la mejor partición del
-conjunto de individuos en q clases, en donde sus centros de gravedad se
-eligen en un inicio de forma aleatoria. Por otra parte están los métodos
-jerárquicos en los cuales se construye un dendograma en el cual se
-forman los grupos de individuos más parecidos, esto permite determinar
-el número de clases que se usarán en el método no jerárquico.</p>
+conjunto de individuos en <span class="math inline">\(q\)</span> clases,
+en donde sus centros de gravedad se eligen en un inicio de forma
+aleatoria. Por otra parte están los métodos jerárquicos en los cuales se
+construye un dendograma en el cual se forman los grupos de individuos
+más parecidos, esto permite determinar el número de clases que se usarán
+en el método no jerárquico.</p>
 <p></br></p>
-<p>Recordemos que mediante el análisis de conglomerados queremos
-clasificar a los distintos individuos u observaciones en grupos muy
-homogeneos, pero que entre los grupos sean muy heterogeneos entre sí. De
-esta forma podríamos encontrar una forma de calcular el grado de
-asociación (similitud o disimilitud) entre dos observaciones, en el caso
-de clustering lo más usado para esto es la distancia euclidiana entre
-los dos puntos, la cual está dado por:</p>
+<p>Mediante el análisis de conglomerados se desea clasificar a los
+distintos individuos u observaciones en grupos muy homogéneos, pero
+heterogeneos entre ellos. Para realizar este objetivo se utilizan
+métricas que perminten calcular el grado de asociación (similitud o
+disimilitud) entre dos observaciones, dentro de las más usada está la
+<strong>distancia euclidiana</strong> entre los dos puntos, la cual está
+dado por:</p>
 <p></br></p>
 <p><span class="math display">\[
-d(x, y) = \sqrt{\sum_{i=1}^{p} (x_i - y_i)^2}
+d(x, y) = \sqrt{\sum_{i=1}^{p} \Big(x_i - y_i\Big)^2}
 \]</span></p>
 <p></br></p>
 <p>En donde <span class="math inline">\(x\)</span> y <span
 class="math inline">\(y\)</span> son individuos con <span
 class="math inline">\(p\)</span> variables, de esta forma podremos
-obtener los dos primeros individuos que más se parezcan entre sí los
-cuales formarán el primer grupo, sean entonces <span
-class="math inline">\(h = \{x, y\}\)</span> un grupo y z un individuo,
-podemos calcular la distancia entre el grupo y el individuo de la forma
-<span class="math inline">\(d(h, z) = min\{d(x,z), d(y, z)\}\)</span>.
-Además hay otras formas de medir la proximidad entre elementos como
-pueden ser el salto mínimo (single linkage), salto máximo, salto
-promedio y agregación de Ward. <br></p>
+obtener los dos primeros individuos que más se parezcan entre sí,
+formarán el primer grupo. Sean entonces <span class="math inline">\(h =
+\{x, y\}\)</span> un grupo y <span class="math inline">\(z\)</span> un
+individuo, con los que se puede calcular la distancia entre el grupo y
+el individuo de la forma: <span class="math inline">\(d(h, z) =
+min\{d(x,z), d(y, z)\}\)</span>. Además hay otras formas de medir la
+proximidad entre elementos como pueden ser el salto mínimo (single
+linkage), salto máximo, salto promedio y agregación de Ward. <br></p>
 <p>El siguiente dendograma fue construido a apartir de 5 individuos:</p>
 <center>
 <p><img src="img/dendograma.png" width="80%" style="display: block; margin: auto;" /></p>
 </center>
 <p></br></br></p>
-<p>En este se observa que al inicio los individuos que más se parecian
-(menor distancia euclidea) fueron (1) y (3) los cuales tuvieron una
-distancia de 1, el siguiente grupo a formarse fue con los individuos (2)
-y (5) con una distancia de 2, el siguiente nodo a formarse fue con el
-grupo {1, 3} y el individuo (4) con una distancia de 4.</p>
+<p>En este diagrama se observa que al inicio los individuos que más se
+parecen (menor distancia euclidea) son los individuos (<span
+class="math inline">\(1\)</span>) y (<span
+class="math inline">\(3\)</span>) los cuales tuvieron una distancia de
+<span class="math inline">\(1\)</span>. El siguiente grupo a formarse lo
+conforman los individuos (<span class="math inline">\(2\)</span>) y
+(<span class="math inline">\(5\)</span>) con una distancia de <span
+class="math inline">\(2\)</span>, el siguiente nodo a formarse está
+conformado por el grupo {<span class="math inline">\(1, 3\)</span>} y el
+individuo (<span class="math inline">\(4\)</span>) con una distancia de
+<span class="math inline">\(4\)</span>.</p>
 <p></br></p>
-<p>Elegir el número óptimo de clusters es una decisión muy subjetiva,
-sin embargo puede tomarse el criterio del mayor salto de nodo a nodo de
-las distancias euclidianas, mirando el dendograma vemos que el mayor
-incremento de las distancias se dio en 4, por lo que si trazamos una
-linea se hará un corte y tendremos dos nodos, el conformado por {<span
+<p>Elegir el número óptimo de clusters o grupos es una decisión
+subjetiva, sin embargo puede tomarse el criterio del mayor salto de nodo
+a nodo de las distancias euclidianas: Observando el dendograma vemos que
+el mayor incremento de las distancias se dio en <span
+class="math inline">\(4\)</span>, por lo que si trazamos una linea se
+hará un corte y tendremos dos nodos, el conformado por {<span
 class="math inline">\(1,3,4\)</span>} y el otro con {<span
 class="math inline">\(2,5\)</span>}.</p>
 <p></br></p>
@@ -489,8 +497,9 @@ distancias &lt;- dist(data, method = &quot;euclidean&quot;)
 dendograma &lt;- hclust(distancias, method = &quot;average&quot;)
 plot(dendograma, cex = 0.6, hang = -1) </code></pre>
 <p><img src="recurso500_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<pre class="r"><code>barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, main = &quot;Agregaciones (distancias euclidianas)&quot;,
-        col = &quot;lightblue&quot;, ylab = &quot;Nodo&quot;, xlab = &quot;Peso&quot;)</code></pre>
+<pre class="r"><code>barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
+        main = &quot;Agregaciones (distancias euclidianas)&quot;,
+        col = &quot;lightblue&quot;, ylab = &quot;Nodo&quot;, xlab = &quot;Peso&quot;, xlim = c(0, 80))</code></pre>
 <p><img src="recurso500_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
 <p></br></br></p>
 <p>Podemos observar que el mayor salto en las agregaciones se da en
@@ -514,9 +523,9 @@ grp</code></pre>
 ## 27 28 29 30 31 32 33 34 35 
 ##  1  1  2  2  2  2  2  2  2</code></pre>
 <p></br></br></p>
-<p>Podemos usar la libreria <em>FactoClass</em> para representar los
-clusters en el primer plano factorial, en la función
-<code>FactoClass</code> tenemos los siguientes argumentos:</p>
+<p>La libreria <code>FactoClass</code> para representar los clusters en
+el primer plano factorial, en la función <code>FactoClass</code> tenemos
+los siguientes argumentos:</p>
 <p></br></br></p>
 <ul>
 <li><p><code>nf</code>: número de componentes principales, recordemos
@@ -540,16 +549,7 @@ Cluster &lt;- FactoClass(data, dudi.pca, nf = p, nfcl = p, k.clust = 2, scanFC =
 <p></br></br></p>
 <p><img src="img/cluster1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p></br></br></p>
-<p>A partir de ahora podemos realizar el análisis que hicimos
-anteriormente en un ACP, podemos observar que en el primer plano
-factorial se representa el <span class="math inline">\(75.99\)</span>%
-de la varianza total, quedando un <span
-class="math inline">\(24.01\)</span>% sin explicar mediante las dos
-primeras componentes. Se evidencia que el cluster 2 se caracteriza por
-tener porcentaje altos de alcohol, altos precios y mayores años de
-añejo, por otra parte el cluster 1 se caracteriza por tener precios
-mucho más economicos a costa de tener menor porcentaje de alcohol y
-pocos años de añejo.</p>
+<!-- A partir de ahora podemos realizar el análisis que hicimos anteriormente en un ACP, podemos observar que en el primer plano factorial se representa el $75.99$\% de la varianza total, quedando un $24.01$\% sin explicar mediante las dos primeras componentes. Se evidencia que el cluster 2 se caracteriza por tener porcentaje altos de alcohol, altos precios y mayores años de añejo, por otra parte el cluster 1 se caracteriza por tener precios mucho más economicos a costa de tener menor porcentaje de alcohol y pocos años de añejo. -->
 </div>
 </div>
 </div>

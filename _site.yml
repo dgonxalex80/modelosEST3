@@ -21,14 +21,14 @@ navbar:
           href: recurso320.html
         - text: "Evaluación"
           href: recurso330.html
-    - text: "AC"
-      menu:
-        - text: "Análisis de conglomerados"
-          href: recurso500.html
     - text: "ACP"
       menu:
         - text: "Análisis de Componentes Principales"
           href: recurso600.html
+    - text: "AC"
+      menu:
+        - text: "Análisis de conglomerados"
+          href: recurso500.html
     - text: "Tutoriales"
       menu:
         - text: "Tutorial 301"
