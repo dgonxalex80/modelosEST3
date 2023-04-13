@@ -84,9 +84,15 @@ Mediante este procedimiento son asignadas las observaciones a los grupos o congl
 
 Utilizados para evaluar la bondad del agrupamiento resultante del análisis. Algunos de los criterios más comunes incluyen:
 
-* **Suma de cuadrados dentro del cluster** (SSC), que mide cuanto varían las observaciones dentro de cada conglomerado y se mide sumando las distancias entre cada observación y el centroide de su conglomerado. 
-* **Suma de cuadrados entre clusters** (SSB), que mide la variavilidad entre los conglomerados,permitiendo valorar la calidad del agrupamiento.   
-* Indice de Rand ajustado y corresponde a un indicador para evaluar la calidad del agrupamiento. Este indice varia entre -1 y 1. Valores cercanos a  1 indica alta similitud entre los grupos, mientras que valores cercanos a -1 indica que los grupos o conglomerados formados son muy diferentes. Valores cercanos a0 indican que los agrupamientos pueden ser productos del azar 
+* **Suma de cuadrados dentro del cluster** ($SSC$), que mide cuanto varían las observaciones dentro de cada conglomerado y se mide sumando las distancias entre cada observación y el centroide de su conglomerado. 
+
+</br>
+
+* **Suma de cuadrados entre clusters** ($SSB$), que mide la variavilidad entre los conglomerados,permitiendo valorar la calidad del agrupamiento.   
+
+</br>
+
+* **Indice de Rand ajustado**, corresponde a un indicador para evaluar la calidad del agrupamiento. Este indice varia entre $-1$ y $1$. Valores cercanos a  $1$ indica alta similitud entre los grupos, mientras que valores cercanos a $-1$ indica que los grupos o conglomerados formados son muy diferentes. Valores cercanos a0 indican que los agrupamientos pueden ser productos del azar 
 
 
 </br></br>
@@ -278,7 +284,8 @@ barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE,
 <!-- ``` -->
 
 
-Por último se mide la 
+Por último se mide el indice de Silhouette promedio con el fin de valorar la mejor alternativa para la elección del número de conglomerados
+
 
 ```{r , warning=FALSE,message=FALSE}
 

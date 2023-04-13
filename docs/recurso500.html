@@ -433,20 +433,29 @@ calidad</strong></span></h4>
 <p>Utilizados para evaluar la bondad del agrupamiento resultante del
 análisis. Algunos de los criterios más comunes incluyen:</p>
 <ul>
-<li><strong>Suma de cuadrados dentro del cluster</strong> (SSC), que
-mide cuanto varían las observaciones dentro de cada conglomerado y se
-mide sumando las distancias entre cada observación y el centroide de su
+<li><strong>Suma de cuadrados dentro del cluster</strong> (<span
+class="math inline">\(SSC\)</span>), que mide cuanto varían las
+observaciones dentro de cada conglomerado y se mide sumando las
+distancias entre cada observación y el centroide de su
 conglomerado.</li>
-<li><strong>Suma de cuadrados entre clusters</strong> (SSB), que mide la
-variavilidad entre los conglomerados,permitiendo valorar la calidad del
-agrupamiento.<br />
-</li>
-<li>Indice de Rand ajustado y corresponde a un indicador para evaluar la
-calidad del agrupamiento. Este indice varia entre -1 y 1. Valores
-cercanos a 1 indica alta similitud entre los grupos, mientras que
-valores cercanos a -1 indica que los grupos o conglomerados formados son
-muy diferentes. Valores cercanos a0 indican que los agrupamientos pueden
-ser productos del azar</li>
+</ul>
+<p></br></p>
+<ul>
+<li><strong>Suma de cuadrados entre clusters</strong> (<span
+class="math inline">\(SSB\)</span>), que mide la variavilidad entre los
+conglomerados,permitiendo valorar la calidad del agrupamiento.</li>
+</ul>
+<p></br></p>
+<ul>
+<li><strong>Indice de Rand ajustado</strong>, corresponde a un indicador
+para evaluar la calidad del agrupamiento. Este indice varia entre <span
+class="math inline">\(-1\)</span> y <span
+class="math inline">\(1\)</span>. Valores cercanos a <span
+class="math inline">\(1\)</span> indica alta similitud entre los grupos,
+mientras que valores cercanos a <span class="math inline">\(-1\)</span>
+indica que los grupos o conglomerados formados son muy diferentes.
+Valores cercanos a0 indican que los agrupamientos pueden ser productos
+del azar</li>
 </ul>
 <p></br></br></p>
 </div>
@@ -703,7 +712,9 @@ plot(dendograma, cex = 0.6, hang = -1) </code></pre>
 <!-- sort(dist_euclidianas) -->
 <!-- dist_euclidianas[2:28]-dist_euclidianas[1:27] -->
 <!-- ``` -->
-<p>Por último se mide la</p>
+<p>Por último se mide el indice de Silhouette promedio con el fin de
+valorar la mejor alternativa para la elección del número de
+conglomerados</p>
 <pre class="r"><code>library(tidyverse)
 library(cluster)
 # distancia euclidiana
