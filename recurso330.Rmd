@@ -381,7 +381,7 @@ $$
 
 Presenta la curva ROC y su área bajo la curva AUC 
 
-
+<center>
 ```{r}
 library(pROC)
 curva_ROC <- roc(test$honor, valor_pronosticado)
@@ -392,6 +392,9 @@ ggtitle(paste0("Curva ROC ", "(AUC = ", auc, ")"))+
 xlab("Especificidad")+
 ylab("Sensibilidad")  
 ```
+
+
+</center>
 
 El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.8292), indica un buen ajuste del modelo de predicción. 
 

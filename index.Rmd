@@ -33,12 +33,13 @@ En esta unidad se presentan los siguientes modelos :
 
 * Modelo diseño de experimentos <span style="color:#034A94">**MDE**</span>
 * Modelo de Regresión Logiística binomial <span style="color:#034A94"> **ML**</span>
-* Análisis de cluster  <span style="color:#034A94">**AC**</span> 
 * Análisis de componentes principales <span style="color:#034A94">**ACP**</span> 
+* Análisis de cluster  <span style="color:#034A94">**AC**</span> 
+
 
 </br>
 
-Los dos primero están basados en el modelo lineal general y su estructura es similar a la del modelo de regresión, tratado en las unidades 1 y 2
+Los dos primero están basados en el modelo lineal general y su estructura es similar a la del modelo de regresión, tratado en las unidades 1 y 2. Los dos últimos forman parte de un grupo de herramientas descriptivas que facilitan el análisis de los datos. 
 
 El <span style="color:#034A94"> **Análisis de Cluster**</span> realiza una clasificación de los objetos o individuos de una base de datos en grupo teniendo en cuenta todas la variables, empleando métricas de distancias
 

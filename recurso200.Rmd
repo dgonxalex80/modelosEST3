@@ -138,6 +138,8 @@ De manera gráfica representamos la información por genotipo
 
 <br/>
 
+<center>
+
 ```{r}
 library(ggplot2)
 ggplot2::ggplot(data=biomasa, aes(x=mg, y=bio_total), fill=mg)+
@@ -147,7 +149,11 @@ ggplot2::ggplot(data=biomasa, aes(x=mg, y=bio_total), fill=mg)+
     labs(title="",
         x ="Factor", y = "Y")
 ```
+</br>
+<sub>
 Figura 1 :  biomasa total por genotipo
+</sub>
+</center>
 
 <br/>
 
@@ -163,6 +169,7 @@ summary(anova1)
 Tambien se representa gráficamente las  distribuciones de la biomasa total por finca
 
 <br/>
+<center>
 ```{r}
 library(ggplot2)
 library(ggplot2)
@@ -171,9 +178,11 @@ ggplot2::ggplot(data=biomasa, aes(x=finca, y=bio_total), fill=finca)+
   stat_summary(fun = "mean", geom = "point", shape = 16,
                size = 3, color = "white")
 ```
-
+</br>
+<sub>
 Figura 2 : biomasa total por finca
-
+</sub>
+</center>
 <br/>
 
 Y su respectivo análisis de varianza

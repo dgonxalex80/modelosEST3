@@ -189,7 +189,7 @@ $$\dfrac{\lambda_{1} + \lambda_2 + \lambda_3}{\displaystyle\sum_{i=1}^p \lambda_
 
 </br>
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(paqueteMOD)
 data("creditos")
 creditosZ= scale(creditos) 
@@ -214,7 +214,7 @@ fviz_eig(res.pca, addlabels = TRUE)
 
 ```{r}
 fviz_pca_ind(res.pca,
-             col.ind = "cos2", # Color by the quality of representation
+             col.ind = "#686868", # Color by the quality of representation
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
              )
 ```
@@ -224,7 +224,7 @@ fviz_pca_ind(res.pca,
 ```{r}
 fviz_pca_var(res.pca,
              col.var = "contrib", # Color by contributions to the PC
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             gradient.cols = c("#FF7F00",  "#034D94"),
              repel = TRUE     # Avoid text overlapping
              )
 ```
@@ -233,8 +233,8 @@ fviz_pca_var(res.pca,
 
 ```{r}
 fviz_pca_biplot(res.pca, repel = TRUE,
-                col.var = "#2E9FDF", # Variables color
-                col.ind = "#696969"  # Individuals color
+                col.var = "#034A94", # Variables color
+                col.ind = "#DEDEDE"  # Individuals color
                 )
 
 ```
@@ -246,7 +246,9 @@ fviz_pca_biplot(res.pca, repel = TRUE,
 
 </br>
 
-Para el ejemplo en R se utilizarán las librerias *ade4* y *factoextra*. A continuación se presenta la matriz de datos de distintos tipos de café y seis variables en puntajes de 0 a 10 de algunas caracteristicas que definen la calidad de estos.
+Para el ejemplo en R se utilizarán las librerias `ade4` y `factoextra`. A continuación se presenta la matriz de datos de distintos tipos de café y seis variables en puntajes de $0$ a $10$ de algunas caracteristicas que definen la calidad de estos.
+
+
 
 </br>
 ```{r message = FALSE}
@@ -255,9 +257,39 @@ data("cafe")
 
 ```
 
+
+```{r, echo=FALSE}
+# install.packages("reactable")
+library(reactable)
+library(reactable)
+
+datos <- data.frame(
+  Id = 1:10,
+  Iden = c("ex_cl", "cl40m", "cl40cb", "cl20m", "cl20cb", "ex_o", "o40m", "o40cb", "o20m", "o20cb"),
+  IAroma = c(7.72, 6.02, 6.48, 6.82, 7.08, 7.66, 6.18, 6.84, 6.66, 7.00),
+  Aroma = c(7.00, 5.42, 5.98, 6.44, 6.20, 7.42, 5.82, 6.56, 7.06, 6.70),
+  Cuerpo = c(6.84, 6.22, 6.44, 6.70, 6.72, 6.98, 6.26, 6.82, 6.70, 7.04),
+  Acidez = c(5.02, 4.34, 4.58, 4.62, 4.78, 5.12, 4.00, 4.30, 4.64, 4.60),
+  Amargo = c(5.04, 4.60, 4.82, 4.38, 4.94, 5.18, 4.46, 4.96, 5.00, 4.88),
+  Astring = c(5.36, 4.78, 4.80, 4.80, 4.90, 5.22, 4.96, 4.84, 4.90, 5.18)
+)
+
+reactable(datos, columns = list(Id = colDef(name = "Id"), Iden = colDef(name = "Iden"), 
+                                   IAroma = colDef(name = "IAroma"), Aroma = colDef(name = "Aroma"), 
+                                   Cuerpo = colDef(name = "Cuerpo"), Acidez = colDef(name = "Acidez"), 
+                                   Amargo = colDef(name = "Amargo"), Astring = colDef(name = "Astring")))
+
+
+```
+
+
+
+
+
+
 </br>
 
-Calculando el ACP mediante la libreria *ade4* se tiene:
+Calculando el ACP mediante la libreria `ade4` se tiene:
 
 </br>
 
@@ -271,7 +303,9 @@ ACP = dudi.pca(cafe[,2:7], scannf=FALSE, center = TRUE, scale = TRUE, nf=p)
 
 </br>
 
-Mediante los argumentos center = TRUE, scale = TRUE estamos normalizando los datos originales. </br>
+Mediante los argumentos `center = TRUE, scale = TRUE` estamos normalizando los datos originales. 
+
+</br>
 
 Los valores propios asociados a la matriz de correlaciones serán:
 
@@ -295,7 +329,7 @@ ACP$li
 
 </br>
 
-Y por ultimo las componentes principales de las variables son:
+Y por último las componentes principales de las variables son:
 
 ```{r}
 ACP$co	
@@ -317,7 +351,7 @@ Se evidencia que la primera componente se lleva el 76.7\% de la inercia total, s
 
 </br></br>
 
-Gratificando las dos primeras componentes de las variables obtenemos el circulo de correlaciones:
+Graficando las dos primeras componentes de las variables obtenemos el circulo de correlaciones:
 
 </br>
 
@@ -328,7 +362,7 @@ fviz_pca_var(ACP, repel = TRUE, col.var = "blue")
 
 </br>
 
-Se puede observar que todas las variables son bastante excentricas, por lo que cuentan con una buena calidad de la representación mediante el ACP, podemos ver que las variables que más correlacionadas están son Amargo, Aroma, Cuerpo y Acidez, siendo las variables Astring y Amargo las que menos correlacionadas están entre si. La flecha a donde apunta la variable indica la dirección en donde esta aumenta.
+Se puede observar que todas las variables son bastante excentricas, por lo que cuentan con una buena calidad de la representación mediante el ACP, podemos ver que las variables que más correlacionadas están son **Amargo**, **Aroma**, **Cuerpo** y **Acidez**, siendo las variables **Astring** y **Amargo** las que menos correlacionadas están entre si. La flecha a donde apunta la variable indica la dirección para donde la variable aumenta.
 
 </br>
 
@@ -343,7 +377,7 @@ fviz_pca_biplot(ACP, repel = TRUE, col.var = "blue")
 
 </br>
 
-Recordemos que las variables están en puntajes. En este caso se puede decir que el tipo de café con la mejor calidad es el ex_o, caracterizándose más por el Aroma, Acidez y el cuerpo. Seguido de este se encuentra el ex_cl, el cual tiene buena puntuación en todas las variables pero se caracteriza más por la astringencia y el aroma. Los cafés con peor calidad son los que se encuentran en dirección contraria a las variables, siendo estos o40m, cl40m, cl20m y cl40cb. Por otra parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad promedio. 
+Recordemos que las variables están en puntajes. En este caso se puede decir que el tipo de café con la mejor calidad es el **ex_o**, caracterizándose más por el Aroma, Acidez y el cuerpo. Seguido de este se encuentra el **ex_cl**, el cual tiene buena puntuación en todas las variables pero se caracteriza más por la astringencia y el aroma. Los cafés con peor calidad son los que se encuentran en dirección contraria a las variables, siendo estos **o40m**, **cl40m**, **cl20m** y **cl40cb**. Por otra parte tenemos a **cl20cb**, **o40cb** y **o20m** tipos de café con calidad promedio. 
 
 </br> </br>
 
@@ -359,7 +393,7 @@ inercia.ACP$tot.inertia
 
 </br>
 
-Podemos observar que hasta la segunda componente (Ax2) se acumula un 84.51\% de la inercia total. 
+Podemos observar que hasta la **segunda componente** (Ax2) se acumula un 84.51\% de la inercia total. 
 
 </br>
 
@@ -374,7 +408,7 @@ inercia.ACP$col.abs
 
 </br>
 
-Siendo la variable IAroma la que más contribuye a la varianza explicada por el primer eje (20\%), mientras que Astring es la que más contribuye al segundo eje (63.8\%). <br>
+Siendo la variable **IAroma** la que más contribuye a la varianza explicada por el primer eje (20\%), mientras que **Astring** es la que más contribuye al segundo eje (63.8\%). <br>
 
 </br>
 
@@ -389,7 +423,7 @@ inercia.ACP$row.abs
 
 </br>
 
-Se observa que el café ex_o (27.2\%) es el que más varianza explicada aporta a la primera componente, por otra parte el café o40m (26.3\%) es el que más aporta al segundo eje.
+Se observa que el café **ex_o** (27.2\%) es el que más varianza explicada aporta a la primera componente, por otra parte el café **o40m** (26.3\%) es el que más aporta al segundo eje.
 
 
 </br></br>

@@ -671,6 +671,7 @@ diagonal y el valor del area bajo la curva AUC = 0.5</p>
 \widehat{\beta_{1}}  \hspace{.3cm} \text{matematicas}
 \]</span> </br></p>
 <p>Presenta la curva ROC y su área bajo la curva AUC</p>
+<center>
 <pre class="r"><code>library(pROC)
 curva_ROC &lt;- roc(test$honor, valor_pronosticado)
 auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
@@ -680,6 +681,7 @@ ggtitle(paste0(&quot;Curva ROC &quot;, &quot;(AUC = &quot;, auc, &quot;)&quot;))
 xlab(&quot;Especificidad&quot;)+
 ylab(&quot;Sensibilidad&quot;)  </code></pre>
 <p><img src="recurso330_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</center>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
 (AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
 <p></br></br></p>

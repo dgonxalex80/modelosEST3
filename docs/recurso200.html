@@ -556,6 +556,7 @@ genotipo de los árboles, proceso que permite neutralizar efectos
 aleatorios en la moderación</p>
 <p>De manera gráfica representamos la información por genotipo</p>
 <p><br/></p>
+<center>
 <pre class="r"><code>library(ggplot2)
 ggplot2::ggplot(data=biomasa, aes(x=mg, y=bio_total), fill=mg)+
   geom_boxplot(fill=c1)+
@@ -563,8 +564,9 @@ ggplot2::ggplot(data=biomasa, aes(x=mg, y=bio_total), fill=mg)+
                size = 3, color = &quot;white&quot;)+
     labs(title=&quot;&quot;,
         x =&quot;Factor&quot;, y = &quot;Y&quot;)</code></pre>
-<p><img src="recurso200_files/figure-html/unnamed-chunk-4-1.png" width="672" />
-Figura 1 : biomasa total por genotipo</p>
+<img src="recurso200_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+</br> <sub> Figura 1 : biomasa total por genotipo </sub>
+</center>
 <p><br/></p>
 <p>Se evalúan las diferencias entre las medias de los genotipos</p>
 <pre class="r"><code>anova1&lt;-aov(bio_total ~ mg, biomasa)
@@ -577,15 +579,17 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p><br/></p>
 <p>Tambien se representa gráficamente las distribuciones de la biomasa
 total por finca</p>
-<p><br/></p>
+<br/>
+<center>
 <pre class="r"><code>library(ggplot2)
 library(ggplot2)
 ggplot2::ggplot(data=biomasa, aes(x=finca, y=bio_total), fill=finca)+
   geom_boxplot(fill=&quot;#0EB0C6&quot;)+
   stat_summary(fun = &quot;mean&quot;, geom = &quot;point&quot;, shape = 16,
                size = 3, color = &quot;white&quot;)</code></pre>
-<p><img src="recurso200_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Figura 2 : biomasa total por finca</p>
+<img src="recurso200_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+</br> <sub> Figura 2 : biomasa total por finca </sub>
+</center>
 <p><br/></p>
 <p>Y su respectivo análisis de varianza</p>
 <p><br/></p>
