@@ -230,10 +230,11 @@ cluster_assigments <- cutree(hc_emp, k = 4)
 # asignamos los clusters
 assigned_cluster <- empresa_z %>% mutate(cluster = as.factor(cluster_assigments))
 
+
 # gráfico de puntos
 ggplot(assigned_cluster, aes(x = inv.pub, y = ventas, color = cluster)) +
   geom_point(size=4) + 
-  theme_classic()
+    theme_classic()
 ```
 
 </br></br>
@@ -262,6 +263,19 @@ rect.hclust(hc_emp, k = 4, border = 2:5)
 </br></br>
 
 
+### <span style="color:#034a94">**Clasificación de las empresas**</span>
+
+```{r}
+dendograma <- hclust(dist_emp, method = "average")
+grp <- cutree(dendograma, k = 4)
+grp
+```
+
+
+</br></br>
+
+
+
 Elegir el número óptimo de clusters o grupos  es una decisión subjetiva, sin embargo puede tomarse el criterio del mayor salto de nodo a nodo de las distancias euclidianas: Observando el dendograma vemos que el mayor incremento de las distancias se dio en $1$, por lo que si trazamos una linea se hará un corte y tendremos cuatros nodos, el conformado por ($E1,E2$), ($E5, E6$), ($E7, E8$) y ($E3, E4$). 
 
 </br>
@@ -271,7 +285,7 @@ library(factoextra)
 
 dist_emp <- dist(empresa_z, method = "euclidean")
 dendograma <- hclust(dist_emp, method = "average")
-plot(dendograma, cex = 0.6, hang = -1) 
+# plot(dendograma, cex = 0.6, hang = -1) 
 barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
         main = "Agregaciones (distancias euclidianas)",
         col = "lightblue", ylab = "Nodo", xlab = "Peso", xlim = c(0, 2.5))
@@ -370,7 +384,7 @@ Mediante la libreria *factoextra* podemos calcular las distancias euclidianas de
 library(factoextra)
 distancias <- dist(data, method = "euclidean")
 dendograma <- hclust(distancias, method = "average")
-plot(dendograma, cex = 0.6, hang = -1) 
+# plot(dendograma, cex = 0.6, hang = -1, main= "Dendograma") 
 barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
         main = "Agregaciones (distancias euclidianas)",
         col = "lightblue", ylab = "Nodo", xlab = "Peso", xlim = c(0, 80))
@@ -386,7 +400,8 @@ Podemos observar que el mayor salto en las agregaciones se da en 60.38, por lo q
 fviz_dend(dendograma, k=2, cex = 0.5,
           k_colors = c("red",  "blue"), 
           color_labels_by_k = TRUE, 
-          rect=TRUE)
+          rect=TRUE,
+          main = "Dendograma")
 ```
 
 </br></br>
@@ -431,6 +446,7 @@ Cluster <- FactoClass(data, dudi.pca, nf = p, nfcl = p, k.clust = 2, scanFC = FA
 </br></br>
 
 ```{r,eval=FALSE}
+library(FactoClass)
 plotFactoClass(Cluster,title="Análisis de conglomerados")
 ```
 

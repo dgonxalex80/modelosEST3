@@ -656,10 +656,11 @@ cluster_assigments &lt;- cutree(hc_emp, k = 4)
 # asignamos los clusters
 assigned_cluster &lt;- empresa_z %&gt;% mutate(cluster = as.factor(cluster_assigments))
 
+
 # gráfico de puntos
 ggplot(assigned_cluster, aes(x = inv.pub, y = ventas, color = cluster)) +
   geom_point(size=4) + 
-  theme_classic()</code></pre>
+    theme_classic()</code></pre>
 <p><img src="recurso500_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p></br></br></p>
 <pre class="r"><code>plot(hc_emp, cex = 0.6, main = &quot;Dendograma de Empresas&quot;,
@@ -685,6 +686,16 @@ reducir la distancia 1.0 y se obtienen cuarto conglomerados</p>
 rect.hclust(hc_emp, k = 4, border = 2:5)</code></pre>
 <p><img src="recurso500_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p></br></br></p>
+</div>
+<div id="clasificación-de-las-empresas" class="section level3">
+<h3><span style="color:#034a94"><strong>Clasificación de las
+empresas</strong></span></h3>
+<pre class="r"><code>dendograma &lt;- hclust(dist_emp, method = &quot;average&quot;)
+grp &lt;- cutree(dendograma, k = 4)
+grp</code></pre>
+<pre><code>E1 E2 E3 E4 E5 E6 E7 E8 
+ 1  1  2  2  3  3  4  4 </code></pre>
+<p></br></br></p>
 <p>Elegir el número óptimo de clusters o grupos es una decisión
 subjetiva, sin embargo puede tomarse el criterio del mayor salto de nodo
 a nodo de las distancias euclidianas: Observando el dendograma vemos que
@@ -699,12 +710,11 @@ class="math inline">\(E3, E4\)</span>).</p>
 
 dist_emp &lt;- dist(empresa_z, method = &quot;euclidean&quot;)
 dendograma &lt;- hclust(dist_emp, method = &quot;average&quot;)
-plot(dendograma, cex = 0.6, hang = -1) </code></pre>
-<p><img src="recurso500_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="r"><code>barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
+# plot(dendograma, cex = 0.6, hang = -1) 
+barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
         main = &quot;Agregaciones (distancias euclidianas)&quot;,
         col = &quot;lightblue&quot;, ylab = &quot;Nodo&quot;, xlab = &quot;Peso&quot;, xlim = c(0, 2.5))</code></pre>
-<p><img src="recurso500_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <!-- ```{r} -->
 <!-- dist_euclidianas =c( -->
 <!-- 0.6011686,                                                             -->
@@ -771,12 +781,11 @@ conjunto de datos:</p>
 <pre class="r"><code>library(factoextra)
 distancias &lt;- dist(data, method = &quot;euclidean&quot;)
 dendograma &lt;- hclust(distancias, method = &quot;average&quot;)
-plot(dendograma, cex = 0.6, hang = -1) </code></pre>
-<p><img src="recurso500_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<pre class="r"><code>barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
+# plot(dendograma, cex = 0.6, hang = -1, main= &quot;Dendograma&quot;) 
+barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
         main = &quot;Agregaciones (distancias euclidianas)&quot;,
         col = &quot;lightblue&quot;, ylab = &quot;Nodo&quot;, xlab = &quot;Peso&quot;, xlim = c(0, 80))</code></pre>
-<p><img src="recurso500_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p></br></br></p>
 <p>Podemos observar que el mayor salto en las agregaciones se da en
 60.38, por lo que se puede realizar un corte con este valor en el
@@ -785,7 +794,8 @@ dendograma, quedando:</p>
 <pre class="r"><code>fviz_dend(dendograma, k=2, cex = 0.5,
           k_colors = c(&quot;red&quot;,  &quot;blue&quot;), 
           color_labels_by_k = TRUE, 
-          rect=TRUE)</code></pre>
+          rect=TRUE,
+          main = &quot;Dendograma&quot;)</code></pre>
 <p></br></br></p>
 <p><img src="img/dendograma2.png" width="80%" style="display: block; margin: auto;" /></p>
 <p></br></p>
@@ -822,7 +832,8 @@ The number of axes for clustering is  4 </code></pre>
 <pre><code>Look the histogram of 25 indexes 
 Partition in  2  clusters</code></pre>
 <p></br></br></p>
-<pre class="r"><code>plotFactoClass(Cluster,title=&quot;Análisis de conglomerados&quot;)</code></pre>
+<pre class="r"><code>library(FactoClass)
+plotFactoClass(Cluster,title=&quot;Análisis de conglomerados&quot;)</code></pre>
 <p></br></br></p>
 <p><img src="img/cluster1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p></br></br></p>
