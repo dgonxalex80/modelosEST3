@@ -370,25 +370,120 @@ iterativa a partir de subgrupos más pequeños.</p>
 <h1><span style="color:#034a94"><strong>Supuestos y
 requisitos</strong></span></h1>
 <p></br></p>
-<p>El análisis de conglomerados se basa en calcular distancias
-utilizando las componentes principales calculadas mediante ACP, estas
-distancias serán equivalentes a calcularlas mediante la matriz original
-<span class="math inline">\(X\)</span>, una vez encontrados los
-conglomerados o grupos se procede a representar el primer plano
-factorial, por lo que los supuestos del análisis de conglomerados serán
-los mismos del análisis de componentes principales.</p>
+<p>El análisis de conglomerados se basa en calcular distancias entre los
+individuos metricas a partir de la matriz de datos <span
+class="math inline">\(X\)</span>. Una vez encontrados los conglomerados
+o grupos se procede a representarlos en un plano factorial. Supone por
+tanto el conocimiento previo de la presencia de conglomerados o por lo
+menos sospecha de presencia de grupos, aunque no se tenga claramente una
+distribución a priori.</p>
 <p></br></br></p>
+</div>
+<div id="conceptos-asociados" class="section level1">
+<h1><span style="color:#034a94"><strong>Conceptos
+asociados</strong></span></h1>
+<p></br></p>
+<div id="estandarización" class="section level3">
+<h3><span
+style="color:#034a94"><strong>Estandarización</strong></span></h3>
+<p>Debido a la diferencias en las escalas de las variables empleadas en
+el análisis, es necesario colocarlas en una sola escala, para lo cual a
+cada variables se le resta el valor de su media y el resultado se divide
+por su desviación estandar. El producto de esta trasformación es una
+variable con media <span class="math inline">\(0\)</span> y varianza
+<span class="math inline">\(1\)</span>.</p>
+<p><span class="math display">\[
+z= \dfrac{x - \bar{x}}{\sigma}
+\]</span> </br></p>
+</div>
+<div id="distancia" class="section level3">
+<h3><span style="color:#034a94"><strong>Distancia</strong></span></h3>
+<p>La distancia entre dos observaciones es una medida de sus
+diferencias. El AC emplea varias medias de distancias como :</p>
+<ul>
+<li><span style="color:#034a94"><strong>Distancia
+euclidiana</strong></span></li>
+</ul>
+<p><span class="math display">\[
+D_{ij} = \sqrt{\sum_{p=1}^{k} (x_{ip}-x_{jp})^{2}}
+\]</span></p>
+<ul>
+<li><span style="color:#034a94"><strong>Distancia de
+Manhattan</strong></span></li>
+</ul>
+<p><span class="math display">\[
+D_{ij} = \sum_{p=1}^{k} \big|x_{ip}-x_{jp}\big|^{n}
+\]</span></p>
+<ul>
+<li><span style="color:#034a94"><strong>Distancia de
+Minkowski</strong></span></li>
+</ul>
+<p><span class="math display">\[
+D_{ij} =\Big[\big|x_{ip}-x_{jp}\big|^{n}  \Big]^{1/n}
+\]</span> </br></br></p>
+</div>
+<div id="agrupamiento" class="section level3">
+<h3><span
+style="color:#034a94"><strong>Agrupamiento</strong></span></h3>
+<p>Mediante este procedimiento son asignadas las observaciones a los
+grupos o conglomerados</p>
+<div id="criterios-de-calidad" class="section level4">
+<h4><span style="color:#034a94"><strong>Criterios de
+calidad</strong></span></h4>
+<p>Utilizados para evaluar la bondad del agrupamiento resultante del
+análisis. Algunos de los criterios más comunes incluyen:</p>
+<ul>
+<li><strong>Suma de cuadrados dentro del cluster</strong> (SSC), que
+mide cuanto varían las observaciones dentro de cada conglomerado y se
+mide sumando las distancias entre cada observación y el centroide de su
+conglomerado.</li>
+<li><strong>Suma de cuadrados entre clusters</strong> (SSB), que mide la
+variavilidad entre los conglomerados,permitiendo valorar la calidad del
+agrupamiento.<br />
+</li>
+<li>Indice de Rand ajustado y corresponde a un indicador para evaluar la
+calidad del agrupamiento. Este indice varia entre -1 y 1. Valores
+cercanos a 1 indica alta similitud entre los grupos, mientras que
+valores cercanos a -1 indica que los grupos o conglomerados formados son
+muy diferentes. Valores cercanos a0 indican que los agrupamientos pueden
+ser productos del azar</li>
+</ul>
+<p></br></br></p>
+</div>
+</div>
+<div id="centros-del-conglomerado" class="section level3">
+<h3><span style="color:#034a94"><strong>Centros del
+conglomerado</strong></span></h3>
+<p>Es la media de los valores de las variables de todos los objetos o
+casos de cada uno de los conglomerados</p>
+</div>
+<div id="dendograma" class="section level3">
+<h3><span style="color:#034a94"><strong>Dendograma</strong></span></h3>
+<p>Corresponde a la representación grafica de los resultados obtenidos
+en el AC, en un plano donde el eje vertical indica las distancias en las
+que se unen o separan los conglomerados y en el eje horizontal los
+objetos o individuos.</p>
+<p></br></br></p>
+</div>
+<div id="matriz-de-coeficientes-desemenanza-y-distancias"
+class="section level3">
+<h3><span style="color:#034a94"><strong>Matriz de coeficientes
+desemenanza y distancias</strong></span></h3>
+<p>Corresponde a una matriz diagonal inferior que contiene las
+distancias entre pares de objetos o casos.</p>
+<p></br></br></p>
+</div>
 <div id="modelo" class="section level2">
 <h2><span style="color:#034a94"><strong>Modelo</strong></span></h2>
 <p></br></p>
-<p>Existen dos tipos de clasificación automática: los métodos no
-jerárquicos los cuales se basan en encontrar la mejor partición del
-conjunto de individuos en <span class="math inline">\(q\)</span> clases,
-en donde sus centros de gravedad se eligen en un inicio de forma
-aleatoria. Por otra parte están los métodos jerárquicos en los cuales se
-construye un dendograma en el cual se forman los grupos de individuos
-más parecidos, esto permite determinar el número de clases que se usarán
-en el método no jerárquico.</p>
+<p>Existen dos tipos de clasificación automática: los <strong>métodos no
+jerárquicos</strong> los cuales se basan en encontrar la mejor partición
+del conjunto de individuos en <span class="math inline">\(q\)</span>
+clases, en donde sus centros de gravedad se eligen en un inicio de forma
+aleatoria. Por otra parte están los <strong>métodos jerárquicos</strong>
+en los cuales se construye un dendograma en el cual se forman los grupos
+de individuos más parecidos, esto permite determinar el número de clases
+que se usarán en el método no jerárquico.</p>
 <p></br></p>
 <p>Mediante el análisis de conglomerados se desea clasificar a los
 distintos individuos u observaciones en grupos muy homogéneos, pero
@@ -399,78 +494,242 @@ disimilitud) entre dos observaciones, dentro de las más usada está la
 dado por:</p>
 <p></br></p>
 <p><span class="math display">\[
-d(x, y) = \sqrt{\sum_{i=1}^{p} \Big(x_i - y_i\Big)^2}
+d(x_i, x_j) = \sqrt{\sum_{p=1}^{m} (x_{ip}-x_{jp})^{2}}
 \]</span></p>
 <p></br></p>
-<p>En donde <span class="math inline">\(x\)</span> y <span
-class="math inline">\(y\)</span> son individuos con <span
-class="math inline">\(p\)</span> variables, de esta forma podremos
+<p>En donde <span class="math inline">\(x_i\)</span> y <span
+class="math inline">\(x_j\)</span> son individuos con <span
+class="math inline">\(m\)</span> variables, de esta forma podremos
 obtener los dos primeros individuos que más se parezcan entre sí,
 formarán el primer grupo. Sean entonces <span class="math inline">\(h =
-\{x, y\}\)</span> un grupo y <span class="math inline">\(z\)</span> un
-individuo, con los que se puede calcular la distancia entre el grupo y
-el individuo de la forma: <span class="math inline">\(d(h, z) =
-min\{d(x,z), d(y, z)\}\)</span>. Además hay otras formas de medir la
-proximidad entre elementos como pueden ser el salto mínimo (single
-linkage), salto máximo, salto promedio y agregación de Ward. <br></p>
-<p>El siguiente dendograma fue construido a apartir de 5 individuos:</p>
-<center>
-<p><img src="img/dendograma.png" width="80%" style="display: block; margin: auto;" /></p>
-</center>
+\{x_i, x_j\}\)</span> un grupo y <span
+class="math inline">\(x_k\)</span> un individuo, con los que se puede
+calcular la distancia entre el grupo y el individuo de la forma: <span
+class="math inline">\(d(h, x_k) = min\{d(x_i,x_k), d(x_j,
+x_k)\}\)</span>. Además de el método descrito, hay otras formas de medir
+la proximidad entre elementos como pueden ser el salto mínimo (single
+linkage), salto máximo, salto promedio y agregación de Ward.</p>
+<p></br></br></p>
+<div id="ejemplo" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p></br></p>
+<p>Se tiene la información sobre la inversión en publicidad y las ventas
+de 8 empresas</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+<th align="left">6</th>
+<th align="left">7</th>
+<th align="left">8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">inv.pub</td>
+<td align="left">16</td>
+<td align="left">12</td>
+<td align="left">10</td>
+<td align="left">12</td>
+<td align="left">45</td>
+<td align="left">50</td>
+<td align="left">45</td>
+<td align="left">50</td>
+</tr>
+<tr class="even">
+<td align="left">ventas</td>
+<td align="left">10</td>
+<td align="left">14</td>
+<td align="left">22</td>
+<td align="left">25</td>
+<td align="left">10</td>
+<td align="left">15</td>
+<td align="left">25</td>
+<td align="left">27</td>
+</tr>
+</tbody>
+</table>
+<p></br></p>
+<pre class="r"><code>id= 1:8
+empresa =data.frame(inv.pub = c(16,12,10,12,45,50,45,50),
+                     ventas =c(10,14,22,25,10,14,25,27) )
+rownames(empresa) = c(&quot;E1&quot;,&quot;E2&quot;,&quot;E3&quot;,&quot;E4&quot;,&quot;E5&quot;,&quot;E6&quot;,&quot;E7&quot;, &quot;E8&quot;)</code></pre>
+<p></br></p>
+<p>Dado que los rangos de las variables son diferente y con fin de que
+estas diferencias en las dimensines de las variables no afecte los
+calculos de las distancias se aconseja estandarizar las variables
+(restar la media y dividir el resultado por la desviación estandar)
+antes de generar las calculos de las distancias</p>
+<p></br></p>
+<p><span class="math display">\[
+z = \dfrac{\bar{x} - \mu}{\sigma}
+\]</span> </br></p>
+<pre class="r"><code>empresa_z =scale(empresa)
+empresa_z = as.data.frame(empresa_z)
+empresa_z</code></pre>
+<pre><code>      inv.pub     ventas
+E1 -0.7417009 -1.1779013
+E2 -0.9536155 -0.6153216
+E3 -1.0595728  0.5098379
+E4 -0.9536155  0.9317727
+E5  0.7946796 -1.1779013
+E6  1.0595728 -0.6153216
+E7  0.7946796  0.9317727
+E8  1.0595728  1.2130625</code></pre>
+<p></br></p>
+<p>Las distancias correspondientes a los valores estandarizados
+serán:</p>
+</div>
+<div id="distancias-euclidianas" class="section level3">
+<h3><span style="color:#034a94"><strong>Distancias
+euclidianas</strong></span></h3>
+<pre class="r"><code>dist(empresa_z, method = &quot;euclidean&quot;)</code></pre>
+<pre><code>          E1        E2        E3        E4        E5        E6        E7
+E2 0.6011686                                                            
+E3 1.7174126 1.1301375                                                  
+E4 2.1202905 1.5470942 0.4350355                                        
+E5 1.5363805 1.8365815 2.5073323 2.7399379                              
+E6 1.8870832 2.0131883 2.3993252 2.5389816 0.6218234                    
+E7 2.6098255 2.3345313 1.9016521 1.7482951 2.1096739 1.5696079          
+E8 2.9935422 2.7195432 2.2327792 2.0327447 2.4055927 1.8283841 0.3863837</code></pre>
+<div id="distamcias-de-manhattan" class="section level4">
+<h4><span style="color:#034a94"><strong>Distamcias de
+Manhattan</strong></span></h4>
+<pre class="r"><code>dist(empresa_z, method = &quot;manhattan&quot;)</code></pre>
+<pre><code>          E1        E2        E3        E4        E5        E6        E7
+E2 0.7744943                                                            
+E3 2.0056110 1.2311167                                                  
+E4 2.3215885 1.5470942 0.5278921                                        
+E5 1.5363805 2.3108748 3.5419915 3.8579690                              
+E6 2.3638534 2.0131883 3.2443050 3.5602825 0.8274729                    
+E7 3.6460545 3.2953893 2.2761871 1.7482951 2.1096739 1.8119874          
+E8 4.1922375 3.8415724 2.8223702 2.2944781 2.6558570 1.8283841 0.5461831</code></pre>
+<p></br></p>
+</div>
+<div id="distancias-de-minkowski" class="section level4">
+<h4><span style="color:#034a94"><strong>Distancias de
+Minkowski</strong></span></h4>
+<pre class="r"><code>dist(empresa_z, method = &quot;minkowski&quot;)</code></pre>
+<pre><code>          E1        E2        E3        E4        E5        E6        E7
+E2 0.6011686                                                            
+E3 1.7174126 1.1301375                                                  
+E4 2.1202905 1.5470942 0.4350355                                        
+E5 1.5363805 1.8365815 2.5073323 2.7399379                              
+E6 1.8870832 2.0131883 2.3993252 2.5389816 0.6218234                    
+E7 2.6098255 2.3345313 1.9016521 1.7482951 2.1096739 1.5696079          
+E8 2.9935422 2.7195432 2.2327792 2.0327447 2.4055927 1.8283841 0.3863837</code></pre>
+<p></br></br></p>
+</div>
+</div>
+<div id="distribución-de-los-individuos-por-distancias"
+class="section level3">
+<h3><span style="color:#034a94"><strong>Distribución de los individuos
+por distancias</strong></h3>
+<pre class="r"><code>library(tidyverse)
+# distancia euclidiana
+dist_emp &lt;- dist(empresa_z, method = &#39;euclidean&#39;)
+
+# Cluster jerarquico con el método complete
+hc_emp &lt;- hclust(dist_emp, method = &#39;complete&#39;)
+
+# Determinamos a dónde pertenece cada observación
+cluster_assigments &lt;- cutree(hc_emp, k = 4)
+
+# asignamos los clusters
+assigned_cluster &lt;- empresa_z %&gt;% mutate(cluster = as.factor(cluster_assigments))
+
+# gráfico de puntos
+ggplot(assigned_cluster, aes(x = inv.pub, y = ventas, color = cluster)) +
+  geom_point() + theme_classic()</code></pre>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p></br></br></p>
+<pre class="r"><code>plot(hc_emp, cex = 0.6, main = &quot;Dendograma de Empresas&quot;,
+     ylab = &quot;Distancia euclidiana&quot;, xlab = &quot;Grupos&quot;)
+rect.hclust(hc_emp, k = 2, border = 2:5)</code></pre>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p></br></br></p>
 <p>En este diagrama se observa que al inicio los individuos que más se
-parecen (menor distancia euclidea) son los individuos (<span
-class="math inline">\(1\)</span>) y (<span
-class="math inline">\(3\)</span>) los cuales tuvieron una distancia de
-<span class="math inline">\(1\)</span>. El siguiente grupo a formarse lo
-conforman los individuos (<span class="math inline">\(2\)</span>) y
-(<span class="math inline">\(5\)</span>) con una distancia de <span
-class="math inline">\(2\)</span>, el siguiente nodo a formarse está
-conformado por el grupo {<span class="math inline">\(1, 3\)</span>} y el
-individuo (<span class="math inline">\(4\)</span>) con una distancia de
-<span class="math inline">\(4\)</span>.</p>
+parecen (menor distancia euclidea) son los individuos <span
+class="math inline">\(E7\)</span>, <span
+class="math inline">\(E8\)</span>, <span
+class="math inline">\(E3\)</span> y <span
+class="math inline">\(E4\)</span> (<span class="math inline">\(d(E7, E8)
+= 0.3863837\)</span>) <span class="math inline">\(d(E3, E4) =
+0.4350355\)</span>) , conformando estas cuatro empresas un primer
+cluster y el resto un segundo grupo o cluster a una distancia de
+2.5.</p>
+<p>En el caso de tener hipótesis de la existencia de de 4 grupos podemos
+reducir la distancia 1.0 y se obtienen cuarto conglomerados</p>
 <p></br></p>
+<pre class="r"><code>plot(hc_emp, cex = 0.6, main = &quot;Dendograma de Empresas&quot;,
+     ylab = &quot;Distancia euclidiana&quot;, xlab = &quot;Grupos&quot;)
+rect.hclust(hc_emp, k = 4, border = 2:5)</code></pre>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p></br></br></p>
 <p>Elegir el número óptimo de clusters o grupos es una decisión
 subjetiva, sin embargo puede tomarse el criterio del mayor salto de nodo
 a nodo de las distancias euclidianas: Observando el dendograma vemos que
 el mayor incremento de las distancias se dio en <span
-class="math inline">\(4\)</span>, por lo que si trazamos una linea se
-hará un corte y tendremos dos nodos, el conformado por {<span
-class="math inline">\(1,3,4\)</span>} y el otro con {<span
-class="math inline">\(2,5\)</span>}.</p>
+class="math inline">\(1\)</span>, por lo que si trazamos una linea se
+hará un corte y tendremos cuatros nodos, el conformado por (<span
+class="math inline">\(E1,E2\)</span>), (<span class="math inline">\(E5,
+E6\)</span>), (<span class="math inline">\(E7, E8\)</span>) y (<span
+class="math inline">\(E3, E4\)</span>).</p>
 <p></br></p>
-<p>Otro método de agrupamiento es el <span
-class="math inline">\(k-means\)</span> (o centros moviles), este se
-centra en dividir un conjunto de datos en <span
-class="math inline">\(k\)</span> grupos. En este se trata de minimizar
-la suma de los cuadrados de las distancias entre los puntos y su
-centroide correspondiente, los pasos en este algoritmo son:</p>
-<ul>
-<li><ol style="list-style-type: decimal">
-<li>Selecciona <span class="math inline">\(k\)</span> centroides
-aleatorios de los puntos en el conjunto de datos.</li>
-</ol></li>
-<li><ol start="2" style="list-style-type: decimal">
-<li>Asigna cada punto al centroide más cercano.</li>
-</ol></li>
-<li><ol start="3" style="list-style-type: decimal">
-<li>Recalcula los centroides como la media de los puntos asignados a
-cada centroide.</li>
-</ol></li>
-<li><ol start="4" style="list-style-type: decimal">
-<li>Repite los pasos <span class="math inline">\(2\)</span> y <span
-class="math inline">\(3\)</span> hasta que los centroides no cambien
-significativamente o se alcance un número máximo de iteraciones (es
-decir, el algoritmo converja).</li>
-</ol></li>
-<li><ol start="5" style="list-style-type: decimal">
-<li>El número k de clusters se debe especificar antes de ejecutar el
-algoritmo.</li>
-</ol></li>
-</ul>
-<p></br></br></p>
-<div id="ejemplo" class="section level3">
-<h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
+<pre class="r"><code>library(factoextra)
+
+dist_emp &lt;- dist(empresa_z, method = &quot;euclidean&quot;)
+dendograma &lt;- hclust(dist_emp, method = &quot;average&quot;)
+plot(dendograma, cex = 0.6, hang = -1) </code></pre>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
+        main = &quot;Agregaciones (distancias euclidianas)&quot;,
+        col = &quot;lightblue&quot;, ylab = &quot;Nodo&quot;, xlab = &quot;Peso&quot;, xlim = c(0, 2.5))</code></pre>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<!-- ```{r} -->
+<!-- dist_euclidianas =c( -->
+<!-- 0.6011686,                                                             -->
+<!-- 1.7174126, 1.1301375,                                                   -->
+<!-- 2.1202905, 1.5470942, 0.4350355,                                         -->
+<!-- 1.5363805, 1.8365815, 2.5073323, 2.7399379,                               -->
+<!-- 1.8870832, 2.0131883, 2.3993252, 2.5389816, 0.6218234,                     -->
+<!-- 2.6098255, 2.3345313, 1.9016521, 1.7482951, 2.1096739, 1.5696079,           -->
+<!-- 2.9935422, 2.7195432, 2.2327792, 2.0327447, 2.4055927, 1.8283841, 0.3863837) -->
+<!-- sort(dist_euclidianas) -->
+<!-- dist_euclidianas[2:28]-dist_euclidianas[1:27] -->
+<!-- ``` -->
+<p>Por último se mide la</p>
+<pre class="r"><code>library(tidyverse)
+library(cluster)
+# distancia euclidiana
+dist_emp &lt;- dist(empresa_z, method = &#39;euclidean&#39;)
+
+# Cluster jerarquico con el método complete
+hc_emp &lt;- hclust(dist_emp, method = &#39;complete&#39;)
+
+# Determinamos a dónde pertenece cada observación
+cluster_assigments &lt;- cutree(hc_emp, k = 4)
+
+# Calcular el coeficiente de Silhouette
+sil &lt;- silhouette(cluster_assigments, dist(empresa_z))
+sil_avg &lt;- mean(sil[,3])
+
+# Imprimir el coeficiente de Silhouette promedio
+cat(&quot;Coeficiente de Silhouette promedio k=4 : &quot;, sil_avg)</code></pre>
+<pre><code>Coeficiente de Silhouette promedio k=4 :  0.690995</code></pre>
+<pre><code>Coeficiente de Silhouette promedio k=2 :  0.3416799</code></pre>
+<p>Estos resultados indican una mejor agrupación cuando se eligen k=4
+conglomerados. (valores más cercanos a 1 indican un agrupamiento más
+coherente)</p>
+<p></br></br></br></p>
+</div>
+<div id="ejemplo-1" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
 <p></br></p>
 <p>El siguiente ejemplo en <strong>R</strong> cuenta con un conjunto de
 datos sobre <span class="math inline">\(35\)</span> observaciones de
@@ -480,13 +739,13 @@ datos sobre <span class="math inline">\(35\)</span> observaciones de
 <p></br></br></p>
 <pre class="r"><code>data = read.table(&quot;whisky.txt&quot;, header = TRUE, row.names = 1)
 head(data)</code></pre>
-<pre><code>##   precio prop aniejo nota
-## 1     70   20    5.0    3
-## 2     60   20    5.0    2
-## 3     65   20    7.5    2
-## 4     74   25   12.0    2
-## 5     70   25   12.0    3
-## 6     73   30    5.0    0</code></pre>
+<pre><code>  precio prop aniejo nota
+1     70   20    5.0    3
+2     60   20    5.0    2
+3     65   20    7.5    2
+4     74   25   12.0    2
+5     70   25   12.0    3
+6     73   30    5.0    0</code></pre>
 <p></br></br></p>
 <p>Mediante la libreria <em>factoextra</em> podemos calcular las
 distancias euclidianas de los individuos y gráficar el dendograma del
@@ -496,11 +755,11 @@ conjunto de datos:</p>
 distancias &lt;- dist(data, method = &quot;euclidean&quot;)
 dendograma &lt;- hclust(distancias, method = &quot;average&quot;)
 plot(dendograma, cex = 0.6, hang = -1) </code></pre>
-<p><img src="recurso500_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <pre class="r"><code>barplot(sort(dendograma$height, decreasing = TRUE), horiz = TRUE, 
         main = &quot;Agregaciones (distancias euclidianas)&quot;,
         col = &quot;lightblue&quot;, ylab = &quot;Nodo&quot;, xlab = &quot;Peso&quot;, xlim = c(0, 80))</code></pre>
-<p><img src="recurso500_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p><img src="recurso500_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
 <p></br></br></p>
 <p>Podemos observar que el mayor salto en las agregaciones se da en
 60.38, por lo que se puede realizar un corte con este valor en el
@@ -518,10 +777,10 @@ segunda los clusters a los que estos pertenecen.</p>
 <p></br></br></p>
 <pre class="r"><code>grp &lt;- cutree(dendograma, k = 2)
 grp</code></pre>
-<pre><code>##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
-##  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 
-## 27 28 29 30 31 32 33 34 35 
-##  1  1  2  2  2  2  2  2  2</code></pre>
+<pre><code> 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+ 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 
+27 28 29 30 31 32 33 34 35 
+ 1  1  2  2  2  2  2  2  2 </code></pre>
 <p></br></br></p>
 <p>La libreria <code>FactoClass</code> para representar los clusters en
 el primer plano factorial, en la función <code>FactoClass</code> tenemos
@@ -539,11 +798,11 @@ el dendograma elegimos dos clusters.</p></li>
 <pre class="r"><code>library(FactoClass)
 p = ncol(data)
 Cluster &lt;- FactoClass(data, dudi.pca, nf = p, nfcl = p, k.clust = 2, scanFC = FALSE)</code></pre>
-<pre><code>## The number of retained axes for factorial analysis is  4 
-## 
-## The number of axes for clustering is  4</code></pre>
-<pre><code>## Look the histogram of 25 indexes 
-## Partition in  2  clusters</code></pre>
+<pre><code>The number of retained axes for factorial analysis is  4 
+
+The number of axes for clustering is  4 </code></pre>
+<pre><code>Look the histogram of 25 indexes 
+Partition in  2  clusters</code></pre>
 <p></br></br></p>
 <pre class="r"><code>plotFactoClass(Cluster,title=&quot;Análisis de conglomerados&quot;)</code></pre>
 <p></br></br></p>
