@@ -80,7 +80,9 @@ $$
 
 Mediante este procedimiento son asignadas las observaciones a los grupos o conglomerados  
 
-#### <span style="color:#034a94">**Criterios de calidad**</span> 
+</br></br>
+
+### <span style="color:#034a94">**Criterios de calidad**</span> 
 
 Utilizados para evaluar la bondad del agrupamiento resultante del análisis. Algunos de los criterios más comunes incluyen:
 
@@ -100,6 +102,8 @@ Utilizados para evaluar la bondad del agrupamiento resultante del análisis. Alg
 ### <span style="color:#034a94">**Centros del conglomerado**</span>
 
 Es la media de los valores de las variables de todos los objetos o casos de cada uno de los conglomerados
+
+</br></br>
 
 ### <span style="color:#034a94">**Dendograma**</span>
 
@@ -184,11 +188,14 @@ empresa_z
 
 Las distancias correspondientes a los valores estandarizados serán:
 
+</br></br>
+
 ### <span style="color:#034a94">**Distancias euclidianas**</span>
 
 ```{r}
 dist(empresa_z, method = "euclidean")
 ```
+</br></br>
 
 #### <span style="color:#034a94">**Distamcias de Manhattan**</span>
 
@@ -196,7 +203,7 @@ dist(empresa_z, method = "euclidean")
 dist(empresa_z, method = "manhattan")
 ```
 
-</br>
+</br></br>
 
 #### <span style="color:#034a94">**Distancias de Minkowski**</span>
 
@@ -225,7 +232,8 @@ assigned_cluster <- empresa_z %>% mutate(cluster = as.factor(cluster_assigments)
 
 # gráfico de puntos
 ggplot(assigned_cluster, aes(x = inv.pub, y = ventas, color = cluster)) +
-  geom_point() + theme_classic()
+  geom_point(size=4) + 
+  theme_classic()
 ```
 
 </br></br>
@@ -309,6 +317,7 @@ cat("Coeficiente de Silhouette promedio k=4 : ", sil_avg)
 
 ```
 
+</br></br>
 
 ```{r , warning=FALSE,message=FALSE, echo=FALSE}
 
@@ -380,6 +389,7 @@ fviz_dend(dendograma, k=2, cex = 0.5,
           rect=TRUE)
 ```
 
+</br></br>
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("img/dendograma2.png")

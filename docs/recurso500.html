@@ -427,9 +427,11 @@ D_{ij} =\Big[\big|x_{ip}-x_{jp}\big|^{n}  \Big]^{1/n}
 style="color:#034a94"><strong>Agrupamiento</strong></span></h3>
 <p>Mediante este procedimiento son asignadas las observaciones a los
 grupos o conglomerados</p>
-<div id="criterios-de-calidad" class="section level4">
-<h4><span style="color:#034a94"><strong>Criterios de
-calidad</strong></span></h4>
+<p></br></br></p>
+</div>
+<div id="criterios-de-calidad" class="section level3">
+<h3><span style="color:#034a94"><strong>Criterios de
+calidad</strong></span></h3>
 <p>Utilizados para evaluar la bondad del agrupamiento resultante del
 análisis. Algunos de los criterios más comunes incluyen:</p>
 <ul>
@@ -459,12 +461,12 @@ del azar</li>
 </ul>
 <p></br></br></p>
 </div>
-</div>
 <div id="centros-del-conglomerado" class="section level3">
 <h3><span style="color:#034a94"><strong>Centros del
 conglomerado</strong></span></h3>
 <p>Es la media de los valores de las variables de todos los objetos o
 casos de cada uno de los conglomerados</p>
+<p></br></br></p>
 </div>
 <div id="dendograma" class="section level3">
 <h3><span style="color:#034a94"><strong>Dendograma</strong></span></h3>
@@ -593,6 +595,7 @@ E8  1.0595728  1.2130625</code></pre>
 <p></br></p>
 <p>Las distancias correspondientes a los valores estandarizados
 serán:</p>
+<p></br></br></p>
 </div>
 <div id="distancias-euclidianas" class="section level3">
 <h3><span style="color:#034a94"><strong>Distancias
@@ -606,6 +609,7 @@ E5 1.5363805 1.8365815 2.5073323 2.7399379
 E6 1.8870832 2.0131883 2.3993252 2.5389816 0.6218234                    
 E7 2.6098255 2.3345313 1.9016521 1.7482951 2.1096739 1.5696079          
 E8 2.9935422 2.7195432 2.2327792 2.0327447 2.4055927 1.8283841 0.3863837</code></pre>
+<p></br></br></p>
 <div id="distamcias-de-manhattan" class="section level4">
 <h4><span style="color:#034a94"><strong>Distamcias de
 Manhattan</strong></span></h4>
@@ -618,7 +622,7 @@ E5 1.5363805 2.3108748 3.5419915 3.8579690
 E6 2.3638534 2.0131883 3.2443050 3.5602825 0.8274729                    
 E7 3.6460545 3.2953893 2.2761871 1.7482951 2.1096739 1.8119874          
 E8 4.1922375 3.8415724 2.8223702 2.2944781 2.6558570 1.8283841 0.5461831</code></pre>
-<p></br></p>
+<p></br></br></p>
 </div>
 <div id="distancias-de-minkowski" class="section level4">
 <h4><span style="color:#034a94"><strong>Distancias de
@@ -654,7 +658,8 @@ assigned_cluster &lt;- empresa_z %&gt;% mutate(cluster = as.factor(cluster_assig
 
 # gráfico de puntos
 ggplot(assigned_cluster, aes(x = inv.pub, y = ventas, color = cluster)) +
-  geom_point() + theme_classic()</code></pre>
+  geom_point(size=4) + 
+  theme_classic()</code></pre>
 <p><img src="recurso500_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p></br></br></p>
 <pre class="r"><code>plot(hc_emp, cex = 0.6, main = &quot;Dendograma de Empresas&quot;,
@@ -733,6 +738,7 @@ sil_avg &lt;- mean(sil[,3])
 # Imprimir el coeficiente de Silhouette promedio
 cat(&quot;Coeficiente de Silhouette promedio k=4 : &quot;, sil_avg)</code></pre>
 <pre><code>Coeficiente de Silhouette promedio k=4 :  0.690995</code></pre>
+<p></br></br></p>
 <pre><code>Coeficiente de Silhouette promedio k=2 :  0.3416799</code></pre>
 <p>Estos resultados indican una mejor agrupación cuando se eligen k=4
 conglomerados. (valores más cercanos a 1 indican un agrupamiento más
@@ -780,6 +786,7 @@ dendograma, quedando:</p>
           k_colors = c(&quot;red&quot;,  &quot;blue&quot;), 
           color_labels_by_k = TRUE, 
           rect=TRUE)</code></pre>
+<p></br></br></p>
 <p><img src="img/dendograma2.png" width="80%" style="display: block; margin: auto;" /></p>
 <p></br></p>
 <p>En este caso el número optimo de grupos o clusters será de 2. Con el
