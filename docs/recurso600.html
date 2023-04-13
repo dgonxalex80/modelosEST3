@@ -347,11 +347,11 @@ $(document).ready(function () {
 </div>
 
 
-<p><br/><br/></p>
+<p></br></br></p>
 <div id="introducción" class="section level1">
 <h1><span
 style="color:#034a94"><strong>Introducción</strong></span></h1>
-<p><br/></p>
+<p></br></p>
 <p>Este análisis consiste en describir la variación producida por las
 observaciones de <span class="math inline">\(p\)</span> variables
 aleatorias, mediante un conjunto de nuevas variables que estan
@@ -369,7 +369,23 @@ forma que explique la mayor cantidad de la variación total del conjunto
 de datos que resta sin explicar por el primer componente, bajo la
 condición de ser independiente de la primera componente y así
 sucesivamente.</p>
-<p><br/><br/></p>
+<p></br></br>La matriz de datos: es una matriz de n x p que contiene los
+datos originales, donde n es el número de observaciones y p es el número
+de variables.</p>
+<p>La matriz de covarianza: es una matriz cuadrada de p x p que muestra
+la relación entre las diferentes variables del conjunto de datos.</p>
+<p>Los autovalores y autovectores: son los componentes principales del
+análisis y se utilizan para transformar los datos originales en un nuevo
+conjunto de datos que contiene menos variables.</p>
+<p>La varianza explicada: indica la cantidad de varianza en los datos
+originales que es explicada por cada componente principal.</p>
+<p>La carga de las variables: indica la contribución de cada variable a
+cada componente principal.</p>
+<p>El gráfico de dispersión: es una representación visual de los datos
+transformados en el nuevo espacio de componentes principales. Este
+gráfico permite identificar patrones o agrupaciones en los datos que
+pueden no haber sido evidentes en el espacio original de las
+variables.</p>
 <p>Las componente se pueden representar por <span
 class="math inline">\(CP1\)</span>, <span
 class="math inline">\(CP2\)</span>, <span
@@ -380,20 +396,79 @@ de <span class="math inline">\(p\)</span> variables, de forma que:</p>
 \dots &gt; V[CP_p]\]</span> y <span class="math inline">\(Cor[CP_i,
 CP_j] = 0\)</span> para todo para de componentes <span
 class="math inline">\(i \neq j\)</span></p>
-<p><br/></p>
+<p></br></br></p>
 <p>El objetivo principal del ACP es poder ver si las dos o tres primeras
 componentes explican la mayor parte de la variación de las <span
 class="math inline">\(p\)</span> variables iniciales. Si es así se
 pueden considerar estas dos componentes, reduciendo la dimensión de los
 datos y considerar su representación gráfica.</p>
-<p><br/><br/></p>
+<p></br></br></p>
 <div id="nota" class="section level3 content-box-gray">
 <h3><span style="color:#686868"><strong>Nota</strong></span></h3>
 <p>Los procedimientos anteriores están soportados en el supuesto de que
 las p variables son una combinación lineal de un base que se desea
 encontrar.</p>
 </div>
-<p><br/><br/></p>
+<div id="principales-conceptos" class="section level2">
+<h2><span style="color:#034a94"><strong>Principales
+conceptos</strong></span></h2>
+<p><br/></p>
+<div id="matriz-de-datos" class="section level3">
+<h3><span style="color:#034a94"><strong>Matriz de
+datos</strong></span></h3>
+<p>Los datos conforman una matriz de dimensión <span
+class="math inline">\(n \times p\)</span> que contiene los datos
+originales, donde <span class="math inline">\(n\)</span> corresponde al
+número de observaciones y <span class="math inline">\(p\)</span> el
+número de variables.</p>
+<p><br/></p>
+</div>
+<div id="matriz-de-covarianza--covarianzas" class="section level3">
+<h3><span style="color:#034a94"><strong>Matriz de covarianza-
+covarianzas</strong></span></h3>
+<p>Matriz cuadrada de dimensión <span class="math inline">\(p \times
+p\)</span> que contiene las covarianzas entre pares de variables <span
+class="math inline">\(Cov[X_i,X_j]\)</span> y su diagonal está
+conformada por las varianza de las variables <span
+class="math inline">\(V[X_i]\)</span></p>
+<p><br/></p>
+</div>
+<div id="autovalores-y-autovectores" class="section level3">
+<h3><span style="color:#034a94"><strong>Autovalores y
+autovectores</strong></span></h3>
+<p>A parir de la matriz de varianza covarianzas son calculados sus
+valores propios que representan la cantidad de la varianza de la data
+explicada por cada componente principal, mientras que los vectores
+propios de la misma matriz, indica la dirección y fuerza de la relación
+entre las variables y la de los componentes principales.</p>
+<p><br/></p>
+</div>
+<div id="varianza-explicada" class="section level3">
+<h3><span style="color:#034a94"><strong>Varianza
+explicada</strong></span></h3>
+<p>Indica la cantidad de varianza de los datos que es explicada por cada
+componente principal.</p>
+<p><br/></p>
+</div>
+<div id="carga-de-las-variables" class="section level3">
+<h3><span style="color:#034a94"><strong>Carga de las
+variables</strong></span></h3>
+<p>Indica la contribución de cada variable a cada componente principal.
+Dependiendo su valor puede sugerir un nombre para el componente que
+facilite la interpretación de los resultados obtenidos.</p>
+<p><br/></p>
+</div>
+<div id="gráfico-de-dispersión" class="section level3">
+<h3><span style="color:#034a94"><strong>Gráfico de
+dispersión</strong></span></h3>
+<p>Representación visual de los datos transformados (componentes
+principales) en un nuevo espacio por lo general de <span
+class="math inline">\(R^2\)</span>. Este gráfico permite identificar
+patrones o agrupaciones en los datos que pueden no haber sido evidentes
+en el espacio original de las variables.</p>
+<p></br></br></p>
+</div>
+</div>
 <div id="determinación-de-los-componentes" class="section level2">
 <h2><span style="color:#034a94"><strong>Determinación de los
 componentes</strong></span></h2>
@@ -401,16 +476,16 @@ componentes</strong></span></h2>
 <p>El primer componente tiene la forma :</p>
 <p><span class="math display">\[CP_{1}  = \beta_{11}X_1+ \beta_{12}X_2 +
 \dots + \beta_{1p}X_{p} = \displaystyle\sum_{i=1}^{p} \beta_{1i} X_{i} =
-b&#39;_{1}X\]</span> <br/></p>
+b&#39;_{1}X\]</span> </br></p>
 <p>Donde <span class="math inline">\(b&#39;= (\beta_{11}, \beta_{12},
 \dots , \beta_{1p})\)</span> es el vector de coeficientes a estimar y
 <span class="math inline">\(X&#39;\)</span> el vector de variables <span
 class="math inline">\((X_1, X_2, \dots, X_p)\)</span> que conforma la
 data.</p>
 <p>Para determinar la porción de la varianza total de la data explicada
-por el componente se define <span
-class="math inline">\(\Sigma\)</span></p>
-<p><br/></p>
+por el componente se define <span class="math inline">\(\Sigma\)</span>
+matriz de Varianzas-covarianzas</p>
+<p></br></br></p>
 <p><span class="math display">\[
 \Sigma =
 \begin{equation}
@@ -424,47 +499,48 @@ class="math inline">\(\Sigma\)</span></p>
 \right)
 \end{equation}
 \]</span></p>
-<p><br/></p>
+<p></br></br></p>
 <p>Enconces la varianza del primer componente será :</p>
 <p><span class="math display">\[V[CP_1] = V[b&#39;_1 X] = b&#39;_1
-\hspace{.1cm}\Sigma \hspace{.1cm} b_1\]</span> <br/></p>
+\hspace{.1cm}\Sigma \hspace{.1cm} b_1\]</span> </br></p>
 <p>Bajo la restricción :</p>
 <p><span class="math display">\[\beta_{11}^2  + \beta_{12}^2 + \dots +
 \beta_{1p} = b&#39;_1 \hspace{.1cm}b_1= 1\]</span></p>
-<p><br/></p>
+<p></br></p>
 <p>La solución a este sistema se obtiene mediante el método matemático
 Multiplicadores de Lagrange que maximiza el valor <span
 class="math inline">\(\lambda_1\)</span> para la siguiente función :</p>
 <p><span class="math display">\[b&#39;_1 \hspace{.1cm}\Sigma
 \hspace{.1cm}b_1 - \lambda_1 (b&#39;_1 \hspace{.1cm} b_1-1)
 \]</span></p>
-<p><br/></p>
+<p></br></p>
 <p>Dando como resultados:</p>
-<p><span class="math display">\[CP_1 = b&#39;_1 X\]</span></p>
+<p><span class="math display">\[CP_1 = b&#39;_1 X\]</span> </br></p>
 <p>El segundo componenete estará determinado por una segunda ecuación de
 Lagrange con la que se obtiene:</p>
 <p><span class="math display">\[CP_2 = b&#39;_2X\]</span></p>
-<p><br/></p>
+<p></br></p>
 <p>La varianza total de las <span class="math inline">\(p\)</span></p>
 <p><span class="math display">\[\displaystyle\sum_{i=1}^p V[X_i] =
 \sum_{i=1}^p V[CP_i] = \displaystyle\sum_{i=1}^p \lambda_{i}\]</span>
-<br/></p>
+</br></p>
 <p>De tal forma que la contribución total por cada componente se
 estimará como:</p>
 <p><span
 class="math display">\[\dfrac{\lambda_{i}}{\displaystyle\sum_{i=1}^p
 \lambda_{i}}\]</span></p>
-<p><br/></p>
+<p></br></p>
 <p>Ahora, la contribución de los primeros tres componentes estará dado
 por :</p>
 <p><span class="math display">\[\dfrac{\lambda_{1} + \lambda_2 +
 \lambda_3}{\displaystyle\sum_{i=1}^p \lambda_{i}}\]</span></p>
-<p><br/><br/></p>
+<p></br></br></p>
 <div id="ejemplo" class="section level3">
 <h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
-<p><br/></p>
+<p></br></p>
 <pre class="r"><code>library(paqueteMOD)
 data(&quot;creditos&quot;)
+creditosZ= scale(creditos) 
 prcomp(creditos[,2:5])</code></pre>
 <pre><code>Standard deviations (1, .., p=4):
 [1] 2.666604e+06 6.864610e+05 1.446571e+01 5.909943e+00
@@ -475,76 +551,69 @@ antiguedad -2.145818e-06 -1.539328e-06 -6.504715e-01 -7.595306e-01
 edad       -1.713297e-06 -1.730520e-07 -7.595306e-01  6.504715e-01
 cuota      -1.074701e-01 -9.942083e-01  1.416024e-06  1.105868e-06
 ingresos   -9.942083e-01  1.074701e-01  2.559740e-06  3.988255e-07</code></pre>
-<p><br/><br/></p>
+<p></br></br></p>
 </div>
 </div>
 <div id="elección-del-número-de-componentes-principales"
 class="section level2">
 <h2><span style="color:#034a94"><strong>Elección del número de
 componentes principales</strong></span></h2>
-<p><br/></p>
-<pre class="r"><code>data(decathlon2)
-decathlon2.active &lt;- decathlon2[1:23, 1:10]
-head(decathlon2.active[, 1:6])</code></pre>
-<pre><code>          X100m Long.jump Shot.put High.jump X400m X110m.hurdle
-SEBRLE    11.04      7.58    14.83      2.07 49.81        14.69
-CLAY      10.76      7.40    14.26      1.86 49.37        14.05
-BERNARD   11.02      7.23    14.25      1.92 48.93        14.99
-YURKOV    11.34      7.09    15.19      2.10 50.42        15.31
-ZSIVOCZKY 11.13      7.30    13.48      2.01 48.62        14.17
-McMULLEN  10.83      7.31    13.76      2.13 49.91        14.38</code></pre>
-<pre class="r"><code>res.pca &lt;- prcomp(decathlon2.active, scale = TRUE)
-fviz_eig(res.pca)</code></pre>
+<p></br></p>
+<pre class="r"><code>library(paqueteMOD)
+data(&quot;creditos&quot;)
+creditosZ= scale(creditos) 
+res.pca &lt;- prcomp(creditos[,2:5])
+fviz_eig(res.pca, addlabels = TRUE)</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p><br/><br/></p>
+<p></br></br></p>
 <pre class="r"><code>fviz_pca_ind(res.pca,
              col.ind = &quot;cos2&quot;, # Color by the quality of representation
-             gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;),
-             repel = TRUE     # Avoid text overlapping
+             gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;)
              )</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p><br/><br/></p>
+<p></br></br></p>
 <pre class="r"><code>fviz_pca_var(res.pca,
              col.var = &quot;contrib&quot;, # Color by contributions to the PC
              gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;),
              repel = TRUE     # Avoid text overlapping
              )</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p><br/><br/></p>
+<p></br></br></p>
 <pre class="r"><code>fviz_pca_biplot(res.pca, repel = TRUE,
                 col.var = &quot;#2E9FDF&quot;, # Variables color
                 col.ind = &quot;#696969&quot;  # Individuals color
                 )</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p><br/><br/></p>
+<p></br></br></p>
 <div id="ejemplo-1" class="section level3">
 <h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
-<p><br/></p>
+<p></br></p>
 <p>Para el ejemplo en R se utilizarán las librerias <em>ade4</em> y
 <em>factoextra</em>. A continuación se presenta la matriz de datos de
 distintos tipos de café y seis variables en puntajes de 0 a 10 de
 algunas caracteristicas que definen la calidad de estos.</p>
-<p><br/></p>
+<p></br></p>
 <pre class="r"><code>library(ade4); library(factoextra)
 data(&quot;cafe&quot;)</code></pre>
-<p><br/></p>
+<p></br></p>
 <p>Calculando el ACP mediante la libreria <em>ade4</em> se tiene:</p>
-<p><br/></p>
+<p></br></p>
 <pre class="r"><code>library(ade4)
 p = ncol(cafe) 
 n = nrow(cafe)
 ACP = dudi.pca(cafe[,2:7], scannf=FALSE, center = TRUE, scale = TRUE, nf=p)</code></pre>
-<p><br/></p>
+<p></br></p>
 <p>Mediante los argumentos center = TRUE, scale = TRUE estamos
-normalizando los datos originales. <br></p>
+normalizando los datos originales. </br></p>
 <p>Los valores propios asociados a la matriz de correlaciones serán:</p>
-<p><br/></p>
+<p></br></p>
 <pre class="r"><code>ACP$eig</code></pre>
 <pre><code>[1] 4.60147661 0.46937103 0.38451212 0.34461612 0.14487978 0.05514434</code></pre>
-<p><br/> Como vemos el primer valor propio será siempre el mayor ya que
-es el que mayor varianza logra explicar. <br></p>
+<p></br></p>
+<p>Como vemos el primer valor propio será siempre el mayor ya que es el
+que mayor varianza logra explicar. <br></p>
 <p>Las componentes principales de los individuos son:</p>
-<p><br/></p>
+<p></br></p>
 <pre class="r"><code>ACP$li</code></pre>
 <pre><code>        Axis1       Axis2      Axis3       Axis4       Axis5       Axis6
 1  -2.9947077  1.01622318  0.6088641 -0.03785795  0.02866881  0.18511122
@@ -557,6 +626,7 @@ es el que mayor varianza logra explicar. <br></p>
 8   0.1375515 -0.84616260 -0.7108259  0.72170121 -0.32801652  0.36384152
 9  -0.4982973 -0.90730984 -0.1613885  0.35575388  0.75859223 -0.18371900
 10 -1.3529300  0.51596367 -0.7309759  0.47071634 -0.48519716 -0.48199090</code></pre>
+<p></br></p>
 <p>Y por ultimo las componentes principales de las variables son:</p>
 <pre class="r"><code>ACP$co  </code></pre>
 <pre><code>             Comp1       Comp2        Comp3       Comp4        Comp5
@@ -573,36 +643,40 @@ Cuerpo  -0.085447344
 Acidez  -0.094621441
 Amargo   0.007324156
 Astring -0.055608952</code></pre>
-<p><br/> Podemos representar mediante un diagrama de barras a los
-valores propios del ACP.</p>
+<p></br></p>
+<p>Podemos representar mediante un diagrama de barras a los valores
+propios del ACP.</p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 fviz_screeplot(ACP, addlabels = TRUE)</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p><br/></p>
+<p></br></p>
 <p>Se evidencia que la primera componente se lleva el 76.7% de la
 inercia total, seguida de la segunda componente con un 7.8% de la
 varianza explicada, de esta forma el porcentaje de inercia representado
 en el primer plano factorial es del 84.5%, perdiendo tan solo un 15.5%
 de la información. <br></p>
-<p><br/><br/></p>
+<p></br></br></p>
 <p>Gratificando las dos primeras componentes de las variables obtenemos
 el circulo de correlaciones:</p>
+<p></br></p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 fviz_pca_var(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p><br/> Se puede observar que todas las variables son bastante
-excentricas, por lo que cuentan con una buena calidad de la
-representación mediante el ACP, podemos ver que las variables que más
-correlacionadas están son Amargo, Aroma, Cuerpo y Acidez, siendo las
-variables Astring y Amargo las que menos correlacionadas están entre si.
-La flecha a donde apunta la variable indica la dirección en donde esta
-aumenta.</p>
+<p></br></p>
+<p>Se puede observar que todas las variables son bastante excentricas,
+por lo que cuentan con una buena calidad de la representación mediante
+el ACP, podemos ver que las variables que más correlacionadas están son
+Amargo, Aroma, Cuerpo y Acidez, siendo las variables Astring y Amargo
+las que menos correlacionadas están entre si. La flecha a donde apunta
+la variable indica la dirección en donde esta aumenta.</p>
+<p></br></p>
 <p>Podemos entonces realizar la representación simultanea de individuos
 y variables para poder caracterizar los tipos de café:</p>
-<p><br/></p>
+<p></br></p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 fviz_pca_biplot(ACP, repel = TRUE, col.var = &quot;blue&quot;)</code></pre>
 <p><img src="recurso600_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p></br></p>
 <p>Recordemos que las variables están en puntajes. En este caso se puede
 decir que el tipo de café con la mejor calidad es el ex_o,
 caracterizándose más por el Aroma, Acidez y el cuerpo. Seguido de este
@@ -612,7 +686,7 @@ cafés con peor calidad son los que se encuentran en dirección contraria
 a las variables, siendo estos o40m, cl40m, cl20m y cl40cb. Por otra
 parte tenemos a cl20cb, o40cb y o20m tipos de café con calidad
 promedio.</p>
-<p></br> <br/></p>
+<p></br> </br></p>
 <p>Obteniendo las contribuciones a la varianza total de las componentes
 principales se tiene:</p>
 <p><br/></p>
@@ -626,12 +700,13 @@ Ax3 0.38451212 5.455360  90.92266
 Ax4 0.34461612 5.799976  96.66626
 Ax5 0.14487978 5.944856  99.08093
 Ax6 0.05514434 6.000000 100.00000</code></pre>
-<p><br/></p>
+<p></br></p>
 <p>Podemos observar que hasta la segunda componente (Ax2) se acumula un
-84.51% de la inercia total. <br></p>
+84.51% de la inercia total.</p>
+<p></br></p>
 <p>Las contribuciones de las variables a la varianza explicada de cada
 componente será:</p>
-<p><br/></p>
+<p></br></p>
 <pre class="r"><code>inercia.ACP$col.abs</code></pre>
 <pre><code>           Axis1     Axis2        Axis3        Axis4       Axis5       Axis6
 IAroma  20.00403  2.336575  0.009528159 6.856429e+00  6.51732976 64.27610524
@@ -640,12 +715,14 @@ Cuerpo  17.18012  2.079834 39.478266260 5.591856e-04 28.02097007 13.24024917
 Acidez  16.32477  1.064280 19.641902322 4.587975e+01  0.85332558 16.23596585
 Amargo  14.44145 28.538956 21.856465870 3.335837e+01  1.70748498  0.09727789
 Astring 13.87568 63.889761  3.342264093 1.323911e+01  0.04543605  5.60774737</code></pre>
+<p></br></p>
 <p>Siendo la variable IAroma la que más contribuye a la varianza
 explicada por el primer eje (20%), mientras que Astring es la que más
 contribuye al segundo eje (63.8%). <br></p>
-<p><br/> Por último podemos estudiar las contribuciones de cada
-individuo a las componentes principales:</p>
-<p><br/></p>
+<p></br></p>
+<p>Por último podemos estudiar las contribuciones de cada individuo a
+las componentes principales:</p>
+<p></br></p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 inercia.ACP$row.abs</code></pre>
 <pre><code>         Axis1       Axis2      Axis3       Axis4       Axis5       Axis6
@@ -659,10 +736,11 @@ inercia.ACP$row.abs</code></pre>
 8   0.04111817 15.25426797 13.1406396 15.11399500  7.42649088 24.00620580
 9   0.53960973 17.53860139  0.6773843  3.67251609 39.71997726  6.12078543
 10  3.97789584  5.67181382 13.8962018  6.42958532 16.24907743 42.12856826</code></pre>
+<p></br></p>
 <p>Se observa que el café ex_o (27.2%) es el que más varianza explicada
 aporta a la primera componente, por otra parte el café o40m (26.3%) es
 el que más aporta al segundo eje.</p>
-<p><br/><br/></p>
+<p></br></br></p>
 </div>
 </div>
 </div>
