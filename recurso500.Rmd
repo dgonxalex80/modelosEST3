@@ -112,7 +112,7 @@ Corresponde a la representación grafica de los resultados obtenidos en el AC, e
 
 </br></br>
 
-### <span style="color:#034a94">**Matriz de coeficientes desemenanza y distancias**</span>
+### <span style="color:#034a94">**Matriz de coeficientes de semejanza y distancias**</span>
 
 Corresponde a una matriz diagonal inferior que contiene  las distancias entre pares de objetos o casos.
 
@@ -275,6 +275,9 @@ grp
 </br></br>
 
 
+### <span style="color:#034a94">**Elección del número de conglomerados**</span>
+
+</br>
 
 Elegir el número óptimo de clusters o grupos  es una decisión subjetiva, sin embargo puede tomarse el criterio del mayor salto de nodo a nodo de las distancias euclidianas: Observando el dendograma vemos que el mayor incremento de las distancias se dio en $1$, por lo que si trazamos una linea se hará un corte y tendremos cuatros nodos, el conformado por ($E1,E2$), ($E5, E6$), ($E7, E8$) y ($E3, E4$). 
 

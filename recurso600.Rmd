@@ -33,9 +33,9 @@ Se utiliza como complemento de los análisis descriptivos y para contribución e
 
 Las nuevas variables se obtienen en orden de contribución a la variabilidad total de los datos, tal forma que el primer componente describe la mayor cantidad de la variación total del conjunto de variables originales. El segundo componente principal se elige de tal forma que explique la mayor cantidad de la variación total del conjunto de datos que resta sin explicar por el primer componente, bajo la condición de ser independiente de la primera componente y así sucesivamente.
 
-</br></br>La matriz de datos: es una matriz de n x p que contiene los datos originales, donde n es el número de observaciones y p es el número de variables.
+</br></br>La matriz de datos: es una matriz de $n \times p$ que contiene los datos originales, donde $n$ es el número de observaciones y $p$ es el número de variables.
 
-La matriz de covarianza: es una matriz cuadrada de p x p que muestra la relación entre las diferentes variables del conjunto de datos.
+La matriz de covarianza: es una matriz cuadrada de $p \times  p$ que muestra la relación entre las diferentes variables del conjunto de datos.
 
 Los autovalores y autovectores: son los componentes principales del análisis y se utilizan para transformar los datos originales en un nuevo conjunto de datos que contiene menos variables.
 
@@ -60,7 +60,7 @@ El objetivo principal del ACP es poder ver si las dos o tres primeras componente
 <div class="content-box-gray">
 ### <span style="color:#686868">**Nota**</span> 
 
-Los procedimientos anteriores están soportados en el supuesto de que las p variables son una combinación lineal de un base que se desea encontrar.
+Los procedimientos anteriores están soportados en el supuesto de que las $p$ variables son una combinación lineal de un base que se desea encontrar.
 
 </div>
 
@@ -210,16 +210,12 @@ res.pca <- prcomp(creditos[,2:5])
 fviz_eig(res.pca, addlabels = TRUE)
 ```
 
-</br></br>
+En este caso el primer componente principal explica el 93.8% de la variabilidad contenida en la base de datos y entre los dos primeros casi el 100% de los datos, lo cual indicaría que con solo una variable (CP1) que se obtiene mediante una combinación lineal de las variables se puede resumir  la base de datos.
 
-```{r}
-fviz_pca_ind(res.pca,
-             col.ind = "#686868", # Color by the quality of representation
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
-             )
-```
+
 
 </br></br>
+
 
 ```{r}
 fviz_pca_var(res.pca,
@@ -228,6 +224,66 @@ fviz_pca_var(res.pca,
              repel = TRUE     # Avoid text overlapping
              )
 ```
+
+Al visualizar las variables en el plano de los componentes principales permite identificar el sentido y la caracterización de los componentes (caracteristica capturada por los vectores propios de $\Sigma$). En este ejercicio el primer componente principal está asociado principalmete con la variable **ingresos** , mientras que el segundo componente se puede asociar a la variable **cuota**
+
+
+Para explicar el sentido de los ejes, se escogen cuatro casos extremos conformados por los siguientes clientes
+
+
+```{r}
+datos<- rbind(creditos[98,],
+              creditos[299,],
+              creditos[6,],
+              creditos[190,])
+
+datos <- as.data.frame(datos)
+rownames(datos) = c("Cliente 098","Cliente 299","Cliente 006","Cliente 190")
+datos
+```
+
+</br></br>
+
+
+```{r}
+
+casos1 <- rbind(res.pca$x[98,1:2],res.pca$x[299,1:2]) 
+rownames(casos1) = c("98","299")
+casos1 <- as.data.frame(casos1)
+
+casos2 <- rbind(res.pca$x[6,1:2], res.pca$x[190,1:2])
+rownames(casos2) = c("6","190")
+casos2 <- as.data.frame(casos2)
+
+fviz_pca_ind(res.pca, col.ind = "#DEDEDE", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
+  geom_point(data = casos1, aes(x = PC1, y = PC2), color = "red", size = 3) +
+  geom_point(data = casos2, aes(x = PC1, y = PC2), color = "blue", size = 3)
+
+
+ 
+```
+
+
+El **cliente 098** presenta altos ingresos ($20924813$), mientras que el **cliente 299**  que se encuentra ubicado al otro extremo presenta bajos ingresos ( $848487$). Esto muestra el sentido en que aumentan los valores del primer componente principal (Dim1).
+Aun más dado que el primer componente no solo está conformado por la variable ingresos, sino que se trata de una combinación lineal de todas las variables donde se destaca (presenta mayor pesos) los ingresos se puede analizara que mientras el cliente 098 presenta una realción cuota/ingresos de $170024/20924813 = 0.008125473$ , el cliente 299 que se encuentra al otro extremo de la recta presenta una relación $727995/848487 = 0.8579919$
+
+
+Lo mismo ocurres al comparar el **clientes 006** (cuota = $3517756$) con **cliente190** (cuota = $103855$)
+
+
+</br></br>
+
+
+```{r}
+datos<- rbind(creditos[98,],
+              creditos[293,],
+              creditos[6,],
+              creditos[190,])
+datos
+```
+
+
+
 
 </br></br>
 
