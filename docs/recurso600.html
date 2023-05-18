@@ -672,8 +672,8 @@ la calidad de estos.</p>
 <p></br></p>
 <pre class="r"><code>library(ade4); library(factoextra)
 data(&quot;cafe&quot;)</code></pre>
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9dad62fae84a2867ca85" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-9dad62fae84a2867ca85">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Id":[1,2,3,4,5,6,7,8,9,10],"Iden":["ex_cl","cl40m","cl40cb","cl20m","cl20cb","ex_o","o40m","o40cb","o20m","o20cb"],"IAroma":[7.72,6.02,6.48,6.82,7.08,7.66,6.18,6.84,6.66,7],"Aroma":[7,5.42,5.98,6.44,6.2,7.42,5.82,6.56,7.06,6.7],"Cuerpo":[6.84,6.22,6.44,6.7,6.72,6.98,6.26,6.82,6.7,7.04],"Acidez":[5.02,4.34,4.58,4.62,4.78,5.12,4,4.3,4.64,4.6],"Amargo":[5.04,4.6,4.82,4.38,4.94,5.18,4.46,4.96,5,4.88],"Astring":[5.36,4.78,4.8,4.8,4.9,5.22,4.96,4.84,4.9,5.18]},"columns":[{"id":"Id","name":"Id","type":"numeric"},{"id":"Iden","name":"Iden","type":"character"},{"id":"IAroma","name":"IAroma","type":"numeric"},{"id":"Aroma","name":"Aroma","type":"numeric"},{"id":"Cuerpo","name":"Cuerpo","type":"numeric"},{"id":"Acidez","name":"Acidez","type":"numeric"},{"id":"Amargo","name":"Amargo","type":"numeric"},{"id":"Astring","name":"Astring","type":"numeric"}],"dataKey":"bf5cf520736dbf0eaef514e5f376b3fa"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9a6af9ca021dce438bf1" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9a6af9ca021dce438bf1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Id":[1,2,3,4,5,6,7,8,9,10],"Iden":["ex_cl","cl40m","cl40cb","cl20m","cl20cb","ex_o","o40m","o40cb","o20m","o20cb"],"IAroma":[7.72,6.02,6.48,6.82,7.08,7.66,6.18,6.84,6.66,7],"Aroma":[7,5.42,5.98,6.44,6.2,7.42,5.82,6.56,7.06,6.7],"Cuerpo":[6.84,6.22,6.44,6.7,6.72,6.98,6.26,6.82,6.7,7.04],"Acidez":[5.02,4.34,4.58,4.62,4.78,5.12,4,4.3,4.64,4.6],"Amargo":[5.04,4.6,4.82,4.38,4.94,5.18,4.46,4.96,5,4.88],"Astring":[5.36,4.78,4.8,4.8,4.9,5.22,4.96,4.84,4.9,5.18]},"columns":[{"id":"Id","name":"Id","type":"numeric"},{"id":"Iden","name":"Iden","type":"character"},{"id":"IAroma","name":"IAroma","type":"numeric"},{"id":"Aroma","name":"Aroma","type":"numeric"},{"id":"Cuerpo","name":"Cuerpo","type":"numeric"},{"id":"Acidez","name":"Acidez","type":"numeric"},{"id":"Amargo","name":"Amargo","type":"numeric"},{"id":"Astring","name":"Astring","type":"numeric"}],"dataKey":"bf5cf520736dbf0eaef514e5f376b3fa"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p></br></p>
 <p>Calculando el ACP mediante la libreria <code>ade4</code> se
 tiene:</p>
@@ -689,41 +689,43 @@ estamos normalizando los datos originales.</p>
 <p>Los valores propios asociados a la matriz de correlaciones serán:</p>
 <p></br></p>
 <pre class="r"><code>ACP$eig</code></pre>
-<pre><code>[1] 4.60147661 0.46937103 0.38451212 0.34461612 0.14487978 0.05514434</code></pre>
+<pre><code>[1] 4.22296911 1.34253540 0.34332281 0.06278951 0.01774934 0.01063383</code></pre>
 <p></br></p>
 <p>Como vemos el primer valor propio será siempre el mayor ya que es el
 que mayor varianza logra explicar. <br></p>
 <p>Las componentes principales de los individuos son:</p>
 <p></br></p>
 <pre class="r"><code>ACP$li</code></pre>
-<pre><code>        Axis1       Axis2      Axis3       Axis4       Axis5       Axis6
-1  -2.9947077  1.01622318  0.6088641 -0.03785795  0.02866881  0.18511122
-2   3.2057321  0.03615753  0.7806676 -0.07003494 -0.09122485 -0.22696752
-3   1.3866259 -0.55662815  0.6612540 -0.18398706 -0.03470995 -0.06223661
-4   0.9814076  0.21905587 -1.0260987 -1.39279259  0.15092805  0.05010482
-5  -0.3457128 -0.50136938  0.4641112 -0.41096544 -0.57540901  0.13120929
-6  -3.5409698 -0.08826572  0.2660512 -0.09933568  0.28882042  0.01645509
-7   3.0213005  1.11233544 -0.1516589  0.64680223  0.28754799  0.20819208
-8   0.1375515 -0.84616260 -0.7108259  0.72170121 -0.32801652  0.36384152
-9  -0.4982973 -0.90730984 -0.1613885  0.35575388  0.75859223 -0.18371900
-10 -1.3529300  0.51596367 -0.7309759  0.47071634 -0.48519716 -0.48199090</code></pre>
+<pre><code>          Axis1       Axis2       Axis3        Axis4       Axis5         Axis6
+ExCl  3.2985249  0.59053730 -0.30417258  0.051239131  0.08307893  1.610162e-01
+C40M -2.0569257  2.14366713  0.36794391 -0.017723919  0.07658039  4.522901e-02
+C40C -1.8513736  0.90752688 -0.68290606  0.004278063 -0.01360567 -2.321584e-01
+C20M  0.5294378  1.64570229  0.15037997 -0.021380245  0.17658953 -2.613240e-02
+C20C  1.1488311  0.24739910 -1.24983058  0.112014829 -0.15335269  8.664286e-02
+ExOs  1.5745902 -1.78350945  0.03458431 -0.131412097  0.16467890 -9.270441e-02
+O40M -3.1230306 -0.80369310  0.74659695  0.182402080 -0.01196760  1.182975e-01
+O40C -2.6684052 -0.56653513 -0.16882998  0.059525086 -0.14189423  4.681633e-02
+O20M -0.5949198 -1.37326871 -0.14639348 -0.072958984  0.19964985  2.882415e-02
+O20C -0.5244905 -1.22493389 -0.24650122  0.017652399 -0.05328415 -3.117366e-02
+Com1  1.2830684  0.19671837  0.59476672 -0.666680362 -0.19447244  5.147559e-05
+Com2  2.9846931  0.02038922  0.90436204  0.483044019 -0.13200083 -1.047086e-01</code></pre>
 <p></br></p>
 <p>Y por último las componentes principales de las variables son:</p>
 <pre class="r"><code>ACP$co  </code></pre>
-<pre><code>             Comp1       Comp2        Comp3       Comp4        Comp5
-IAroma  -0.9594169  0.10472444  0.006052845 -0.15371519 -0.097171463
-Aroma   -0.9144779 -0.09905878 -0.245477287  0.04789976  0.301769522
-Cuerpo  -0.8891227 -0.09880354 -0.389613549  0.00138818 -0.201486279
-Acidez  -0.8667067 -0.07067830  0.274819022 -0.39762926  0.035161005
-Amargo  -0.8151809 -0.36599671  0.289897844  0.33905502 -0.049737315
-Astring -0.7990534  0.54761303  0.113364062  0.21359800  0.008113424
-               Comp6
-IAroma   0.188267462
-Aroma    0.017298649
-Cuerpo  -0.085447344
-Acidez  -0.094621441
-Amargo   0.007324156
-Astring -0.055608952</code></pre>
+<pre><code>              Comp1       Comp2       Comp3       Comp4        Comp5
+DA       -0.4239495  0.81522430  0.39404355 -0.01784939  0.009101505
+EA       -0.9825263  0.06905389 -0.12723505  0.06875531  0.072279373
+pH       -0.4957107 -0.77583057  0.38629570  0.05454417 -0.009568026
+AcidezT   0.9795929  0.15677029  0.05699178  0.06256249 -0.059082131
+Cafeina   0.9563901 -0.20380887  0.12671531 -0.14757932  0.072853723
+AcidosCl  0.9787056  0.07175130  0.05774534  0.17051342  0.059601018
+                Comp6
+DA       -0.002097963
+EA        0.061100244
+pH        0.008174496
+AcidezT   0.071888824
+Cafeina   0.025215445
+AcidosCl -0.032024168</code></pre>
 <p></br></p>
 <p>Podemos representar mediante un diagrama de barras a los valores
 propios del ACP.</p>
@@ -756,18 +758,7 @@ variable aumenta.</p>
 <p>Podemos entonces realizar la representación simultanea de individuos
 y variables para poder caracterizar los tipos de café:</p>
 <p></br></p>
-<pre class="r"><code>library(&quot;factoextra&quot;)
-cap12=ACP$li[,1:2]
-rownames(cap12) = cafe$Iden
-etiquetas= cafe$Iden
-
-fviz_pca_biplot(ACP, repel = TRUE, col.var = &quot;blue&quot;, xlim = c(-5, 5) ,ylim = c(-2,2)) +
-                geom_point(data = cap12, aes(x = Axis1, y = Axis2), color = &quot;red&quot;, size = 3)+
-                geom_text(data = cap12, aes(x = Axis1, y = Axis2, label = etiquetas), 
-                           size = 3, hjust = 1.7, vjust = 1.3)</code></pre>
-<pre><code>Coordinate system already present. Adding new coordinate system, which will
-replace the existing one.</code></pre>
-<p><img src="recurso600_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="img/plotACP1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p></br></p>
 <p>Recordemos que las variables están en puntajes. En este caso se puede
 decir que el tipo de café con la mejor calidad es el
@@ -788,12 +779,12 @@ principales se tiene:</p>
 inercia.ACP = inertia.dudi(ACP,row.inertia=TRUE, col.inertia=TRUE)
 inercia.ACP$tot.inertia</code></pre>
 <pre><code>       inertia      cum    cum(%)
-Ax1 4.60147661 4.601477  76.69128
-Ax2 0.46937103 5.070848  84.51413
-Ax3 0.38451212 5.455360  90.92266
-Ax4 0.34461612 5.799976  96.66626
-Ax5 0.14487978 5.944856  99.08093
-Ax6 0.05514434 6.000000 100.00000</code></pre>
+Ax1 4.22296911 4.222969  70.38282
+Ax2 1.34253540 5.565505  92.75841
+Ax3 0.34332281 5.908827  98.48046
+Ax4 0.06278951 5.971617  99.52695
+Ax5 0.01774934 5.989366  99.82277
+Ax6 0.01063383 6.000000 100.00000</code></pre>
 <p></br></p>
 <p>Podemos observar que hasta la <strong>segunda componente</strong>
 (Ax2) se acumula un 84.51% de la inercia total.</p>
@@ -802,13 +793,13 @@ Ax6 0.05514434 6.000000 100.00000</code></pre>
 componente será:</p>
 <p></br></p>
 <pre class="r"><code>inercia.ACP$col.abs</code></pre>
-<pre><code>           Axis1     Axis2        Axis3        Axis4       Axis5       Axis6
-IAroma  20.00403  2.336575  0.009528159 6.856429e+00  6.51732976 64.27610524
-Aroma   18.17394  2.090594 15.671573296 6.657806e-01 62.85545355  0.54265446
-Cuerpo  17.18012  2.079834 39.478266260 5.591856e-04 28.02097007 13.24024917
-Acidez  16.32477  1.064280 19.641902322 4.587975e+01  0.85332558 16.23596585
-Amargo  14.44145 28.538956 21.856465870 3.335837e+01  1.70748498  0.09727789
-Astring 13.87568 63.889761  3.342264093 1.323911e+01  0.04543605  5.60774737</code></pre>
+<pre><code>             Axis1      Axis2      Axis3      Axis4      Axis5       Axis6
+DA        4.256086 49.5026540 45.2257514  0.5074108  0.4667070  0.04139101
+EA       22.859697  0.3551817  4.7153168  7.5287948 29.4338194 35.10718993
+pH        5.818871 44.8340564 43.4647417  4.7381593  0.5157777  0.62839421
+AcidezT  22.723402  1.8306352  0.9460668  6.2336285 19.6666403 48.59962717
+Cafeina  21.659690  3.0940007  4.6768728 34.6867762 29.9034549  5.97920502
+AcidosCl 22.682254  0.3834721  0.9712505 46.3052304 20.0136006  9.64419265</code></pre>
 <p></br></p>
 <p>Siendo la variable <strong>IAroma</strong> la que más contribuye a la
 varianza explicada por el primer eje (20%), mientras que
@@ -820,17 +811,19 @@ las componentes principales:</p>
 <p></br></p>
 <pre class="r"><code>library(&quot;factoextra&quot;)
 inercia.ACP$row.abs</code></pre>
-<pre><code>         Axis1       Axis2      Axis3       Axis4       Axis5       Axis6
-1  19.48999241 22.00198737  9.6411901  0.04158901  0.05672983  6.21390373
-2  22.33352233  0.02785359 15.8497441  0.14232919  0.57440544  9.34171101
-3   4.17850953  6.60106561 11.3717309  0.98228826  0.08315726  0.70241029
-4   2.09315612  1.02233565 27.3821959 56.29078571  1.57228815  0.45525842
-5   0.25973694  5.35549142  5.6018837  4.90089069 22.85312172  3.12196638
-6  27.24879089  0.16598463  1.8408579  0.28633532  5.75768628  0.04910204
-7  19.83766803 26.36059855  0.5981716 12.13968540  5.70706576  7.86008865
-8   0.04111817 15.25426797 13.1406396 15.11399500  7.42649088 24.00620580
-9   0.53960973 17.53860139  0.6773843  3.67251609 39.71997726  6.12078543
-10  3.97789584  5.67181382 13.8962018  6.42958532 16.24907743 42.12856826</code></pre>
+<pre><code>          Axis1        Axis2       Axis3        Axis4       Axis5        Axis6
+ExCl 21.4704122  2.164649965  2.24572317  0.348445767  3.24054796 2.031740e+01
+C40M  8.3490694 28.523821023  3.28608915  0.041691854  2.75341592 1.603109e+00
+C40C  6.7637722  5.112249032 11.31978125  0.002428992  0.08691135 4.223747e+01
+C20M  0.5531344 16.811077540  0.54890361  0.060667630 14.64085858 5.351646e-01
+C20C  2.6044331  0.379917450 37.91564038  1.665262611 11.04128045 5.882940e+00
+ExOs  4.8925573 19.744395174  0.02903183  2.291935457 12.73246600 6.734878e+00
+O40M 19.2465694  4.009345542 13.52971110  4.415615650  0.06724358 1.096680e+01
+O40C 14.0509084  1.992263108  0.69185526  0.470253192  9.45292308 1.717606e+00
+O20M  0.6984217 11.705879737  0.52018710  0.706462717 18.71434447 6.510915e-01
+O20C  0.5428454  9.313615558  1.47487165  0.041356062  1.33300786 7.615607e-01
+Com1  3.2486317  0.240205431  8.58636647 58.988454091 17.75631104 2.076499e-06
+Com2 17.5792449  0.002580442 19.85183902 30.967425976  8.18068971 8.591984e+00</code></pre>
 <p></br></p>
 <p>Se observa que el café <strong>ex_o</strong> (27.2%) es el que más
 varianza explicada aporta a la primera componente, por otra parte el
