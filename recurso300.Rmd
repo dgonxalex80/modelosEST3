@@ -21,8 +21,8 @@ library(tidyverse)
 
 # install.packages("learnr")          # solo una vez
 # install.packages("devtools")     # solo una vez
-# devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
-library(paqueteMOD)
+# devtools::install_github("dgonxalex80/paqueteMODELOS", force = TRUE) 
+library(paqueteMODELOS)
 data("eleccion")
 ```
 
@@ -37,7 +37,9 @@ data("eleccion")
 
 <br/>
 
-La regresión logística tiene la misma estructura presentada en el modelo de regresión lineal múltiple, solo que la variable dependiente es no numérica y corresponde a una variable cualitativa con dos valores (bivariada). En este caso el modelo se denomina Logit binomial.
+El **modelo Logit**, también conocido como **regresión logística**, es una técnica estadística importante utilizada en análisis de datos para modelar la probabilidad de un evento binario, como sí/no, éxito/fracaso, o 1/0. 
+
+Tiene la misma estructura presentada en el modelo de regresión lineal múltiple, solo que la variable dependiente es no numérica y corresponde a una variable cualitativa con dos valores (bivariada). En este caso el modelo se denomina Logit binomial.
 
 <br/>
 
@@ -103,7 +105,7 @@ Con el prósito de responder a esta preguntas, empezaremos con las caracteristic
 
 </br>
 
-La  data: `matriculah` de `paqueteMOD`,  contiene los datos de un conjunto de estudiantes que han obtenido matricula de honor (`matricula = 1`) y un grupo de no la han conseguido (`matricula = 0`) y sus respectivas notas obtenidas en matemáticas
+La  data: `matriculah` de `paqueteMODELOS`,  contiene los datos de un conjunto de estudiantes que han obtenido matricula de honor (`matricula = 1`) y un grupo de no la han conseguido (`matricula = 0`) y sus respectivas notas obtenidas en matemáticas
 
 </br>
 
@@ -112,21 +114,34 @@ En este caso se debe contar con una variable categórica con dos niveles represe
 </br>
 
 ```{r}
-library(paqueteMOD)
+library(paqueteMODELOS)
 data("matriculah")
-summary(matricula)
+summary(matriculah)
 ```
 
 </br></br>
 
 Distribución de matriculados: 
 
-Utilizamos la función  `table()` para encontrar la distribución de la variable categórica matricula:
+Utilizamos la función  `table()` y `ggplot()` para encontrar la distribución de la variable categórica matricula:
 
 </br>
 
-```{r}
-table(matriculah$honor)
+```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+# Crear la tabla t1
+t1 <- table(matriculah$honor)
+# Convertir la tabla a un data frame
+df_t1 <- as.data.frame(t1)
+# Renombrar las columnas
+colnames(df_t1) <- c("Honor", "Cantidad")
+# Crear el gráfico de barras con ggplot2 y agregar las etiquetas de frecuencia absoluta
+ggplot(df_t1, aes(x = Honor, y = Cantidad)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  geom_text(aes(label = Cantidad), vjust = -0.5, color = "black", size = 4) +  # Etiquetas de frecuencia absoluta
+  labs(title = " ",
+       x = "Honor",
+       y = "Cantidad") +
+  theme_minimal()
 ```
 
 </br></br>
@@ -137,7 +152,7 @@ Distribución del puntaje en matemáticas por tipo de matricula
 
 Tambien podemos explorar el comportamiento de la variable cuantitativa (matemáticas) para las dos categorías, que en este caso corresponde a la distribución de las notas por tipo de matricula : 
 
-```{r}
+```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
 library(ggplot2)
 ggplot(data = matriculah, aes(x = as.factor(honor), y = matematicas, color = honor)) +
   geom_boxplot() +
@@ -146,6 +161,66 @@ ggplot(data = matriculah, aes(x = as.factor(honor), y = matematicas, color = hon
   labs(x = "matricula de honor", y = "puntaje matemáticas") +
   ggtitle("  ")
 ```
+
+</br></br>
+
+## <span style="color:#686868">**Conceptos básicos**</span>
+
+</br>
+
+### <span style="color:#034a94">**Variable Dependiente Binaria**</span>: 
+
+En el modelo Logit, tienes una variable dependiente que debe ser binaria, es decir, solo puede tomar dos valores posibles, como 1 o 0.
+
+</br>
+
+### <span style="color:#034a94">**Variables Independientes**</span>: 
+
+Puedes tener una o más variables independientes que se utilizan para predecir la variable dependiente binaria. Estas variables pueden ser continuas o categóricas.
+
+</br>
+
+### <span style="color:#034a94">**Función Logit**</span>: 
+
+La función logit es la función de enlace utilizada en la regresión logística. Transforma la probabilidad de éxito en una forma que abarca todo el rango real (-∞, ∞). La función logit se define como el logaritmo natural (ln) de la razón de la probabilidad de éxito a la probabilidad de fracaso.
+
+</br>
+
+### <span style="color:#034a94">**Coeficientes de Regresión**</span>: 
+
+El modelo Logit estima coeficientes para cada una de las variables independientes. Estos coeficientes representan el cambio en el logit (logaritmo de la razón de probabilidades) de la variable dependiente debido a un cambio unitario en la variable independiente, manteniendo todas las demás variables constantes.
+
+</br>
+
+### <span style="color:#034a94">**Estimación de Parámetros**</span>: 
+
+La regresión logística utiliza técnicas de estimación, como la máxima verosimilitud, para estimar los valores de los coeficientes de regresión.
+
+
+</br>
+
+### <span style="color:#034a94">**Odds Ratio**</span>: 
+
+Los coeficientes de regresión en el modelo Logit se utilizan para calcular las "razones de posibilidades" (odds ratio). Un odds ratio representa cómo un cambio de una unidad en la variable independiente afecta las probabilidades de éxito en términos de una multiplicación. Un odds ratio mayor a 1 indica un aumento en las probabilidades, mientras que un odds ratio menor a 1 indica una disminución.
+
+</br>
+
+### <span style="color:#034a94">**Hipótesis Nula y Alternativa**</span>: 
+
+Se pueden realizar pruebas de hipótesis para determinar si los coeficientes son estadísticamente significativos en la predicción de la variable dependiente. La hipótesis nula es que el coeficiente es igual a cero, lo que significa que la variable independiente no tiene efecto en las probabilidades.
+
+</br>
+
+###  <span style="color:#034a94">**Evaluación del Modelo**</span>: 
+
+Se utilizan medidas como la precisión, la sensibilidad, la especificidad, el área bajo la curva ROC (AUC-ROC), entre otras, para evaluar el rendimiento del modelo Logit en la clasificación de datos.
+
+</br>
+
+### <span style="color:#034a94">**Interpretación de Coeficientes**</span>: 
+
+La interpretación de los coeficientes en el modelo Logit es importante para comprender cómo cada variable independiente afecta las probabilidades de éxito o fracaso.
+
 
 </br></br></br>
 

@@ -14,7 +14,7 @@
 
 <title> Modelo</title>
 
-<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -244,89 +244,20 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Conceptos 
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso100.html">Conceptos básicos</a>
-    </li>
-  </ul>
+        <li>
+  <a href="recurso300.html">Introducción</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    MDE
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso200.html">Modelo de Diseño de Experimentos </a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso310.html">Modelo</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso300.html">Introducción</a>
-    </li>
-    <li>
-      <a href="recurso310.html">Modelo</a>
-    </li>
-    <li>
-      <a href="recurso320.html">Estimación</a>
-    </li>
-    <li>
-      <a href="recurso330.html">Evaluación</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso320.html">Estimación</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ACP
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso600.html">Análisis de Componentes Principales</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso330.html">Evaluación</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    AC
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso500.html">Análisis de conglomerados</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Tutoriales
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso700.html">Tutorial 301</a>
-    </li>
-    <li>
-      <a href="recurso701.html">Tutorial 302</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso340.html">Ejemplo</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -397,19 +328,7 @@ están sobre el eje horizontal con <span
 class="math inline">\(Y=0\)</span> o en el eje horizontal con <span
 class="math inline">\(Y=1\)</span></p>
 <p></br></p>
-<pre class="r"><code>library(ggplot2)
-# data(matricular)
-matriculah1=matriculah
-matriculah1$honor = as.numeric(matriculah1$honor)
-
-g3=ggplot(data = matriculah1, mapping = aes(x=matematicas, y=honor)) + 
-           geom_point() + 
-           geom_smooth(method = &quot;lm&quot;, se=FALSE) +         
-           labs(y = &quot;matricula de honor&quot;, x = &quot;puntaje matemáticas&quot;) +
-           ggtitle(&quot;  &quot;)
-
-g3</code></pre>
-<p><img src="recurso310_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="recurso310_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p></br></br></p>
 <p>Como se puede observar este modelo no permite ajustar una linea que
 represente los valores obtenidos en la prueba de matemáticas. Además de
@@ -465,13 +384,7 @@ lados se obtiene la siguiente expresión lineal:</p>
 <p><span class="math display">\[\ln
 \Bigg(\dfrac{P(Y=k|X=x)}{1-P(Y=k|X=x)}\Bigg) =  \beta_{0}+ \beta_{1}
 \hspace{.2cm}x_{i} + \varepsilon_{i}^{*}\]</span> </br></p>
-<pre class="r"><code>library(ggplot2)
-fx=function(x){
-  1/(1+exp(-x))
-}
-
-ggplot(data.frame(x=c(-8, 8)), aes(x)) + stat_function(fun=fx, size=1, col=&quot;#FF7F00&quot;)</code></pre>
-<p><img src="recurso310_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="recurso310_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p></br></br></p>
 <p>Empleando la función logística se replantea el modelo partiendo del
 <strong>logaritmo de la razón de probabilidades</strong> (logaritmo de

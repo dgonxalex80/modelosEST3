@@ -23,8 +23,7 @@ library(tidyverse)
 # install.packages("devtools")     # solo una vez
 # devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
 set.seed(123) 
-library(paqueteMOD)
-library(paqueteMOD)
+library(paqueteMODELOS)
 data("dataMat")
 dataMat = sample(dataMat, 1000, replace = TRUE)
 glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1

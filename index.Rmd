@@ -27,23 +27,52 @@ knitr::include_graphics("img/banner_presentacion.png")
 
 # <span style="color:#034A94"> **Introducción**</span>
 
-</br>
-
-En esta unidad se presentan los siguientes modelos :
-
-* Modelo diseño de experimentos <span style="color:#034A94">**MDE**</span>
-* Modelo de Regresión Logiística binomial <span style="color:#034A94"> **ML**</span>
-* Análisis de componentes principales <span style="color:#034A94">**ACP**</span> 
-* Análisis de cluster  <span style="color:#034A94">**AC**</span> 
-
+El **modelo logit** es una poderosa herramienta de clasificación que desempeña un papel central en la ciencia de datos y permite tomar decisiones informadas y precisas en una variedad de dominios.
 
 </br>
 
-Los dos primero están basados en el modelo lineal general y su estructura es similar a la del modelo de regresión, tratado en las unidades 1 y 2. Los dos últimos forman parte de un grupo de herramientas descriptivas que facilitan el análisis de los datos. 
+En esta unidad se presentan el **Modelo de Regresión Logiística binomial** :  
 
-El <span style="color:#034A94"> **Análisis de Cluster**</span> realiza una clasificación de los objetos o individuos de una base de datos en grupo teniendo en cuenta todas la variables, empleando métricas de distancias
+* Principales conceptos
+* El modelo
+* Estimación
+* Evaluación del modelo
+* Ejemplo
 
-Finalmente el <span style="color:#034A94">**Análisis de Componente Principales**</span> es un análisis complementario que permite resumir en pocas variables independientes un gran número de variables. Esta herramienta es útil en el caso de tener muchas variables y poder las emplear un modelo de regresión como variables independientes
+</br>
+
+```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+
+fx <- function(x) {
+  1 / (1 + exp(-x))
+}
+
+# x= c(rnorm(20, -5, 5), rnorm(20, 5,5)) 
+# y= rep(c(0,1), each = 20)
+
+x= c(-3.0,  -0.1,   8.6,  -9.9, -10.2,  3.0,  -6.1,  -2.5,  -6.6, -15.3,
+   -5.4,   0.9,   0.9,  -8.9, -12.7,  7.2,  5.8,  -5.4,  -2.8, -13.0,
+#----------------------------------------------------------------------
+    1.3,  -2.7,   -1.5,   5.5,  -1.8,  7.9,   6.4,   0.4,   6.1,   8.7,
+   10.3,   3.9,   4.5 ,  -4.5,  12.2,  10.6,   9.1,   3.5,   6.8,  7.0)
+
+y = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+
+datos <- data.frame(x, y)
+
+ggplot(data.frame(x = c(-8, 8)), aes(x)) + 
+    geom_hline(yintercept = 0, linetype = "solid", color = "#018ABE", size = 1) +
+  geom_hline(yintercept = 1, linetype = "solid", color = "#018ABE", size =1 ) +
+  geom_vline(xintercept = 0, linetype = "solid", color = "#686868", size =1) +
+  stat_function(fun = fx, size = 2, col = "#FF7F00") +
+  geom_point(data = datos, aes(x, y), color = "black", size = 2)
+
+```
+
 
 
 

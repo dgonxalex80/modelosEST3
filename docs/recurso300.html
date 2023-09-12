@@ -14,7 +14,7 @@
 
 <title> Modelo Lineal General - Logit binomial</title>
 
-<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -244,89 +244,20 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Conceptos 
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso100.html">Conceptos básicos</a>
-    </li>
-  </ul>
+        <li>
+  <a href="recurso300.html">Introducción</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    MDE
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso200.html">Modelo de Diseño de Experimentos </a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso310.html">Modelo</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso300.html">Introducción</a>
-    </li>
-    <li>
-      <a href="recurso310.html">Modelo</a>
-    </li>
-    <li>
-      <a href="recurso320.html">Estimación</a>
-    </li>
-    <li>
-      <a href="recurso330.html">Evaluación</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso320.html">Estimación</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ACP
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso600.html">Análisis de Componentes Principales</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso330.html">Evaluación</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    AC
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso500.html">Análisis de conglomerados</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Tutoriales
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso700.html">Tutorial 301</a>
-    </li>
-    <li>
-      <a href="recurso701.html">Tutorial 302</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso340.html">Ejemplo</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -352,10 +283,14 @@ Lineal General - Logit binomial</strong></span></h1>
 <h2><span
 style="color:#034A94"><strong>Introducción</strong></span></h2>
 <p><br/></p>
-<p>La regresión logística tiene la misma estructura presentada en el
-modelo de regresión lineal múltiple, solo que la variable dependiente es
-no numérica y corresponde a una variable cualitativa con dos valores
-(bivariada). En este caso el modelo se denomina Logit binomial.</p>
+<p>El <strong>modelo Logit</strong>, también conocido como
+<strong>regresión logística</strong>, es una técnica estadística
+importante utilizada en análisis de datos para modelar la probabilidad
+de un evento binario, como sí/no, éxito/fracaso, o 1/0.</p>
+<p>Tiene la misma estructura presentada en el modelo de regresión lineal
+múltiple, solo que la variable dependiente es no numérica y corresponde
+a una variable cualitativa con dos valores (bivariada). En este caso el
+modelo se denomina Logit binomial.</p>
 <p><br/></p>
 <p>Este modelo está relacionado con predicción y explicación de las
 decisiones de los consumidores, la clasificación de los clientes de un
@@ -426,11 +361,11 @@ caracteristicas de los datos</p>
 <div id="datos" class="section level3">
 <h3><span style="color:#034A94"><strong>Datos</strong></span></h3>
 <p></br></p>
-<p>La data: <code>matriculah</code> de <code>paqueteMOD</code>, contiene
-los datos de un conjunto de estudiantes que han obtenido matricula de
-honor (<code>matricula = 1</code>) y un grupo de no la han conseguido
-(<code>matricula = 0</code>) y sus respectivas notas obtenidas en
-matemáticas</p>
+<p>La data: <code>matriculah</code> de <code>paqueteMODELOS</code>,
+contiene los datos de un conjunto de estudiantes que han obtenido
+matricula de honor (<code>matricula = 1</code>) y un grupo de no la han
+conseguido (<code>matricula = 0</code>) y sus respectivas notas
+obtenidas en matemáticas</p>
 <p></br></p>
 <p>En este caso se debe contar con una variable categórica con dos
 niveles representados por dos valores : <span
@@ -439,40 +374,116 @@ class="math inline">\(1\)</span> (variable matricula), quien obra como
 variable dependiente y por lo menos una variable cuantitativa que tome
 diferentes valores (en este caso la nota de matemáticas).</p>
 <p></br></p>
-<pre class="r"><code>library(paqueteMOD)
+<pre class="r"><code>library(paqueteMODELOS)
 data(&quot;matriculah&quot;)
-summary(matricula)</code></pre>
-<pre><code>    honor            matematicas   
- Length:200         Min.   :33.00  
- Class :character   1st Qu.:45.00  
- Mode  :character   Median :52.00  
-                    Mean   :52.65  
-                    3rd Qu.:59.00  
-                    Max.   :75.00  </code></pre>
+summary(matriculah)</code></pre>
+<pre><code> honor     matematicas   
+ No:151   Min.   :33.00  
+ Si: 49   1st Qu.:45.00  
+          Median :52.00  
+          Mean   :52.65  
+          3rd Qu.:59.00  
+          Max.   :75.00  </code></pre>
 <p></br></br></p>
 <p>Distribución de matriculados:</p>
-<p>Utilizamos la función <code>table()</code> para encontrar la
-distribución de la variable categórica matricula:</p>
+<p>Utilizamos la función <code>table()</code> y <code>ggplot()</code>
+para encontrar la distribución de la variable categórica matricula:</p>
 <p></br></p>
-<pre class="r"><code>table(matriculah$honor)</code></pre>
-<pre><code>
- No  Si 
-151  49 </code></pre>
+<p><img src="recurso300_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p></br></br></p>
 <p>Distribución del puntaje en matemáticas por tipo de matricula</p>
 <p></br></p>
 <p>Tambien podemos explorar el comportamiento de la variable
 cuantitativa (matemáticas) para las dos categorías, que en este caso
 corresponde a la distribución de las notas por tipo de matricula :</p>
-<pre class="r"><code>library(ggplot2)
-ggplot(data = matriculah, aes(x = as.factor(honor), y = matematicas, color = honor)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.2)+
-  scale_color_manual(values=c(&quot;#FF7F00&quot;,&quot;#034A94&quot;))+
-  labs(x = &quot;matricula de honor&quot;, y = &quot;puntaje matemáticas&quot;) +
-  ggtitle(&quot;  &quot;)</code></pre>
-<p><img src="recurso300_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="recurso300_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p></br></br></p>
+</div>
+<div id="conceptos-básicos" class="section level2">
+<h2><span style="color:#686868"><strong>Conceptos
+básicos</strong></span></h2>
+<p></br></p>
+<div id="variable-dependiente-binaria" class="section level3">
+<h3><span style="color:#034a94"><strong>Variable Dependiente
+Binaria</strong></span>:</h3>
+<p>En el modelo Logit, tienes una variable dependiente que debe ser
+binaria, es decir, solo puede tomar dos valores posibles, como 1 o
+0.</p>
+<p></br></p>
+</div>
+<div id="variables-independientes" class="section level3">
+<h3><span style="color:#034a94"><strong>Variables
+Independientes</strong></span>:</h3>
+<p>Puedes tener una o más variables independientes que se utilizan para
+predecir la variable dependiente binaria. Estas variables pueden ser
+continuas o categóricas.</p>
+<p></br></p>
+</div>
+<div id="función-logit" class="section level3">
+<h3><span style="color:#034a94"><strong>Función
+Logit</strong></span>:</h3>
+<p>La función logit es la función de enlace utilizada en la regresión
+logística. Transforma la probabilidad de éxito en una forma que abarca
+todo el rango real (-∞, ∞). La función logit se define como el logaritmo
+natural (ln) de la razón de la probabilidad de éxito a la probabilidad
+de fracaso.</p>
+<p></br></p>
+</div>
+<div id="coeficientes-de-regresión" class="section level3">
+<h3><span style="color:#034a94"><strong>Coeficientes de
+Regresión</strong></span>:</h3>
+<p>El modelo Logit estima coeficientes para cada una de las variables
+independientes. Estos coeficientes representan el cambio en el logit
+(logaritmo de la razón de probabilidades) de la variable dependiente
+debido a un cambio unitario en la variable independiente, manteniendo
+todas las demás variables constantes.</p>
+<p></br></p>
+</div>
+<div id="estimación-de-parámetros" class="section level3">
+<h3><span style="color:#034a94"><strong>Estimación de
+Parámetros</strong></span>:</h3>
+<p>La regresión logística utiliza técnicas de estimación, como la máxima
+verosimilitud, para estimar los valores de los coeficientes de
+regresión.</p>
+<p></br></p>
+</div>
+<div id="odds-ratio" class="section level3">
+<h3><span style="color:#034a94"><strong>Odds Ratio</strong></span>:</h3>
+<p>Los coeficientes de regresión en el modelo Logit se utilizan para
+calcular las “razones de posibilidades” (odds ratio). Un odds ratio
+representa cómo un cambio de una unidad en la variable independiente
+afecta las probabilidades de éxito en términos de una multiplicación. Un
+odds ratio mayor a 1 indica un aumento en las probabilidades, mientras
+que un odds ratio menor a 1 indica una disminución.</p>
+<p></br></p>
+</div>
+<div id="hipótesis-nula-y-alternativa" class="section level3">
+<h3><span style="color:#034a94"><strong>Hipótesis Nula y
+Alternativa</strong></span>:</h3>
+<p>Se pueden realizar pruebas de hipótesis para determinar si los
+coeficientes son estadísticamente significativos en la predicción de la
+variable dependiente. La hipótesis nula es que el coeficiente es igual a
+cero, lo que significa que la variable independiente no tiene efecto en
+las probabilidades.</p>
+<p></br></p>
+</div>
+<div id="evaluación-del-modelo" class="section level3">
+<h3><span style="color:#034a94"><strong>Evaluación del
+Modelo</strong></span>:</h3>
+<p>Se utilizan medidas como la precisión, la sensibilidad, la
+especificidad, el área bajo la curva ROC (AUC-ROC), entre otras, para
+evaluar el rendimiento del modelo Logit en la clasificación de
+datos.</p>
+<p></br></p>
+</div>
+<div id="interpretación-de-coeficientes" class="section level3">
+<h3><span style="color:#034a94"><strong>Interpretación de
+Coeficientes</strong></span>:</h3>
+<p>La interpretación de los coeficientes en el modelo Logit es
+importante para comprender cómo cada variable independiente afecta las
+probabilidades de éxito o fracaso.</p>
 <p></br></br></br></p>
+</div>
 </div>
 
 

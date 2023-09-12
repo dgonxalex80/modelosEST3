@@ -1,40 +1,18 @@
-name: "Modelos"
+name: "Modelo Logit"
 output_dir: "docs"
 navbar:
   title: "Modelos Estadísticos para la toma de decisiones"
   left:
-    - text: "Conceptos "
-      menu:
-        - text: "Conceptos básicos"
-          href: recurso100.html
-    - text: "MDE"
-      menu:
-        - text: "Modelo de Diseño de Experimentos "
-          href: recurso200.html
-    - text: "ML"
-      menu:
-        - text: "Introducción"
-          href: recurso300.html
-        - text: "Modelo"
-          href: recurso310.html
-        - text: "Estimación"
-          href: recurso320.html
-        - text: "Evaluación"
-          href: recurso330.html
-    - text: "ACP"
-      menu:
-        - text: "Análisis de Componentes Principales"
-          href: recurso600.html
-    - text: "AC"
-      menu:
-        - text: "Análisis de conglomerados"
-          href: recurso500.html
-    - text: "Tutoriales"
-      menu:
-        - text: "Tutorial 301"
-          href: recurso700.html          
-        - text: "Tutorial 302"
-          href: recurso701.html 
+    - text: "Introducción"
+      href: recurso300.html
+    - text: "Modelo"
+      href: recurso310.html
+    - text: "Estimación"
+      href: recurso320.html
+    - text: "Evaluación"
+      href: recurso330.html
+    - text: "Ejemplo"
+      href: recurso340.html
 output:
   html_document:
     css: style.css

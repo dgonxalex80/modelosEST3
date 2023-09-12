@@ -14,7 +14,7 @@
 
 <title> Evaluación del modelo</title>
 
-<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -244,89 +246,20 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Conceptos 
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso100.html">Conceptos básicos</a>
-    </li>
-  </ul>
+        <li>
+  <a href="recurso300.html">Introducción</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    MDE
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso200.html">Modelo de Diseño de Experimentos </a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso310.html">Modelo</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ML
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso300.html">Introducción</a>
-    </li>
-    <li>
-      <a href="recurso310.html">Modelo</a>
-    </li>
-    <li>
-      <a href="recurso320.html">Estimación</a>
-    </li>
-    <li>
-      <a href="recurso330.html">Evaluación</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso320.html">Estimación</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ACP
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso600.html">Análisis de Componentes Principales</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso330.html">Evaluación</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    AC
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso500.html">Análisis de conglomerados</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Tutoriales
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="recurso700.html">Tutorial 301</a>
-    </li>
-    <li>
-      <a href="recurso701.html">Tutorial 302</a>
-    </li>
-  </ul>
+<li>
+  <a href="recurso340.html">Ejemplo</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -347,7 +280,89 @@ $(document).ready(function () {
 </div>
 
 
+<p></br></p>
+<p>La bondad de ajuste de un modelo de <strong>regresión
+logística</strong> se mide mediante diversas métricas y pruebas
+estadísticas. Algunas de las formas más comunes de medir la bondad de
+ajuste en un modelo logit incluyen:</p>
+<p></br></p>
+<div id="likelihood-ratio-test-prueba-de-razón-de-verosimilitud"
+class="section level3">
+<h3><span style="color:#034a94"><strong>Likelihood Ratio Test (Prueba de
+Razón de Verosimilitud)</strong></span>:</h3>
+<p>Esta prueba compara el modelo ajustado con un modelo nulo (modelo sin
+variables predictoras) para determinar si el modelo ajustado es
+significativamente mejor. Se utiliza el estadístico de prueba
+chi-cuadrado y se compara con una distribución chi-cuadrado con los
+grados de libertad apropiados.</p>
+<p></br></p>
+</div>
+<div id="deviance" class="section level3">
+<h3><span style="color:#034a94"><strong>Deviance</strong></span>:</h3>
+<p>La deviance es una medida de la diferencia entre el modelo ajustado y
+un modelo de referencia ideal. Cuanto menor sea la deviance, mejor será
+el ajuste del modelo. Puedes calcular la deviance utilizando la función
+<code>deviance</code> en R.</p>
+<p></br></p>
+</div>
+<div
+id="aic-criterio-de-información-de-akaike-y-bic-criterio-de-información-bayesiano"
+class="section level3">
+<h3><span style="color:#034a94"><strong>AIC (Criterio de Información de
+Akaike)</strong> y <strong>BIC (Criterio de Información
+Bayesiano)</strong></span>:</h3>
+<p>Estos son criterios de selección de modelos que penalizan la
+complejidad del modelo. Un valor más bajo de AIC o BIC indica un mejor
+ajuste del modelo.</p>
+<p></br></p>
+</div>
+<div id="roc-auc-área-bajo-la-curva-roc" class="section level3">
+<h3><span style="color:#034a94"><strong>ROC-AUC (Área bajo la Curva
+ROC)</strong></span>:</h3>
+<p>Esta métrica mide la capacidad del modelo para discriminar entre las
+clases positiva y negativa. Un valor de ROC-AUC cercano a 1 indica un
+buen ajuste del modelo.</p>
+<p></br></p>
+</div>
+<div id="sensibilidad-y-especificidad" class="section level3">
+<h3><span style="color:#034a94"><strong>Sensibilidad y
+Especificidad</strong></span>:</h3>
+<p>Estas métricas miden la capacidad del modelo para clasificar
+correctamente las observaciones positivas y negativas, respectivamente.
+Una alta sensibilidad y especificidad indican un buen ajuste.</p>
+<p></br></p>
+</div>
+<div id="gráficos-de-curva-roc-y-curva-pr" class="section level3">
+<h3><span style="color:#034a94"><strong>Gráficos de Curva ROC y Curva
+PR</strong></span>:</h3>
+<p>Estos gráficos te permiten visualizar el rendimiento del modelo en
+diferentes umbrales de probabilidad y evaluar su capacidad de
+clasificación.</p>
+<p></br></p>
+</div>
+<div id="matriz-de-confusión" class="section level3">
+<h3><span style="color:#034a94"><strong>Matriz de
+Confusión</strong></span>:</h3>
+<p>La matriz de confusión muestra la clasificación real y la
+clasificación predicha por el modelo. Puedes calcular métricas como la
+precisión, la tasa de falsos positivos y la tasa de falsos negativos a
+partir de la matriz de confusión.</p>
+<p></br></p>
+</div>
+<div id="validación-cruzada" class="section level3">
+<h3><span style="color:#034a94"><strong>Validación
+Cruzada</strong></span>:</h3>
+<p>Dividir los datos en <strong>conjuntos de entrenamiento</strong> y
+<strong>conjunto de prueba</strong> repetidamente (por ejemplo, mediante
+validación cruzada k-fold) y calcular métricas de bondad de ajuste en
+cada iteración. Esto proporciona una evaluación más robusta del
+modelo.</p>
+<p>La elección de la métrica de bondad de ajuste depende de tus
+objetivos específicos y del contexto del problema. En general, es
+recomendable utilizar múltiples métricas y pruebas para evaluar el
+rendimiento del modelo desde diferentes perspectivas.</p>
 <p></br></br></p>
+</div>
 <div id="bondad-de-ajuste-del-modelo" class="section level2">
 <h2><span style="color:#034A94"><strong>Bondad de ajuste del
 modelo</strong></span></h2>
@@ -376,18 +391,19 @@ Positovo : <strong>FP</strong></p></li>
 <p></br></br></p>
 <p>La proporción de clasificaciones correctas dan una aproximación del
 valor <span class="math inline">\(R^2\)</span></p>
-<p></br></p>
+<p></br></br></p>
 <p><span class="math display">\[
 \dfrac{708+115}{708+127+50+115} = \dfrac{823}{1000} = 0.823
-\]</span> Este valor cuenta como el <span
-class="math inline">\(R^2\)</span> , es decir que el modelo explica
-(clasifica de manera adecuada) el 82.3% de los casos.</p>
+\]</span> </br></br></p>
+<p>Este valor cuenta como el <span class="math inline">\(R^2\)</span> ,
+es decir que el modelo explica (clasifica de manera adecuada) el 82.3%
+de los casos.</p>
 <p></br></br></p>
 <p>Este valor se puede obtener de la matriz de confusión que se obtiene
 con una data que no se ha empleado en la estimación del modelo</p>
 <p></br></br></p>
 </div>
-<div id="matriz-de-confusión" class="section level2">
+<div id="matriz-de-confusión-1" class="section level2">
 <h2><span style="color:#034A94"><strong>Matriz de
 confusión</strong></span></h2>
 <p></br></p>
@@ -413,42 +429,15 @@ forma:</p>
 <p>Se procede a estimar el modelo con la data train y luego emplearlo
 para realizar las predicciones con la data test, para finalmente evaluar
 el resultado utilizando para ello la matriz de confusión.</p>
-<pre class="r"><code>library(tidyverse)
-glm(honor ~ matematicas , family = binomial(link = &quot;logit&quot;), data = train) -&gt; modelo2
-
-valor_pronosticado &lt;- predict(modelo2,test,type = &quot;response&quot;)
-niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
-                             factor(.)
-
-rendimiento_data&lt;-data.frame(observados=test$honor,
-                             predicciones= niveles_pronosticados)
-
-Positivos &lt;- sum(rendimiento_data$observados==&quot;Si&quot;)
-Negativos &lt;- sum(rendimiento_data$observados==&quot;No&quot;)
-Positivos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;Si&quot;)
-Negativos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;No&quot;)
-Total &lt;- nrow(rendimiento_data)
-VP&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
-VN&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
-FP&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
-FN&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
-
-matriz_confusion=matrix(c(VP, FP, FN,VN), nrow=2)
-
-rownames(matriz_confusion) = c(&quot; Si &quot;, &quot; No    &quot;)
-colnames(matriz_confusion) = c(&quot;Si&quot;, &quot;No&quot;)
-matriz_confusion</code></pre>
-<pre><code>        Si  No
- Si     48  57
- No     23 272</code></pre>
 <p></br></br></p>
-<pre>
-        |                predicción             |  
-        |         |   Si       |    No          |
---------|---------|------------|----------------|   
-Estado  |  Si     |   48  (VP) |     57   (FN)  |
-real    |  No     |   23  (FP) |     272  (VN)  |
-</pre>
+<p><img src="img/matriz.png" width="60%" style="display: block; margin: auto;" /></p>
+<!-- <pre> -->
+<!--         |                predicción             |   -->
+<!--         |         |   Si       |    No          | -->
+<!-- --------|---------|------------|----------------|    -->
+<!-- Estado  |  Si     |   48  (VP) |     57   (FN)  | -->
+<!-- real    |  No     |   23  (FP) |     272  (VN)  | -->
+<!-- </pre> -->
 <p></br></p>
 <blockquote>
 
@@ -469,9 +458,17 @@ Charasteristic) . Esta curva compara diferentes puntos de corte de la
 probabilidad que permite establecer la tasa de clasificaciones correcta
 de verdaderos positivos y de falsos positivos:</p>
 <p></br></br></p>
-<div id="exactitud" class="section level3">
-<h3><span style="color:#034A94"> <strong>Exactitud</strong></span></h3>
-<p>Porcentaje de casos correctamente clasificados</p>
+<div id="exactitudaccuracy" class="section level3">
+<h3><span style="color:#034A94">
+<strong>Exactitud</strong>(Accuracy)</span></h3>
+<ul>
+<li>Mide la proporción de predicciones correctas en relación con el
+total de predicciones realizadas por el modelo.</li>
+<li>Es útil cuando las clases están balanceadas.</li>
+<li>Presenta limitaciones cuando las clases están desequilibradas. Un
+modelo que predice siempre la clase mayoritaria puede tener una alta
+exactitud.</li>
+</ul>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Exactitud} = \dfrac{\text{aciertos en
@@ -481,26 +478,41 @@ clasificación}}{\text{Total}} = \dfrac{VP + VN}{\text{Total}} =
 </div>
 <p></br></br></p>
 </div>
-<div id="tasa-de-error" class="section level3">
-<h3><span style="color:#034A94"> <strong>Tasa de
-error</strong></span></h3>
+<div id="tasa-de-error-error-rate" class="section level3">
+<h3><span style="color:#034A94"> <strong>Tasa de error</strong> (Error
+Rate)</span></h3>
 <!-- ```{r, echo=FALSE, out.width="80%", fig.align = "center"} -->
 <!-- knitr::include_graphics("img/matriz_confusion.png") -->
 <!-- ``` -->
-<p>Porcentaje de casos incorrectamente clasificados</p>
+<ul>
+<li>Porcentaje de casos incorrectamente clasificados. Es el complemento
+de la exactitud, es decir, 1 - exactitud.</li>
+<li>Es útil como medida general del error del modelo.</li>
+<li>Al igual que la exactitud, puede ser falsa en problemas con clases
+desequilibradas.</li>
+</ul>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Tasa de Error} = \dfrac{\text{no aciertos en
 clasificación}}{\text{Total}} = \dfrac{FP + FN}{\text{Total}} =
 \dfrac{23+57}{400} = 0.20
 \]</span></p>
+</div>
 <p></br></br></p>
 </div>
-<div id="sensibilidad" class="section level3">
-<h3><span style="color:#034A94">
-<strong>Sensibilidad</strong></span></h3>
-<p>Porcentaje de positivos que son clasificados por el modelo como
-positivos</p>
+<div id="sensibilidad-recall-o-true-positive-rate"
+class="section level3">
+<h3><span style="color:#034A94"> <strong>Sensibilidad</strong> (Recall o
+True Positive Rate)</span></h3>
+<ul>
+<li>Mide la capacidad del modelo para identificar correctamente los
+casos positivos (VP) en relación con el total de casos positivos reales
+(VP + FN).</li>
+<li>Importante cuando es crítico <strong>no perder casos
+positivos</strong>.</li>
+<li>A mayor sensibilidad menos falsos negativos, pero pueden aumentar
+los falsos positivos.</li>
+</ul>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Sensibilidad} = \dfrac{VP}{\text{Total positivos}} =
@@ -509,11 +521,14 @@ positivos</p>
 </div>
 <p></br></br></p>
 </div>
-<div id="especificidad" class="section level3">
+<div id="especificidadspecificity" class="section level3">
 <h3><span style="color:#034A94">
-<strong>Especificidad</strong></span></h3>
-<p>Porcentaje de negativos que son clasificados por el modelo como
-negativos</p>
+<strong>Especificidad</strong>(Specificity)</span></h3>
+<p>Mide la capacidad del modelo para identificar correctamente los casos
+negativos (VN) en relación con el total de casos negativos reales (VN +
+FP). * Importante cuando es crítico <strong>no cometer falsos
+positivos</strong>. Mayor especificidad significa menos falsos
+positivos, pero puede aumentar los falsos negativos.</p>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Especificidad} = \dfrac{\text{VN}}{\text{Total negativos}} =
@@ -522,9 +537,17 @@ negativos</p>
 </div>
 <p></br></br></p>
 </div>
-<div id="presición" class="section level3">
-<h3><span style="color:#034A94"> <strong>Presición</strong></span></h3>
-<p>Porcentaje de positivos pronosticados de manera correcta</p>
+<div id="presición-precision" class="section level3">
+<h3><span style="color:#034A94"> <strong>Presición</strong>
+(Precision)</span></h3>
+<ul>
+<li>Mide la proporción de predicciones positivas correctas (VP) en
+relación con el total de predicciones positivas (VP + FP).</li>
+<li>Importante cuando se busca <strong>minimizar los falsos
+positivos</strong>.</li>
+<li>A mayor precisión, menos falsos positivos, pero generar aumento de
+los falsos negativos.</li>
+</ul>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Precision} = \dfrac{\text{VP}}{\text{Total clasificados
@@ -533,10 +556,18 @@ positivos}} = \dfrac{48}{71} = 0.676
 </div>
 <p></br></br></p>
 </div>
-<div id="valor-de-predicción-negativo" class="section level3">
+<div id="valor-de-predicción-negativo-negative-predictive-value"
+class="section level3">
 <h3><span style="color:#034A94"> <strong>Valor de predicción
-negativo</strong></span></h3>
-<p>Porcentaje de negativos clasificados por el modelo como negativos</p>
+negativo</strong> (Negative Predictive Value)</span></h3>
+<ul>
+<li>Mide la proporción de casos negativos reales (VN) en relación con el
+total de predicciones negativas correctas (VN + FN).</li>
+<li>Importante cuando se busca <strong>minimizar los falsos
+negativos</strong>.</li>
+<li>A mayor valor predictivo negativo, menos falsos negativos, pero se
+pueden aumentar los falsos positivos.</li>
+</ul>
 <div class="content-box-blue">
 <p><span class="math display">\[
 \text{Valor de prediccion negativo} = \dfrac{\text{VN}}{\text{Total
@@ -548,68 +579,110 @@ clasificados negativos}} = \dfrac{272}{329} = 0.827
 <div id="resumen" class="section level3">
 <h3><span style="color:#686868"> <strong>Resumen</strong></span></h3>
 <p></br></p>
-<pre class="r"><code>library(tidyverse)
-Exactitud &lt;- (VP+VN)/Total
-Tasa_de_Error &lt;- (FP+FN)/Total
-Sensibilidad &lt;- VP/Positivos
-Especificidad &lt;- VN/Negativos
-Precision &lt;- VP/Positivos_pronosticados
-Valor_prediccion_negativo &lt;- VN / Negativos_pronosticados
-
-indicadores &lt;- t(data.frame(Exactitud,Tasa_de_Error,Sensibilidad,Especificidad,Precision,Valor_prediccion_negativo))
-indicadores %&gt;% 
-  round(.,3)</code></pre>
-<pre>
-                           
-Exactitud                   0.800
-
-Tasa de Error               0.200
-
-Sensibilidad                0.457
-
-Especificidad               0.922
-
-Precisión                   0.676
-
-Valor predicción negativo   0.827
-
-</pre>
-<p></br></br></p>
-</div>
-<div id="nota" class="section level3 content-box-gray">
-<h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
-<ul>
-<li>Interesa tener valores de</li>
-</ul>
-<table>
+<!-- ```{r, eval=FALSE} -->
+<!-- # library(tidyverse) -->
+<!-- # Exactitud <- (VP+VN)/Total -->
+<!-- # Tasa_de_Error <- (FP+FN)/Total -->
+<!-- # Sensibilidad <- VP/Positivos -->
+<!-- # Especificidad <- VN/Negativos -->
+<!-- # Precision <- VP/Positivos_pronosticados -->
+<!-- # Valor_prediccion_negativo <- VN / Negativos_pronosticados -->
+<!-- #  -->
+<!-- # indicadores <- t(data.frame(Exactitud,Tasa_de_Error,Sensibilidad,Especificidad,Precision,Valor_prediccion_negativo)) -->
+<!-- # indicadores %>%  -->
+<!-- #   round(.,3) -->
+<!-- ``` -->
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Indicador
+</th>
+<th style="text-align:right;">
+Valor
+</th>
+<th style="text-align:center;">
+Preferencia
+</th>
+</tr>
+</thead>
 <tbody>
-<tr class="odd">
-<td align="center">Exactitud</td>
-<td align="center">alto</td>
+<tr>
+<td style="text-align:left;width: 300px; ">
+Exactitud
+</td>
+<td style="text-align:right;width: 150px; ">
+0.800
+</td>
+<td style="text-align:center;width: 150px; ">
+Alto
+</td>
 </tr>
-<tr class="even">
-<td align="center">Tasa de Error</td>
-<td align="center">bajo</td>
+<tr>
+<td style="text-align:left;width: 300px; ">
+Tasa de Error
+</td>
+<td style="text-align:right;width: 150px; ">
+0.200
+</td>
+<td style="text-align:center;width: 150px; ">
+Bajo
+</td>
 </tr>
-<tr class="odd">
-<td align="center">Sensibilidad</td>
-<td align="center">alto</td>
+<tr>
+<td style="text-align:left;width: 300px; ">
+Sensibilidad
+</td>
+<td style="text-align:right;width: 150px; ">
+0.457
+</td>
+<td style="text-align:center;width: 150px; ">
+Alto
+</td>
 </tr>
-<tr class="even">
-<td align="center">Especificidad</td>
-<td align="center">alto</td>
+<tr>
+<td style="text-align:left;width: 300px; ">
+Especificidad
+</td>
+<td style="text-align:right;width: 150px; ">
+0.922
+</td>
+<td style="text-align:center;width: 150px; ">
+Alto
+</td>
 </tr>
-<tr class="odd">
-<td align="center">Precisión</td>
-<td align="center">alto</td>
+<tr>
+<td style="text-align:left;width: 300px; ">
+Precisión
+</td>
+<td style="text-align:right;width: 150px; ">
+0.676
+</td>
+<td style="text-align:center;width: 150px; ">
+Alto
+</td>
 </tr>
-<tr class="even">
-<td align="center">Valor predicción negativo</td>
-<td align="center">alto</td>
+<tr>
+<td style="text-align:left;width: 300px; ">
+Valor predicción negativo
+</td>
+<td style="text-align:right;width: 150px; ">
+0.827
+</td>
+<td style="text-align:center;width: 150px; ">
+Alto
+</td>
 </tr>
 </tbody>
 </table>
-<p></br></p>
 <ul>
 <li>El valor <strong>c</strong> de corte de la probabilidad, incide
 sobre los indicadores</li>
@@ -619,8 +692,8 @@ sobre los indicadores</li>
 <li>El balanceo de los porcentajes de la variable dependiente es
 importante y afecta a los indicadores</li>
 </ul>
-</div>
 <p></br></br></p>
+</div>
 </div>
 <div id="curva-roc-y-valor-auc" class="section level1">
 <h1><span style="color:#034A94"><strong>Curva ROC y valor
@@ -671,17 +744,7 @@ diagonal y el valor del area bajo la curva AUC = 0.5</p>
 \widehat{\beta_{1}}  \hspace{.3cm} \text{matematicas}
 \]</span> </br></p>
 <p>Presenta la curva ROC y su área bajo la curva AUC</p>
-<center>
-<pre class="r"><code>library(pROC)
-curva_ROC &lt;- roc(test$honor, valor_pronosticado)
-auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
-
-ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=1)+
-ggtitle(paste0(&quot;Curva ROC &quot;, &quot;(AUC = &quot;, auc, &quot;)&quot;))+
-xlab(&quot;Especificidad&quot;)+
-ylab(&quot;Sensibilidad&quot;)  </code></pre>
-<p><img src="recurso330_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-</center>
+<p><img src="recurso330_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
 (AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
 <p></br></br></p>
