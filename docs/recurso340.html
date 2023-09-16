@@ -12,7 +12,7 @@
 <meta name="author" content="Modelos Estadísticos para la toma de decisiones" />
 
 
-<title> Validación cruzada</title>
+<title> Ejemplo</title>
 
 <script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -256,9 +256,6 @@ $(document).ready(function () {
 <li>
   <a href="recurso330.html">Evaluación</a>
 </li>
-<li>
-  <a href="recurso340.html">Ejemplo</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -272,239 +269,305 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore"><span style="color:#034a94">
-<strong>Validación cruzada</strong></span></h1>
+<strong>Ejemplo</strong></span></h1>
 <h4 class="author">Modelos Estadísticos para la toma de decisiones</h4>
 
 </div>
 
 
-<pre class="r"><code>library(caret)
-table(dataMat$gana) %&gt;% 
-  prop.table()</code></pre>
-<pre><code>
-   No    Si 
-0.755 0.245 </code></pre>
-<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = dataMat) -&gt; modelo1
-summary(modelo1) </code></pre>
+<p>En un estudio médico fueron registrados datos de pacientes propensos
+a un infarto. Cada paciente fue identificado mediante un número de
+identificación (id) y se recopiló información sobre su
+<strong>edad</strong> , nivel de actividad física
+(<strong>actividad</strong>), antecedentes de angina
+(<strong>angina</strong>) y presión arterial (<strong>presion</strong>).
+El objetivo del estudio fue el de analizar cómo estas variables están
+relacionadas con la ocurrencia de infartos cardíacos
+(<strong>infarto</strong>).</p>
+<p>Se requiere ajustar un <strong>modelo logit</strong> para predecir la
+probabilidad de infarto en función de las características recogidas de
+los pacientes</p>
+<div id="datos" class="section level3">
+<h3>Datos</h3>
+<table class="table table-striped">
+<thead>
+<tr>
+<th style="text-align:right;">
+id
+</th>
+<th style="text-align:right;">
+edad
+</th>
+<th style="text-align:right;">
+actividad
+</th>
+<th style="text-align:right;">
+infarto
+</th>
+<th style="text-align:right;">
+angina
+</th>
+<th style="text-align:right;">
+presion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="resumen-descriptivo-de-las-variables" class="section level3">
+<h3>Resumen descriptivo de las variables</h3>
+<p>Inicialmete se revisa las relaciones existentes entre las variables
+contenidas con respecto a la variable dependiente</p>
+<pre class="r"><code>summary(corazon[,2:6])</code></pre>
+<pre><code>      edad         actividad      infarto         angina        presion    
+ Min.   :35.00   Min.   :0.0   Min.   :0.00   Min.   :0.00   Min.   :0.00  
+ 1st Qu.:42.50   1st Qu.:1.0   1st Qu.:0.00   1st Qu.:1.00   1st Qu.:0.00  
+ Median :51.00   Median :2.0   Median :1.00   Median :1.00   Median :1.00  
+ Mean   :50.42   Mean   :1.6   Mean   :0.66   Mean   :0.86   Mean   :0.52  
+ 3rd Qu.:56.00   3rd Qu.:2.0   3rd Qu.:1.00   3rd Qu.:1.00   3rd Qu.:1.00  
+ Max.   :76.00   Max.   :3.0   Max.   :1.00   Max.   :1.00   Max.   :1.00  </code></pre>
+</div>
+<div id="variable-dependiente" class="section level3">
+<h3>Variable dependiente</h3>
+<pre class="r"><code># Instala y carga el paquete ggplot2 si aún no lo has hecho
+# install.packages(&quot;ggplot2&quot;)
+library(ggplot2)
+
+# Ejemplo de datos (sustituye &quot;data&quot; y &quot;frecuencia&quot; con tus propios datos)
+data = table(corazon$infarto) %&gt;%
+               as.data.frame()
+
+# Crea el gráfico de barras con ggplot2
+grafico_barras &lt;- ggplot(data, aes(x = Var1, y = Freq)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;lightblue&quot;) +  # Barras azul claro
+  geom_text(aes(label = Freq), vjust = -0.5, color = &quot;black&quot;, size = 4) +  # Etiquetas de frecuencia encima de las barras
+  labs(x = &quot;Infarto&quot;, y = &quot;Frecuencia&quot;) +  # Etiquetas de ejes
+  theme_minimal()  # Tema minimalista
+
+# Muestra el gráfico
+print(grafico_barras)</code></pre>
+<p><img src="recurso340_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="estimación-del-modelo" class="section level3">
+<h3>Estimación del modelo</h3>
+<pre class="r"><code># Crear variables dicotómicas para la variable &quot;actividad&quot;
+corazon$a_d&lt;- factor(corazon$actividad, levels = 0:3, labels = c(&quot;ninguna&quot;, &quot;minima&quot;, &quot;moderada&quot;, &quot;mas_que_moderada&quot;))
+corazon$a_d &lt;- relevel(corazon$a_d, ref = &quot;ninguna&quot;)
+
+# Ajustar un modelo logit
+modelo1 &lt;- glm(infarto ~ edad + a_d + angina + presion, data = corazon, family = binomial(link = &quot;logit&quot;))
+
+# Ver un resumen del modelo
+summary(modelo1)</code></pre>
 <pre><code>
 Call:
-glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
-    data = dataMat)
+glm(formula = infarto ~ edad + a_d + angina + presion, family = binomial(link = &quot;logit&quot;), 
+    data = corazon)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.73548  -0.40492  -0.11740  -0.01932   2.68961  
+    Min       1Q   Median       3Q      Max  
+-2.6299  -0.9368   0.6105   0.8946   1.5771  
 
 Coefficients:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
-nota           6.921      1.113   6.216 5.10e-10 ***
+                    Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept)          4.15175    2.73523   1.518   0.1290  
+edad                -0.03838    0.03880  -0.989   0.3226  
+a_dminima            1.23798    1.07218   1.155   0.2482  
+a_dmoderada          1.30852    0.95666   1.368   0.1714  
+a_dmas_que_moderada  1.22074    1.12652   1.084   0.2785  
+angina              -2.11143    1.40812  -1.499   0.1338  
+presion             -1.17841    0.70273  -1.677   0.0936 .
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 222.71  on 199  degrees of freedom
-Residual deviance: 106.29  on 198  degrees of freedom
-AIC: 110.29
+    Null deviance: 64.104  on 49  degrees of freedom
+Residual deviance: 55.662  on 43  degrees of freedom
+AIC: 69.662
 
-Number of Fisher Scoring iterations: 7</code></pre>
-<pre class="r"><code>library(caret)
+Number of Fisher Scoring iterations: 5</code></pre>
+<pre class="r"><code># Realizar selección de variables paso a paso (stepwise)
+modelo2 &lt;- step(modelo1, direction = &quot;both&quot;, trace = 0)
 
-# separacion de muetras
-ntrain &lt;- nrow(dataMat)*0.6
-ntest &lt;- nrow(dataMat)*0.4
-
-set.seed(123)
-index_train&lt;-sample(1:nrow(dataMat),size = ntrain)
-train&lt;-dataMat[index_train,]  # muestra de entrenamiento
-test&lt;-dataMat[-index_train,]  # muestra de prueba
-
-# matriz de confucion
-valor_pronosticado &lt;- predict(modelo1,test,type = &quot;response&quot;)
-niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
-  factor(.)
-
-confusionMatrix(niveles_pronosticados, test$gana )</code></pre>
-<pre><code>Confusion Matrix and Statistics
-
-          Reference
-Prediction No Si
-        No 67  4
-        Si  2  7
-                                         
-               Accuracy : 0.925          
-                 95% CI : (0.8439, 0.972)
-    No Information Rate : 0.8625         
-    P-Value [Acc &gt; NIR] : 0.06427        
-                                         
-                  Kappa : 0.6576         
-                                         
- Mcnemar&#39;s Test P-Value : 0.68309        
-                                         
-            Sensitivity : 0.9710         
-            Specificity : 0.6364         
-         Pos Pred Value : 0.9437         
-         Neg Pred Value : 0.7778         
-             Prevalence : 0.8625         
-         Detection Rate : 0.8375         
-   Detection Prevalence : 0.8875         
-      Balanced Accuracy : 0.8037         
-                                         
-       &#39;Positive&#39; Class : No             
-                                         </code></pre>
-<pre class="r"><code>library(ROSE)
-# oversampling
-train.blc &lt;- ovun.sample(gana~., data=train, 
-                         p=0.5, seed=1, 
-                         method=&quot;over&quot;)$data
-
-test.blc &lt;- ovun.sample(gana~., data=test, 
-                         p=0.5, seed=1, 
-                         method=&quot;over&quot;)$data</code></pre>
-<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = train.blc) -&gt; modelo2
-summary(modelo1) </code></pre>
+# Ver un resumen del modelo seleccionado
+summary(modelo2)</code></pre>
 <pre><code>
 Call:
-glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
-    data = dataMat)
+glm(formula = infarto ~ presion, family = binomial(link = &quot;logit&quot;), 
+    data = corazon)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.73548  -0.40492  -0.11740  -0.01932   2.68961  
+    Min       1Q   Median       3Q      Max  
+-1.7712  -1.2435   0.6835   1.1127   1.1127  
 
 Coefficients:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
-nota           6.921      1.113   6.216 5.10e-10 ***
+            Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept)   1.3350     0.5026   2.656  0.00791 **
+presion      -1.1809     0.6383  -1.850  0.06430 . 
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 222.71  on 199  degrees of freedom
-Residual deviance: 106.29  on 198  degrees of freedom
-AIC: 110.29
+    Null deviance: 64.104  on 49  degrees of freedom
+Residual deviance: 60.453  on 48  degrees of freedom
+AIC: 64.453
 
-Number of Fisher Scoring iterations: 7</code></pre>
-<pre class="r"><code># matriz de confucion
-valor_pronosticado &lt;- predict(modelo2,test.blc,type = &quot;response&quot;)
-niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
-  factor(.)
-
-confusionMatrix(niveles_pronosticados, test.blc$gana )</code></pre>
-<pre><code>Confusion Matrix and Statistics
-
-          Reference
-Prediction No Si
-        No 64 12
-        Si  5 55
-                                          
-               Accuracy : 0.875           
-                 95% CI : (0.8074, 0.9255)
-    No Information Rate : 0.5074          
-    P-Value [Acc &gt; NIR] : &lt;2e-16          
-                                          
-                  Kappa : 0.7496          
-                                          
- Mcnemar&#39;s Test P-Value : 0.1456          
-                                          
-            Sensitivity : 0.9275          
-            Specificity : 0.8209          
-         Pos Pred Value : 0.8421          
-         Neg Pred Value : 0.9167          
-             Prevalence : 0.5074          
-         Detection Rate : 0.4706          
-   Detection Prevalence : 0.5588          
-      Balanced Accuracy : 0.8742          
-                                          
-       &#39;Positive&#39; Class : No              
-                                          </code></pre>
-<pre class="r"><code>library(paqueteMODELOS)
-library(tidyverse)
-data(&quot;dataMat&quot;)
-dataMat = sample(dataMat, 2000, replace = TRUE)
-
-
-# separacion de muetras
-ntrain &lt;- nrow(dataMat)*0.6
-ntest &lt;- nrow(dataMat)*0.4
-
-set.seed(123)
-index_train&lt;-sample(1:nrow(dataMat),size = ntrain)
-train&lt;-dataMat[index_train,]  # muestra de entrenamiento
-test&lt;-dataMat[-index_train,]  # muestra de prueba
-
-
-
-
-library(ROSE)
-# oversampling
-train.blc &lt;- ovun.sample(gana~., data=train, 
-                         p=0.5, seed=1, 
-                         method=&quot;over&quot;)$data
-
-test.blc &lt;- ovun.sample(gana~., data=test, 
-                         p=0.5, seed=1, 
-                         method=&quot;over&quot;)$data</code></pre>
-<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = train.blc) -&gt; modelo2
-summary(modelo1) </code></pre>
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div
+id="relacion-de-la-variable-dependiente-con-las-variables-independienes"
+class="section level3">
+<h3>Relacion de la variable dependiente con las variables
+independienes</h3>
+<pre class="r"><code># Ajustar un modelo logit
+modelo3 &lt;- glm(infarto ~ edad, data = corazon, family = binomial(link = &quot;logit&quot;))
+summary(modelo3)</code></pre>
 <pre><code>
 Call:
-glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
-    data = dataMat)
+glm(formula = infarto ~ edad, family = binomial(link = &quot;logit&quot;), 
+    data = corazon)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--1.73548  -0.40492  -0.11740  -0.01932   2.68961  
+    Min       1Q   Median       3Q      Max  
+-1.5630  -1.4422   0.8631   0.9238   1.0021  
 
 Coefficients:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
-nota           6.921      1.113   6.216 5.10e-10 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+            Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)  1.43942    1.65623   0.869    0.385
+edad        -0.01533    0.03206  -0.478    0.632
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 222.71  on 199  degrees of freedom
-Residual deviance: 106.29  on 198  degrees of freedom
-AIC: 110.29
+    Null deviance: 64.104  on 49  degrees of freedom
+Residual deviance: 63.875  on 48  degrees of freedom
+AIC: 67.875
 
-Number of Fisher Scoring iterations: 7</code></pre>
-<pre class="r"><code># matriz de confucion
-valor_pronosticado &lt;- predict(modelo2,test.blc,type = &quot;response&quot;)
-niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
-  factor(.)
-
-confusionMatrix(niveles_pronosticados, test.blc$gana )</code></pre>
-<pre><code>Confusion Matrix and Statistics
-
-          Reference
-Prediction  No  Si
-        No 518 101
-        Si  95 486
-                                          
-               Accuracy : 0.8367          
-                 95% CI : (0.8145, 0.8572)
-    No Information Rate : 0.5108          
-    P-Value [Acc &gt; NIR] : &lt;2e-16          
-                                          
-                  Kappa : 0.6731          
-                                          
- Mcnemar&#39;s Test P-Value : 0.721           
-                                          
-            Sensitivity : 0.8450          
-            Specificity : 0.8279          
-         Pos Pred Value : 0.8368          
-         Neg Pred Value : 0.8365          
-             Prevalence : 0.5108          
-         Detection Rate : 0.4317          
-   Detection Prevalence : 0.5158          
-      Balanced Accuracy : 0.8365          
-                                          
-       &#39;Positive&#39; Class : No              
-                                          </code></pre>
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
 
 
 

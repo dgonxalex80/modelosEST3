@@ -1,5 +1,5 @@
 ---
-title: <span style="color:#034a94"> **Validación cruzada**</span>
+title: <span style="color:#034a94"> **Ejemplo**</span>
 author: "Modelos Estadísticos para la toma de decisiones"
 output: html_document
 css: style.css
@@ -21,136 +21,103 @@ library(stats)
 # install.packages("devtools")     # solo una vez
 # devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
 library(paqueteMODELOS)
-library(tidyverse)
-data("dataMat")
-# dataMat = sample(dataMat, 1000, replace = TRUE)
-glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
-summary(modelo1) 
-```
-
-```{r}
-library(caret)
-table(dataMat$gana) %>% 
-  prop.table()
-
-
-```
-
-```{r}
-glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
-summary(modelo1) 
-```
-```{r}
-library(caret)
-
-# separacion de muetras
-ntrain <- nrow(dataMat)*0.6
-ntest <- nrow(dataMat)*0.4
-
-set.seed(123)
-index_train<-sample(1:nrow(dataMat),size = ntrain)
-train<-dataMat[index_train,]  # muestra de entrenamiento
-test<-dataMat[-index_train,]  # muestra de prueba
-
-# matriz de confucion
-valor_pronosticado <- predict(modelo1,test,type = "response")
-niveles_pronosticados <- ifelse(valor_pronosticado >0.5, "Si","No") %>%
-  factor(.)
-
-confusionMatrix(niveles_pronosticados, test$gana )
-```
-```{r}
-library(ROSE)
-# oversampling
-train.blc <- ovun.sample(gana~., data=train, 
-                         p=0.5, seed=1, 
-                         method="over")$data
-
-test.blc <- ovun.sample(gana~., data=test, 
-                         p=0.5, seed=1, 
-                         method="over")$data
+library(dplyr)
 ```
 
 
-```{r}
+En un estudio médico fueron registrados datos de pacientes propensos a un infarto. Cada paciente fue identificado mediante un número de identificación (id) y se recopiló información sobre su **edad** , nivel de actividad física (**actividad**), antecedentes de angina (**angina**) y presión arterial (**presion**). El objetivo del estudio fue el de analizar cómo estas variables están relacionadas con la ocurrencia de infartos cardíacos (**infarto**). 
 
-glm(gana ~ nota , family = binomial(link = "logit"), data = train.blc) -> modelo2
-summary(modelo1) 
+Se requiere ajustar un **modelo logit** para predecir la probabilidad de infarto en función de las características recogidas de los pacientes
 
-# matriz de confucion
-valor_pronosticado <- predict(modelo2,test.blc,type = "response")
-niveles_pronosticados <- ifelse(valor_pronosticado >0.5, "Si","No") %>%
-  factor(.)
+### Datos
 
-confusionMatrix(niveles_pronosticados, test.blc$gana )
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(paqueteMETODOS)
+data("corazon")
+# Crear la tabla bonita
+tabla_bonita <- kable(head(corazon), format = "html", table.attr = 'class="table table-striped"')
+
+# Muestra la tabla bonita
+tabla_bonita
+
 ```
 
+### Resumen descriptivo de las variables
 
+Inicialmete se revisa las relaciones existentes entre las variables contenidas con respecto a la variable dependiente
 
 
 
 ```{r}
-library(paqueteMODELOS)
-library(tidyverse)
-data("dataMat")
-dataMat = sample(dataMat, 2000, replace = TRUE)
-
-
-# separacion de muetras
-ntrain <- nrow(dataMat)*0.6
-ntest <- nrow(dataMat)*0.4
-
-set.seed(123)
-index_train<-sample(1:nrow(dataMat),size = ntrain)
-train<-dataMat[index_train,]  # muestra de entrenamiento
-test<-dataMat[-index_train,]  # muestra de prueba
-
-
-
-
-library(ROSE)
-# oversampling
-train.blc <- ovun.sample(gana~., data=train, 
-                         p=0.5, seed=1, 
-                         method="over")$data
-
-test.blc <- ovun.sample(gana~., data=test, 
-                         p=0.5, seed=1, 
-                         method="over")$data
+summary(corazon[,2:6])
 ```
+
+
+### Variable dependiente
+
+```{r}
+# Instala y carga el paquete ggplot2 si aún no lo has hecho
+# install.packages("ggplot2")
+library(ggplot2)
+
+# Ejemplo de datos (sustituye "data" y "frecuencia" con tus propios datos)
+data = table(corazon$infarto) %>%
+               as.data.frame()
+
+# Crea el gráfico de barras con ggplot2
+grafico_barras <- ggplot(data, aes(x = Var1, y = Freq)) +
+  geom_bar(stat = "identity", fill = "lightblue") +  # Barras azul claro
+  geom_text(aes(label = Freq), vjust = -0.5, color = "black", size = 4) +  # Etiquetas de frecuencia encima de las barras
+  labs(x = "Infarto", y = "Frecuencia") +  # Etiquetas de ejes
+  theme_minimal()  # Tema minimalista
+
+# Muestra el gráfico
+print(grafico_barras)
+
+```
+
+
+### Estimación del modelo
+
+
+```{r}
+# Crear variables dicotómicas para la variable "actividad"
+corazon$a_d<- factor(corazon$actividad, levels = 0:3, labels = c("ninguna", "minima", "moderada", "mas_que_moderada"))
+corazon$a_d <- relevel(corazon$a_d, ref = "ninguna")
+
+# Ajustar un modelo logit
+modelo1 <- glm(infarto ~ edad + a_d + angina + presion, data = corazon, family = binomial(link = "logit"))
+
+# Ver un resumen del modelo
+summary(modelo1)
+
+# Realizar selección de variables paso a paso (stepwise)
+modelo2 <- step(modelo1, direction = "both", trace = 0)
+
+# Ver un resumen del modelo seleccionado
+summary(modelo2)
+
+
+```
+
+```{r}
+
+
+```
+
+### Relacion de la variable dependiente con las variables independienes
+
+
+
 
 
 ```{r}
 
-glm(gana ~ nota , family = binomial(link = "logit"), data = train.blc) -> modelo2
-summary(modelo1) 
+# Ajustar un modelo logit
+modelo3 <- glm(infarto ~ edad, data = corazon, family = binomial(link = "logit"))
+summary(modelo3)
 
-# matriz de confucion
-valor_pronosticado <- predict(modelo2,test.blc,type = "response")
-niveles_pronosticados <- ifelse(valor_pronosticado >0.5, "Si","No") %>%
-  factor(.)
-
-confusionMatrix(niveles_pronosticados, test.blc$gana )
 ```
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  

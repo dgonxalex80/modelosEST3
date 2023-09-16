@@ -39,6 +39,14 @@ data("eleccion")
 
 El **modelo Logit**, también conocido como **regresión logística**, es una técnica estadística importante utilizada en análisis de datos para modelar la probabilidad de un evento binario, como sí/no, éxito/fracaso, o 1/0. 
 
+
+* compra / no compra
+* paga / no paga
+* deserta / no deserta
+* gana / pierde
+
+
+
 Tiene la misma estructura presentada en el modelo de regresión lineal múltiple, solo que la variable dependiente es no numérica y corresponde a una variable cualitativa con dos valores (bivariada). En este caso el modelo se denomina Logit binomial.
 
 <br/>
@@ -48,6 +56,14 @@ Este modelo está relacionado con predicción y explicación de las decisiones d
 <br/>
 
 El objetivo de la **regresión logística** es la de predecir la probabilidad de que una variable binaria (dicotómica) tome los valores posibles en la que esta está definida ($R_Y= \{0,1 \}$, mediante la combinación lineal de una o varias variables independientes cuantitativas o cualitativas. La regresiòn logistica hace parte de los modelos lineales generalizados en donde se usa una función de enlace llamada logit.
+
+
+* probabilidad de compra
+* probabilidad de no pago
+* probabilidad de desertar
+* probabilidad de perder
+
+En todo los casos se puede tambien estar interesados en esblecer cuales de las variables independientes indicen en el incremento de esta probabilidad y así poder generar poíticas para incrementarlas o disminuirlas segun la conveniencia
 
 </br>
 
@@ -176,36 +192,36 @@ En el modelo Logit, tienes una variable dependiente que debe ser binaria, es dec
 
 ### <span style="color:#034a94">**Variables Independientes**</span>: 
 
-Puedes tener una o más variables independientes que se utilizan para predecir la variable dependiente binaria. Estas variables pueden ser continuas o categóricas.
+Puedes tener una o más variables independientes que se utilizan para predecir la variable dependiente binaria. Estas variables pueden ser continuas o categóricas. Para el caso de las variables categóricas se emplean variables binarias dicótomas.
 
 </br>
 
 ### <span style="color:#034a94">**Función Logit**</span>: 
 
-La función logit es la función de enlace utilizada en la regresión logística. Transforma la probabilidad de éxito en una forma que abarca todo el rango real (-∞, ∞). La función logit se define como el logaritmo natural (ln) de la razón de la probabilidad de éxito a la probabilidad de fracaso.
+La función logit es la función de enlace utilizada en la regresión logística. Transforma la probabilidad de éxito en una forma que abarca todo el rango real $(-\infty, \infty )$. La función logit se define como el logaritmo natural ($\ln$) de la razón de la probabilidad de éxito a la probabilidad de fracaso.
 
 </br>
 
 ### <span style="color:#034a94">**Coeficientes de Regresión**</span>: 
 
-El modelo Logit estima coeficientes para cada una de las variables independientes. Estos coeficientes representan el cambio en el logit (logaritmo de la razón de probabilidades) de la variable dependiente debido a un cambio unitario en la variable independiente, manteniendo todas las demás variables constantes.
+El modelo Logit estima coeficientes para cada una de las variables independientes. Estos coeficientes representan el cambio en el logit (**logaritmo de la razón de probabilidades**) de la variable dependiente debido a un cambio unitario en la variable independiente, manteniendo todas las demás variables constantes.
 
 </br>
 
 ### <span style="color:#034a94">**Estimación de Parámetros**</span>: 
 
-La regresión logística utiliza técnicas de estimación, como la máxima verosimilitud, para estimar los valores de los coeficientes de regresión.
+La regresión logística utiliza técnicas de estimación, como la **máxima verosimilitud**, para estimar los valores de los coeficientes de regresión.
 
 
 </br>
 
 ### <span style="color:#034a94">**Odds Ratio**</span>: 
 
-Los coeficientes de regresión en el modelo Logit se utilizan para calcular las "razones de posibilidades" (odds ratio). Un odds ratio representa cómo un cambio de una unidad en la variable independiente afecta las probabilidades de éxito en términos de una multiplicación. Un odds ratio mayor a 1 indica un aumento en las probabilidades, mientras que un odds ratio menor a 1 indica una disminución.
+Los coeficientes de regresión en el modelo Logit se utilizan para calcular las **razones de posibilidades** (odds ratio). Un **odds ratio** representa cómo un cambio de una unidad en la variable independiente afecta las probabilidades de éxito en términos de una multiplicación. Un odds ratio mayor a 1 indica un aumento en las probabilidades, mientras que un odds ratio menor a 1 indica una disminución.
 
 </br>
 
-### <span style="color:#034a94">**Hipótesis Nula y Alternativa**</span>: 
+### <span style="color:#034a94">**Hipótesis sobre los coeficientes**</span>: 
 
 Se pueden realizar pruebas de hipótesis para determinar si los coeficientes son estadísticamente significativos en la predicción de la variable dependiente. La hipótesis nula es que el coeficiente es igual a cero, lo que significa que la variable independiente no tiene efecto en las probabilidades.
 
@@ -213,14 +229,13 @@ Se pueden realizar pruebas de hipótesis para determinar si los coeficientes son
 
 ###  <span style="color:#034a94">**Evaluación del Modelo**</span>: 
 
-Se utilizan medidas como la precisión, la sensibilidad, la especificidad, el área bajo la curva ROC (AUC-ROC), entre otras, para evaluar el rendimiento del modelo Logit en la clasificación de datos.
+Se utilizan medidas como: la precisión, la sensibilidad, la especificidad, el área bajo la curva ROC (AUC-ROC), entre otras, para evaluar el rendimiento del modelo Logit en la clasificación de datos.
 
 </br>
 
 ### <span style="color:#034a94">**Interpretación de Coeficientes**</span>: 
 
 La interpretación de los coeficientes en el modelo Logit es importante para comprender cómo cada variable independiente afecta las probabilidades de éxito o fracaso.
-
 
 </br></br></br>
 

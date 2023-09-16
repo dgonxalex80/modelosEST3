@@ -11,8 +11,6 @@ navbar:
       href: recurso320.html
     - text: "Evaluación"
       href: recurso330.html
-    - text: "Ejemplo"
-      href: recurso340.html
 output:
   html_document:
     css: style.css

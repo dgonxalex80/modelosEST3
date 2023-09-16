@@ -37,9 +37,9 @@ En esta unidad se presentan el **Modelo de Regresión Logiística binomial** :
 * El modelo
 * Estimación
 * Evaluación del modelo
-* Ejemplo
 
-</br>
+
+</br></br>
 
 ```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -74,5 +74,10 @@ ggplot(data.frame(x = c(-8, 8)), aes(x)) +
 ```
 
 
+<br/><br/>
 
+## <span style="color:#034A94">**Pasos**</span>
 
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+knitr::include_graphics("img/pasos.png")
+```
