@@ -13,7 +13,7 @@
 
 <title> Experiencia</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -30,6 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -217,6 +218,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -265,6 +269,14 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore"><span style="color:#034A94">
@@ -293,6 +305,34 @@ binomial</strong> :</p>
 <li>Evaluación del modelo</li>
 </ul>
 <p></br></br></p>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)
+
+fx &lt;- function(x) {
+  1 / (1 + exp(-x))
+}
+
+# x= c(rnorm(20, -5, 5), rnorm(20, 5,5)) 
+# y= rep(c(0,1), each = 20)
+
+x= c(-3.0,  -0.1,   8.6,  -9.9, -10.2,  3.0,  -6.1,  -2.5,  -6.6, -15.3,
+   -5.4,   0.9,   0.9,  -8.9, -12.7,  7.2,  5.8,  -5.4,  -2.8, -13.0,
+#----------------------------------------------------------------------
+    1.3,  -2.7,   -1.5,   5.5,  -1.8,  7.9,   6.4,   0.4,   6.1,   8.7,
+   10.3,   3.9,   4.5 ,  -4.5,  12.2,  10.6,   9.1,   3.5,   6.8,  7.0)
+
+y = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+
+datos &lt;- data.frame(x, y)
+
+ggplot(data.frame(x = c(-8, 8)), aes(x)) + 
+    geom_hline(yintercept = 0, linetype = &quot;solid&quot;, color = &quot;#018ABE&quot;, size = 1) +
+  geom_hline(yintercept = 1, linetype = &quot;solid&quot;, color = &quot;#018ABE&quot;, size =1 ) +
+  geom_vline(xintercept = 0, linetype = &quot;solid&quot;, color = &quot;#686868&quot;, size =1) +
+  stat_function(fun = fx, size = 1, col = &quot;#FF7F00&quot;) +
+  geom_point(data = datos, aes(x, y), color = &quot;black&quot;, size = 1)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><br/><br/></p>
 <div id="pasos" class="section level2">
@@ -334,6 +374,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

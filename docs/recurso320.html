@@ -14,7 +14,7 @@
 
 <title> Estimación del modelo</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -31,6 +31,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -218,6 +219,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -265,6 +269,14 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -410,7 +422,6 @@ nota de matemáticas sobre la probabilidad realizamos el siguiente
 cálculo:</p>
 <p></br></p>
 <!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
-<pre><code>exp(0.14415) =  1.155057</code></pre>
 <p></br></br></p>
 <p><span class="math inline">\(\widehat{\beta}_{1}\)</span> indica el
 cambio en <span class="math inline">\(ln(p/(1-p))\)</span> debido a un
@@ -420,7 +431,7 @@ exponencial (<code>exp()</code>)</p>
 <p>Por cada unidad de aumento de <span class="math inline">\(x\)</span>
 los <span class="math inline">\(odds\)</span> de obtener matricula se
 incrementan en : <span class="math inline">\(1.16\)</span> unidades</p>
-<pre><code>exp(b1) =  2734.118</code></pre>
+<pre><code>exp(b1) = exp(0.14415) =  1.155057</code></pre>
 <p></br></p>
 <p>Un intervalo de confianza para los coeficientes se puede obtener
 mediante :</p>
@@ -533,6 +544,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

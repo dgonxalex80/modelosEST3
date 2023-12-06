@@ -1,8 +1,10 @@
 ---
 title: <span style="color:#034a94"> **Evaluación del modelo**</span>
 author: "Modelos Estadísticos para la toma de decisiones"
-output: html_document
-css: style.css
+output:
+  html_document:
+    code_folding: hide
+    css: style.css
 ---
 
 ```{r setup, include=FALSE}
@@ -160,7 +162,7 @@ Se procede a dividir la data en dos partes
 * train con el 60% de los registros
 * test  con el 40% de los registros
 
-```{r, echo=FALSE}
+```{r}
 # names(dataMat)
 # nrow(dataMat)
 
@@ -179,7 +181,7 @@ test<-matriculah[-index_train,]  # muestra de prueba
 Se procede a estimar el modelo con la data train y luego emplearlo para realizar las predicciones con la data test, para finalmente evaluar el resultado utilizando para ello la matriz de confusión.
 
 
-```{r, echo=FALSE}
+```{r}
 library(tidyverse)
 modelo2 = glm(honor ~ matematicas , family = binomial(link = "logit"), data = train) 
 
@@ -357,7 +359,7 @@ $$
 <!-- ``` -->
 
 
-```{r, echo=FALSE}
+```{r}
 # Instala y carga las librerías knitr y kableExtra si aún no están instaladas
 # install.packages("knitr")
 # install.packages("kableExtra")
@@ -457,7 +459,7 @@ $$
 Presenta la curva ROC y su área bajo la curva AUC 
 
 
-```{r, echo=FALSE, fig.align='center'}
+```{r, fig.align='center'}
 library(pROC)
 curva_ROC <- roc(test$honor, valor_pronosticado)
 auc<- round(auc(curva_ROC, levels =c(0,1), direction = "<"),4) # 0.9177

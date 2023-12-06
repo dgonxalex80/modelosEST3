@@ -14,7 +14,7 @@
 
 <title> Evaluación del modelo</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -31,6 +31,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
@@ -220,6 +221,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -267,6 +271,14 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -422,10 +434,46 @@ forma:</p>
 <li>train con el 60% de los registros</li>
 <li>test con el 40% de los registros</li>
 </ul>
+<pre class="r"><code># names(dataMat)
+# nrow(dataMat)
+
+ntrain &lt;- nrow(matriculah)*0.6
+ntest &lt;- nrow(matriculah)*0.4
+# c(ntrain,ntest)
+
+set.seed(123)
+index_train&lt;-sample(1:nrow(matriculah),size = ntrain)
+train&lt;-matriculah[index_train,]  # muestra de entrenamiento
+test&lt;-matriculah[-index_train,]  # muestra de prueba</code></pre>
 <p></br></br></p>
 <p>Se procede a estimar el modelo con la data train y luego emplearlo
 para realizar las predicciones con la data test, para finalmente evaluar
 el resultado utilizando para ello la matriz de confusión.</p>
+<pre class="r"><code>library(tidyverse)
+modelo2 = glm(honor ~ matematicas , family = binomial(link = &quot;logit&quot;), data = train) 
+
+valor_pronosticado &lt;- predict(modelo2,test,type = &quot;response&quot;)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+                             factor(.)
+
+rendimiento_data&lt;-data.frame(observados=test$honor,
+                             predicciones= niveles_pronosticados)
+
+Positivos &lt;- sum(rendimiento_data$observados==&quot;Si&quot;)
+Negativos &lt;- sum(rendimiento_data$observados==&quot;No&quot;)
+Positivos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;Si&quot;)
+Negativos_pronosticados &lt;- sum(rendimiento_data$predicciones==&quot;No&quot;)
+Total &lt;- nrow(rendimiento_data)
+VP&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
+VN&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
+FP&lt;-sum(rendimiento_data$observados==&quot;No&quot; &amp; rendimiento_data$predicciones==&quot;Si&quot;)
+FN&lt;-sum(rendimiento_data$observados==&quot;Si&quot; &amp; rendimiento_data$predicciones==&quot;No&quot;)
+
+matriz_confusion=matrix(c(VP, FP, FN,VN), nrow=2)
+
+rownames(matriz_confusion) = c(&quot; Si &quot;, &quot; No    &quot;)
+colnames(matriz_confusion) = c(&quot;Si&quot;, &quot;No&quot;)
+# matriz_confusion</code></pre>
 <p></br></br></p>
 <p><img src="img/matriz.png" width="60%" style="display: block; margin: auto;" /></p>
 <!-- <pre> -->
@@ -589,6 +637,29 @@ clasificados negativos}} = \dfrac{272}{329} = 0.827
 <!-- # indicadores %>%  -->
 <!-- #   round(.,3) -->
 <!-- ``` -->
+<pre class="r"><code># Instala y carga las librerías knitr y kableExtra si aún no están instaladas
+# install.packages(&quot;knitr&quot;)
+# install.packages(&quot;kableExtra&quot;)
+library(knitr)
+library(kableExtra)
+
+# Crear un marco de datos con los valores
+df &lt;- data.frame(
+  Indicador = c(&quot;Exactitud&quot;, &quot;Tasa de Error&quot;, &quot;Sensibilidad&quot;, &quot;Especificidad&quot;, &quot;Precisión&quot;, &quot;Valor predicción negativo&quot;),
+  Valor = c(0.800, 0.200, 0.457, 0.922, 0.676, 0.827),
+  Preferencia = c(&quot;Alto&quot;, &quot;Bajo&quot;, &quot;Alto&quot;, &quot;Alto&quot;, &quot;Alto&quot;, &quot;Alto&quot;))
+
+# Crear la tabla formateada con kable y kableExtra
+tabla_formateada &lt;- df %&gt;%
+  kable(format = &quot;html&quot;, align = &quot;lrc&quot;) %&gt;%
+  kable_styling(bootstrap_options = &quot;striped&quot;, full_width = FALSE) %&gt;%
+  add_header_above(c(&quot; &quot; = 1, &quot; &quot; = 1, &quot; &quot; = 1)) %&gt;%
+  column_spec(1, width = &quot;300px&quot;) %&gt;%  # Ampliar el ancho de la primera columna
+  column_spec(2, width = &quot;150px&quot;) %&gt;%  # Ampliar el ancho de la segunda columna
+  column_spec(3, width = &quot;150px&quot;)    # Ampliar el ancho de la tercera columna
+
+# Imprimir la tabla
+tabla_formateada</code></pre>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -741,6 +812,14 @@ diagonal y el valor del area bajo la curva AUC = 0.5</p>
 \widehat{\beta_{1}}  \hspace{.3cm} \text{matematicas}
 \]</span> </br></p>
 <p>Presenta la curva ROC y su área bajo la curva AUC</p>
+<pre class="r"><code>library(pROC)
+curva_ROC &lt;- roc(test$honor, valor_pronosticado)
+auc&lt;- round(auc(curva_ROC, levels =c(0,1), direction = &quot;&lt;&quot;),4) # 0.9177
+
+ggroc(curva_ROC, colour = &quot;#FF7F00&quot;, size=1)+
+ggtitle(paste0(&quot;Curva ROC &quot;, &quot;(AUC = &quot;, auc, &quot;)&quot;))+
+xlab(&quot;Especificidad&quot;)+
+ylab(&quot;Sensibilidad&quot;)  </code></pre>
 <p><img src="recurso330_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
 (AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
@@ -780,6 +859,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

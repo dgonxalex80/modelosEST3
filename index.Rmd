@@ -1,7 +1,9 @@
 ---
 title : <span style="color:#034A94"> **Experiencia**</span>
-output: html_document
-css: style.css
+output:
+  html_document:
+    code_folding: hide
+    css: style.css
 ---
 
 
@@ -41,7 +43,7 @@ En esta unidad se presentan el **Modelo de Regresión Logiística binomial** :
 
 </br></br>
 
-```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+```{r, fig.align='center', message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 
@@ -68,8 +70,8 @@ ggplot(data.frame(x = c(-8, 8)), aes(x)) +
     geom_hline(yintercept = 0, linetype = "solid", color = "#018ABE", size = 1) +
   geom_hline(yintercept = 1, linetype = "solid", color = "#018ABE", size =1 ) +
   geom_vline(xintercept = 0, linetype = "solid", color = "#686868", size =1) +
-  stat_function(fun = fx, size = 2, col = "#FF7F00") +
-  geom_point(data = datos, aes(x, y), color = "black", size = 2)
+  stat_function(fun = fx, size = 1, col = "#FF7F00") +
+  geom_point(data = datos, aes(x, y), color = "black", size = 1)
 
 ```
 

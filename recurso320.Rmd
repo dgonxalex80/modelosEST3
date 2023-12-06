@@ -1,8 +1,10 @@
 ---
 title: <span style="color:#034a94"> **Estimación del modelo**</span>
 author: "Modelos Estadísticos para la toma de decisiones"
-output: html_document
-css: style.css
+output:
+  html_document:
+    code_folding: hide
+    css: style.css
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +25,7 @@ library(tidyverse)
 # install.packages("devtools")     # solo una vez
 # devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
 set.seed(123) 
-library(paqueteMODELOS)
+library(paqueteMOD)
 data("dataMat")
 dataMat = sample(dataMat, 1000, replace = TRUE)
 glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
@@ -206,9 +208,6 @@ Ahora para interpretar el aporte que genera un punto adicional en la nota de mat
 <!-- $$\exp{\{ 0.1563404 \}} = 1.169224$$ -->
 
 
-```{r, echo=FALSE}
-cat("exp(0.14415) = ", exp(0.14415) )
-```
 
 
 </br></br>
@@ -217,9 +216,11 @@ $\widehat{\beta}_{1}$ indica el cambio en $ln(p/(1-p))$  debido a un incremento 
 
 Por cada unidad de aumento de $x$ los $odds$ de obtener matricula se  incrementan en : $1.16$ unidades
 
+
 ```{r, echo=FALSE}
-cat("exp(b1) = ", exp(b1))
+cat("exp(b1) = exp(0.14415) = ", exp(0.14415) )
 ```
+
 
 
 </br>

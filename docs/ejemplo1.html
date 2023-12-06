@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Modelos Estadísticos para la toma de decisiones" />
+
+
+<title> Ejemplo</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Modelos Estadísticos para la toma de decisiones</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="recurso300.html">Introducción</a>
+</li>
+<li>
+  <a href="recurso310.html">Modelo</a>
+</li>
+<li>
+  <a href="recurso320.html">Estimación</a>
+</li>
+<li>
+  <a href="recurso330.html">Evaluación</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Ejemplo</strong></span></h1>
+<h4 class="author">Modelos Estadísticos para la toma de decisiones</h4>
+
+</div>
+
+
+<p>Se ha llevado a cabo un estudio para analizar los factores que
+influyen en el éxito de los estudiantes en el primer curso de
+matemáticas universitario, conocido como <strong>Fundamentos de
+Matemáticas</strong>. Para este propósito, se recopiló información sobre
+si los estudiantes aprobaron o no (<strong>gana</strong>, con valores de
+1, si aprobaron y 0 si no) este curso, así como sus notas de matemáticas
+correspondientes al último grado de bachillerato
+(<strong>nota</strong>).</p>
+<p>El objetivo del estudio es desarrollar un modelo de <strong>regresión
+logística</strong> que permita comprender cómo la <strong>nota</strong>
+obtenida en matemáticas en el último grado de bachillerato está
+relacionada con la probabilidad de <strong>gana</strong> en el primer
+curso de matemáticas universitario. El modelo permitirá evaluar si la
+<strong>nota</strong> es un predictor significativo del éxito en el
+curso y proporcionar una estimación de la relación entre estas dos
+variables.</p>
+<p>El modelo se ajustará a los datos recopilados y se evaluará su
+capacidad para predecir si un estudiante tendrá éxito en el curso
+<strong>Fundamentos de Matemáticas</strong> en función de su
+<strong>nota</strong> de bachillerato. Los resultados ayudarán a
+comprender mejor los factores que influyen en el desempeño de los
+estudiantes en esta materia universitaria.</p>
+<pre class="r"><code>summarytools::dfSummary(dataMat)</code></pre>
+<pre><code>Data Frame Summary  
+Dimensions: 200 x 2  
+Duplicates: 149  
+
+--------------------------------------------------------------------------------------------------------
+No   Variable    Stats / Values          Freqs (% of Valid)   Graph                 Valid      Missing  
+---- ----------- ----------------------- -------------------- --------------------- ---------- ---------
+1    gana        1. No                   151 (75.5%)          IIIIIIIIIIIIIII       200        0        
+     [factor]    2. Si                    49 (24.5%)          IIII                  (100.0%)   (0.0%)   
+
+2    nota        Mean (sd) : 3.1 (0.5)   40 distinct values     .   .   :           200        0        
+     [numeric]   min &lt; med &lt; max:                               : . : : :           (100.0%)   (0.0%)   
+                 2.1 &lt; 3.1 &lt; 4.4                                : : : : :                               
+                 IQR (CV) : 0.6 (0.1)                           : : : : : : :                           
+                                                              . : : : : : : : : .                       
+--------------------------------------------------------------------------------------------------------</code></pre>
+<pre class="r"><code>library(caret)
+t1 =table(dataMat$gana) %&gt;% 
+  prop.table()</code></pre>
+<p><img src="ejemplo1_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="estimación-de-modelo" class="section level3">
+<h3>Estimación de modelo</h3>
+<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = dataMat) -&gt; modelo1
+summary(modelo1) </code></pre>
+<pre><code>
+Call:
+glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
+    data = dataMat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.73548  -0.40492  -0.11740  -0.01932   2.68961  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
+nota           6.921      1.113   6.216 5.10e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.71  on 199  degrees of freedom
+Residual deviance: 106.29  on 198  degrees of freedom
+AIC: 110.29
+
+Number of Fisher Scoring iterations: 7</code></pre>
+</div>
+<div id="validación-del-modelo" class="section level3">
+<h3>Validación del modelo</h3>
+<pre class="r"><code>library(caret)
+
+# separacion de muetras  60% - 40%
+ntrain &lt;- nrow(dataMat)*0.6
+ntest &lt;- nrow(dataMat)*0.4
+
+set.seed(123)
+index_train&lt;-sample(1:nrow(dataMat),size = ntrain)
+train&lt;-dataMat[index_train,]  # muestra de entrenamiento
+test&lt;-dataMat[-index_train,]  # muestra de prueba
+
+# matriz de confucion
+valor_pronosticado &lt;- predict(modelo1,test,type = &quot;response&quot;)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test$gana )</code></pre>
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction No Si
+        No 67  4
+        Si  2  7
+                                         
+               Accuracy : 0.925          
+                 95% CI : (0.8439, 0.972)
+    No Information Rate : 0.8625         
+    P-Value [Acc &gt; NIR] : 0.06427        
+                                         
+                  Kappa : 0.6576         
+                                         
+ Mcnemar&#39;s Test P-Value : 0.68309        
+                                         
+            Sensitivity : 0.9710         
+            Specificity : 0.6364         
+         Pos Pred Value : 0.9437         
+         Neg Pred Value : 0.7778         
+             Prevalence : 0.8625         
+         Detection Rate : 0.8375         
+   Detection Prevalence : 0.8875         
+      Balanced Accuracy : 0.8037         
+                                         
+       &#39;Positive&#39; Class : No             
+                                         </code></pre>
+</div>
+<div id="valanceo-de-las-muestras" class="section level3">
+<h3>Valanceo de las muestras</h3>
+<pre class="r"><code>library(ROSE)
+# oversampling
+train.blc &lt;- ovun.sample(gana~., data=train, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data
+table(train.blc$gana)</code></pre>
+<pre><code>
+No Si 
+82 80 </code></pre>
+<pre class="r"><code>test.blc &lt;- ovun.sample(gana~., data=test, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data
+table(test.blc$gana)</code></pre>
+<pre><code>
+No Si 
+69 67 </code></pre>
+<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = train.blc) -&gt; modelo2
+summary(modelo1) </code></pre>
+<pre><code>
+Call:
+glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
+    data = dataMat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.73548  -0.40492  -0.11740  -0.01932   2.68961  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
+nota           6.921      1.113   6.216 5.10e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.71  on 199  degrees of freedom
+Residual deviance: 106.29  on 198  degrees of freedom
+AIC: 110.29
+
+Number of Fisher Scoring iterations: 7</code></pre>
+<pre class="r"><code># matriz de confucion
+valor_pronosticado &lt;- predict(modelo2,test.blc,type = &quot;response&quot;)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test.blc$gana )</code></pre>
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction No Si
+        No 64 12
+        Si  5 55
+                                          
+               Accuracy : 0.875           
+                 95% CI : (0.8074, 0.9255)
+    No Information Rate : 0.5074          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.7496          
+                                          
+ Mcnemar&#39;s Test P-Value : 0.1456          
+                                          
+            Sensitivity : 0.9275          
+            Specificity : 0.8209          
+         Pos Pred Value : 0.8421          
+         Neg Pred Value : 0.9167          
+             Prevalence : 0.5074          
+         Detection Rate : 0.4706          
+   Detection Prevalence : 0.5588          
+      Balanced Accuracy : 0.8742          
+                                          
+       &#39;Positive&#39; Class : No              
+                                          </code></pre>
+<pre class="r"><code>library(paqueteMODELOS)
+library(tidyverse)
+data(&quot;dataMat&quot;)
+dataMat = sample(dataMat, 2000, replace = TRUE)
+
+
+# separacion de muetras
+ntrain &lt;- nrow(dataMat)*0.6
+ntest &lt;- nrow(dataMat)*0.4
+
+set.seed(123)
+index_train&lt;-sample(1:nrow(dataMat),size = ntrain)
+train&lt;-dataMat[index_train,]  # muestra de entrenamiento
+test&lt;-dataMat[-index_train,]  # muestra de prueba
+
+
+
+
+library(ROSE)
+# oversampling
+train.blc &lt;- ovun.sample(gana~., data=train, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data
+
+test.blc &lt;- ovun.sample(gana~., data=test, 
+                         p=0.5, seed=1, 
+                         method=&quot;over&quot;)$data</code></pre>
+<pre class="r"><code>glm(gana ~ nota , family = binomial(link = &quot;logit&quot;), data = train.blc) -&gt; modelo2
+summary(modelo1) </code></pre>
+<pre><code>
+Call:
+glm(formula = gana ~ nota, family = binomial(link = &quot;logit&quot;), 
+    data = dataMat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.73548  -0.40492  -0.11740  -0.01932   2.68961  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -24.008      3.771  -6.366 1.94e-10 ***
+nota           6.921      1.113   6.216 5.10e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.71  on 199  degrees of freedom
+Residual deviance: 106.29  on 198  degrees of freedom
+AIC: 110.29
+
+Number of Fisher Scoring iterations: 7</code></pre>
+<pre class="r"><code># matriz de confucion
+valor_pronosticado &lt;- predict(modelo2,test.blc,type = &quot;response&quot;)
+niveles_pronosticados &lt;- ifelse(valor_pronosticado &gt;0.5, &quot;Si&quot;,&quot;No&quot;) %&gt;%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test.blc$gana )</code></pre>
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction  No  Si
+        No 518 101
+        Si  95 486
+                                          
+               Accuracy : 0.8367          
+                 95% CI : (0.8145, 0.8572)
+    No Information Rate : 0.5108          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.6731          
+                                          
+ Mcnemar&#39;s Test P-Value : 0.721           
+                                          
+            Sensitivity : 0.8450          
+            Specificity : 0.8279          
+         Pos Pred Value : 0.8368          
+         Neg Pred Value : 0.8365          
+             Prevalence : 0.5108          
+         Detection Rate : 0.4317          
+   Detection Prevalence : 0.5158          
+      Balanced Accuracy : 0.8365          
+                                          
+       &#39;Positive&#39; Class : No              
+                                          </code></pre>
+<pre class="r"><code>library(pROC)
+# Calcular la curva ROC
+# roc_curve &lt;- roc(dataMat$gana, modelo1$fitted.values)</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

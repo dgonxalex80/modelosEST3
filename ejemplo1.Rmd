@@ -1,0 +1,204 @@
+---
+title: <span style="color:#034a94"> **Ejemplo**</span>
+author: "Modelos Estadísticos para la toma de decisiones"
+output:
+  html_document:
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA, warning = FALSE, message = FALSE)
+# colores
+c1="#FF7F00"
+c2="#=EB0C6"
+c3="#034A94"
+c4="#686868"
+color2=c(c1,c2)
+library(memisc)
+library(MASS)
+library(lattice)
+library(stats)
+# install.packages("learnr")          # solo una vez
+# install.packages("devtools")     # solo una vez
+# devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
+library(paqueteMOD)
+library(tidyverse)
+data("dataMat")
+# dataMat = sample(dataMat, 1000, replace = TRUE)
+glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
+summary(modelo1) 
+```
+
+Se ha llevado a cabo un estudio para analizar los factores que influyen en el éxito de los estudiantes en el primer curso de matemáticas universitario, conocido como **Fundamentos de Matemáticas**. Para este propósito, se recopiló información sobre si los estudiantes aprobaron o no (**gana**, con valores de 1, si aprobaron y 0 si no) este curso, así como sus notas de matemáticas correspondientes al último grado de bachillerato (**nota**).
+
+El objetivo del estudio es desarrollar un modelo de **regresión logística** que permita comprender cómo la **nota** obtenida en matemáticas en el último grado de bachillerato está relacionada con la probabilidad de **gana** en el primer curso de matemáticas universitario. El modelo permitirá evaluar si la **nota** es un predictor significativo del éxito en el curso y proporcionar una estimación de la relación entre estas dos variables.
+
+El modelo se ajustará a los datos recopilados y se evaluará su capacidad para predecir si un estudiante tendrá éxito en el curso **Fundamentos de Matemáticas** en función de su **nota** de bachillerato. Los resultados ayudarán a comprender mejor los factores que influyen en el desempeño de los estudiantes en esta materia universitaria.
+
+
+```{r}
+summarytools::dfSummary(dataMat)
+```
+
+
+
+```{r}
+library(caret)
+t1 =table(dataMat$gana) %>% 
+  prop.table()
+
+
+```
+
+
+```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+# Crear la tabla t1
+t1 <- table(dataMat$gana)
+# Convertir la tabla a un data frame
+df_t1 <- as.data.frame(t1)
+# Renombrar las columnas
+colnames(df_t1) <- c("Gana", "Cantidad")
+# Crear el gráfico de barras con ggplot2 y agregar las etiquetas de frecuencia absoluta
+ggplot(df_t1, aes(x = Gana, y = Cantidad)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  geom_text(aes(label = Cantidad), vjust = -0.5, color = "black", size = 4) +  # Etiquetas de frecuencia absoluta
+  labs(title = " ",
+       x = "Gana",
+       y = "Cantidad") +
+  theme_minimal()
+```
+
+### Estimación de modelo
+
+```{r}
+glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
+summary(modelo1) 
+```
+
+### Validación del modelo 
+
+```{r}
+library(caret)
+
+# separacion de muetras  60% - 40%
+ntrain <- nrow(dataMat)*0.6
+ntest <- nrow(dataMat)*0.4
+
+set.seed(123)
+index_train<-sample(1:nrow(dataMat),size = ntrain)
+train<-dataMat[index_train,]  # muestra de entrenamiento
+test<-dataMat[-index_train,]  # muestra de prueba
+
+# matriz de confucion
+valor_pronosticado <- predict(modelo1,test,type = "response")
+niveles_pronosticados <- ifelse(valor_pronosticado >0.5, "Si","No") %>%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test$gana )
+```
+
+### Valanceo de las muestras
+
+```{r}
+library(ROSE)
+# oversampling
+train.blc <- ovun.sample(gana~., data=train, 
+                         p=0.5, seed=1, 
+                         method="over")$data
+table(train.blc$gana)
+
+test.blc <- ovun.sample(gana~., data=test, 
+                         p=0.5, seed=1, 
+                         method="over")$data
+table(test.blc$gana)
+
+```
+
+
+
+
+
+```{r}
+
+glm(gana ~ nota , family = binomial(link = "logit"), data = train.blc) -> modelo2
+summary(modelo1) 
+
+# matriz de confucion
+valor_pronosticado <- predict(modelo2,test.blc,type = "response")
+niveles_pronosticados <- ifelse(valor_pronosticado >0.5, "Si","No") %>%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test.blc$gana )
+```
+
+
+
+
+
+```{r}
+library(paqueteMODELOS)
+library(tidyverse)
+data("dataMat")
+dataMat = sample(dataMat, 2000, replace = TRUE)
+
+
+# separacion de muetras
+ntrain <- nrow(dataMat)*0.6
+ntest <- nrow(dataMat)*0.4
+
+set.seed(123)
+index_train<-sample(1:nrow(dataMat),size = ntrain)
+train<-dataMat[index_train,]  # muestra de entrenamiento
+test<-dataMat[-index_train,]  # muestra de prueba
+
+
+
+
+library(ROSE)
+# oversampling
+train.blc <- ovun.sample(gana~., data=train, 
+                         p=0.5, seed=1, 
+                         method="over")$data
+
+test.blc <- ovun.sample(gana~., data=test, 
+                         p=0.5, seed=1, 
+                         method="over")$data
+```
+
+
+```{r}
+
+glm(gana ~ nota , family = binomial(link = "logit"), data = train.blc) -> modelo2
+summary(modelo1) 
+
+# matriz de confucion
+valor_pronosticado <- predict(modelo2,test.blc,type = "response")
+niveles_pronosticados <- ifelse(valor_pronosticado >0.5, "Si","No") %>%
+  factor(.)
+
+confusionMatrix(niveles_pronosticados, test.blc$gana )
+```
+
+
+
+```{r}
+library(pROC)
+# Calcular la curva ROC
+# roc_curve <- roc(dataMat$gana, modelo1$fitted.values)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
