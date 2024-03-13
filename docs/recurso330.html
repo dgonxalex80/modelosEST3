@@ -14,7 +14,7 @@
 
 <title> Evaluación del modelo</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -381,20 +381,20 @@ modelo</strong></span></h2>
 correcta :</p>
 <p></br></p>
 <ul>
-<li><p>Siendo <span class="math inline">\(No\)</span>, lo clasifica como
-<span class="math inline">\(No\)</span> : <strong>VN</strong></p></li>
-<li><p>Siendo <span class="math inline">\(Si\)</span> lo clasifica como
-<span class="math inline">\(Si\)</span> : <strong>VP</strong></p></li>
+<li><p>Siendo <span class="math inline">\(NO\)</span>, lo clasifica como
+<span class="math inline">\(NO\)</span> : <strong>VN</strong></p></li>
+<li><p>Siendo <span class="math inline">\(SI\)</span> lo clasifica como
+<span class="math inline">\(SI\)</span> : <strong>VP</strong></p></li>
 </ul>
 <p></br></p>
 <p>Los colores naranjas corresponden a las proporciones de
 clasificaciones erradas por el modelo.</p>
 <ul>
-<li><p>Siendo <span class="math inline">\(Si\)</span>, lo clasifica
-incorrectamente como <span class="math inline">\(No\)</span> : Falsos
+<li><p>Siendo <span class="math inline">\(SI\)</span>, lo clasifica
+incorrectamente como <span class="math inline">\(NO\)</span> : Falsos
 Negativo : <strong>FN</strong></p></li>
-<li><p>Siendo <span class="math inline">\(No\)</span>, lo clasifica
-incorrectamente como <span class="math inline">\(Si\)</span> : Falso
+<li><p>Siendo <span class="math inline">\(NO\)</span>, lo clasifica
+incorrectamente como <span class="math inline">\(SI\)</span> : Falso
 Positovo : <strong>FP</strong></p></li>
 </ul>
 <p></br></br></p>
@@ -660,7 +660,7 @@ tabla_formateada &lt;- df %&gt;%
 
 # Imprimir la tabla
 tabla_formateada</code></pre>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="color: black; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -824,6 +824,99 @@ ylab(&quot;Sensibilidad&quot;)  </code></pre>
 <p>El área comprendida entre la curva ROC y la diagonal del cuadrado
 (AUC = 0.8292), indica un buen ajuste del modelo de predicción.</p>
 <p></br></br></p>
+<div class="content-box-gray">
+<div id="nota" class="section level3">
+<h3><span style="color:#686868"><strong>Nota:</strong></span></h3>
+<p></br></br></p>
+<p>Existen casos donde es conveniente tener valores altos de estos
+indicadores</p>
+</div>
+<div id="alta-sensibilidad-recall" class="section level3">
+<h3><strong>Alta Sensibilidad (Recall):</strong></h3>
+<p><strong>Detección de enfermedades graves:</strong> Por ejemplo, en el
+diagnóstico de cáncer, es crucial identificar correctamente a todas las
+personas que realmente tienen la enfermedad (casos positivos). Una alta
+sensibilidad asegura que se detecten la mayor cantidad posible de casos
+positivos, aunque esto pueda resultar en un mayor número de falsos
+positivos.</p>
+<p><strong>Detección de fraudes:</strong> En la detección de fraudes en
+transacciones financieras, es fundamental identificar la mayor cantidad
+posible de transacciones fraudulentas. Una alta sensibilidad ayuda a
+capturar la mayoría de los casos de fraude, aunque pueda resultar en
+algunos casos legítimos identificados como fraudulentos.</p>
+<p></br></br></p>
+</div>
+<div id="alta-especificidad" class="section level3">
+<h3><strong>Alta Especificidad:</strong></h3>
+<p><strong>Pruebas de seguridad en aeropuertos:</strong> En los
+controles de seguridad en aeropuertos, es importante minimizar los
+falsos positivos para no causar molestias innecesarias a los pasajeros.
+Una alta especificidad asegura que la mayoría de los pasajeros legítimos
+no sean identificados erróneamente como riesgosos.</p>
+<p><strong>Diagnóstico de enfermedades contagiosas:</strong> En el caso
+de enfermedades altamente contagiosas, es crucial identificar
+correctamente a las personas sanas (casos negativos) para evitar la
+propagación de la enfermedad. Una alta especificidad ayuda a minimizar
+los falsos negativos, asegurando que las personas enfermas sean
+identificadas correctamente.</p>
+</div>
+</div>
+<p></br></br></p>
+<div id="código" class="section level3">
+<h3><strong>CÓDIGO</strong></h3>
+<pre class="r"><code># Instalar y cargar el paquete caret si no está instalado
+if (!requireNamespace(&quot;caret&quot;, quietly = TRUE)) {
+  install.packages(&quot;caret&quot;)
+}
+library(caret)
+
+# Dividir la base de datos en conjuntos de entrenamiento y prueba
+set.seed(123)  # Para reproducibilidad
+training_indices &lt;- createDataPartition(dataMat$gana, p = 0.7, list = FALSE)
+datos_entrenamiento &lt;- dataMat[training_indices, ]
+datos_prueba &lt;- dataMat[-training_indices, ]
+
+# Entrenar el modelo
+modelo_logit &lt;- glm(gana ~ nota, family = binomial(link = &quot;logit&quot;), data = datos_entrenamiento)
+
+# Obtener las predicciones del modelo en los datos de prueba
+predicciones &lt;- predict(modelo_logit, newdata = datos_prueba, type = &quot;response&quot;)
+clases_predichas &lt;- ifelse(predicciones &gt; 0.5, 1, 0)
+
+datos_prueba$gana1&lt;-as.numeric(datos_prueba$gana==&quot;Si&quot;)
+# Crear la matriz de confusión
+matriz_confusion &lt;- confusionMatrix(table(clases_predichas, datos_prueba$gana1))
+
+# Mostrar la matriz de confusión y métricas de evaluación
+print(matriz_confusion)</code></pre>
+<pre><code>Confusion Matrix and Statistics
+
+                
+clases_predichas   0   1
+               0 211  18
+               1  19  51
+                                          
+               Accuracy : 0.8763          
+                 95% CI : (0.8335, 0.9114)
+    No Information Rate : 0.7692          
+    P-Value [Acc &gt; NIR] : 2.003e-06       
+                                          
+                  Kappa : 0.6532          
+                                          
+ Mcnemar&#39;s Test P-Value : 1               
+                                          
+            Sensitivity : 0.9174          
+            Specificity : 0.7391          
+         Pos Pred Value : 0.9214          
+         Neg Pred Value : 0.7286          
+             Prevalence : 0.7692          
+         Detection Rate : 0.7057          
+   Detection Prevalence : 0.7659          
+      Balanced Accuracy : 0.8283          
+                                          
+       &#39;Positive&#39; Class : 0               
+                                          </code></pre>
+</div>
 </div>
 
 

@@ -22,7 +22,7 @@ library(stats)
 # install.packages("learnr")          # solo una vez
 # install.packages("devtools")     # solo una vez
 # devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
-library(paqueteMOD)
+library(paqueteMODELOS)
 library(tidyverse)
 data("dataMat")
 # dataMat = sample(dataMat, 1000, replace = TRUE)

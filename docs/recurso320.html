@@ -14,7 +14,7 @@
 
 <title> Estimación del modelo</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -350,13 +350,15 @@ class="math inline">\(X\)</span> de la siguiente forma:</p>
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
 -9.04461  + 0.14415 \hspace{.2cm}x_{i}}\big\}\]</span> </br></br></p>
 <p>Un estudiante con un puntaje de en matemáticas de <span
-class="math inline">\(60\)</span> tendrá una razón <span
+class="math inline">\(70\)</span> tendrá una razón <span
 class="math inline">\(Odds\)</span> de :</p>
 <p></br></p>
 <p><span class="math display">\[\Bigg(
 \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{
 -9.04461  + 0.14415 \hspace{.2cm} \times 70}\big\} =
 2.84593\]</span></p>
+<pre class="r"><code>exp(-9.04461+0.14415*70)</code></pre>
+<pre><code>[1] 2.84593</code></pre>
 <p>Lo que indica que un estudiante con puntaje en matemáticas igual a
 70, tiene 2.85 veces más probabilidad de obtener la matricula de honor
 en comparación de no tenerla.</p>
@@ -477,7 +479,7 @@ gl_{null} -gl_{residual}}\)</span></p>
 <pre><code>[1] 2.29994e-146</code></pre>
 <p></br></p>
 <p>Lo cual indica que se rechaza <span
-class="math inline">\(H_0\)</span>, en favor de <span
+class="math inline">\(H_o\)</span>, en favor de <span
 class="math inline">\(H_a\)</span>, el modelo es significativo</p>
 <p></br></p>
 <div id="nota" class="section level3 content-box-gray">

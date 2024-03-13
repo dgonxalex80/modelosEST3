@@ -35,6 +35,9 @@ matriculah = sample(matriculah, 1000, replace = TRUE)
 modelo1 = glm(honor ~ matematicas , family = binomial(link = "logit"), data = matriculah) 
 summary(modelo1) 
 
+
+data("dataMat")
+dataMat = sample(dataMat, 1000, replace = TRUE)
 ```
 
 </br>
@@ -106,17 +109,17 @@ Los colores azules representan la proporción de clasificaciones correcta :
 
 </br>
 
-* Siendo $No$, lo clasifica como $No$ : **VN** 
+* Siendo $NO$, lo clasifica como $NO$ : **VN** 
 
-* Siendo $Si$ lo clasifica como $Si$  : **VP**
+* Siendo $SI$ lo clasifica como $SI$  : **VP**
 
 </br>
 
 Los colores naranjas corresponden a las proporciones de clasificaciones erradas por el modelo.
 
-* Siendo $Si$, lo clasifica incorrectamente como $No$ :  Falsos Negativo : **FN**  
+* Siendo $SI$, lo clasifica incorrectamente como $NO$ :  Falsos Negativo : **FN**  
 
-* Siendo $No$, lo  clasifica incorrectamente como $Si$ : Falso Positovo  : **FP**
+* Siendo $NO$, lo  clasifica incorrectamente como $SI$ : Falso Positovo  : **FP**
 
 </br></br>
 
@@ -477,6 +480,63 @@ El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.829
 
 </br></br>
 
+<div class="content-box-gray">
+
+### <span style="color:#686868">**Nota:**</span> 
+
+</br></br>
+
+Existen casos donde es conveniente tener valores altos de estos indicadores 
+
+### **Alta Sensibilidad (Recall):**
+
+**Detección de enfermedades graves:** Por ejemplo, en el diagnóstico de cáncer, es crucial identificar correctamente a todas las personas que realmente tienen la enfermedad (casos positivos). Una alta sensibilidad asegura que se detecten la mayor cantidad posible de casos positivos, aunque esto pueda resultar en un mayor número de falsos positivos.
+
+**Detección de fraudes:** En la detección de fraudes en transacciones financieras, es fundamental identificar la mayor cantidad posible de transacciones fraudulentas. Una alta sensibilidad ayuda a capturar la mayoría de los casos de fraude, aunque pueda resultar en algunos casos legítimos identificados como fraudulentos.
+
+</br></br>
+
+###  **Alta Especificidad:**
+
+**Pruebas de seguridad en aeropuertos:** En los controles de seguridad en aeropuertos, es importante minimizar los falsos positivos para no causar molestias innecesarias a los pasajeros. Una alta especificidad asegura que la mayoría de los pasajeros legítimos no sean identificados erróneamente como riesgosos.
+
+**Diagnóstico de enfermedades contagiosas:** En el caso de enfermedades altamente contagiosas, es crucial identificar correctamente a las personas sanas (casos negativos) para evitar la propagación de la enfermedad. Una alta especificidad ayuda a minimizar los falsos negativos, asegurando que las personas enfermas sean identificadas correctamente.
+
+</div>
+
+</br></br>
+
+### **CÓDIGO**
+
+```{r}
+# Instalar y cargar el paquete caret si no está instalado
+if (!requireNamespace("caret", quietly = TRUE)) {
+  install.packages("caret")
+}
+library(caret)
+
+# Dividir la base de datos en conjuntos de entrenamiento y prueba
+set.seed(123)  # Para reproducibilidad
+training_indices <- createDataPartition(dataMat$gana, p = 0.7, list = FALSE)
+datos_entrenamiento <- dataMat[training_indices, ]
+datos_prueba <- dataMat[-training_indices, ]
+
+# Entrenar el modelo
+modelo_logit <- glm(gana ~ nota, family = binomial(link = "logit"), data = datos_entrenamiento)
+
+# Obtener las predicciones del modelo en los datos de prueba
+predicciones <- predict(modelo_logit, newdata = datos_prueba, type = "response")
+clases_predichas <- ifelse(predicciones > 0.5, 1, 0)
+
+datos_prueba$gana1<-as.numeric(datos_prueba$gana=="Si")
+# Crear la matriz de confusión
+matriz_confusion <- confusionMatrix(table(clases_predichas, datos_prueba$gana1))
+
+# Mostrar la matriz de confusión y métricas de evaluación
+print(matriz_confusion)
+
+
+```
 
 
 

@@ -25,7 +25,7 @@ library(tidyverse)
 # install.packages("devtools")     # solo una vez
 # devtools::install_github("dgonxalex80/paqueteMOD", force = TRUE) #descarga paquete nivelatorioEST
 set.seed(123) 
-library(paqueteMOD)
+library(paqueteMODELOS)
 data("dataMat")
 dataMat = sample(dataMat, 1000, replace = TRUE)
 glm(gana ~ nota , family = binomial(link = "logit"), data = dataMat) -> modelo1
@@ -123,11 +123,14 @@ $$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.0446
 </br></br>
 
 
-Un estudiante con un puntaje de en matemáticas de $60$ tendrá una razón $Odds$ de :
+Un estudiante con un puntaje de en matemáticas de $70$ tendrá una razón $Odds$ de :
 
 </br>
 
 $$\Bigg( \dfrac{\widehat{P_{i}}}{1-\widehat{P_{i}}} \Bigg) = \exp{\big\{ -9.04461  + 0.14415 \hspace{.2cm} \times 70}\big\} = 2.84593$$
+```{r}
+exp(-9.04461+0.14415*70)
+```
 
 Lo que indica que un estudiante con puntaje en matemáticas igual a 70, tiene 2.85 veces más probabilidad de obtener la matricula de honor en comparación de no tenerla.
 
@@ -275,12 +278,13 @@ with(modelo1, pchisq(null.deviance - deviance , df.null-df.residual, lower.tail 
 
 </br>
 
-Lo cual indica que se rechaza $H_0$, en favor de $H_a$, el modelo es significativo
+Lo cual indica que se rechaza $H_o$, en favor de $H_a$, el modelo es significativo
 
 
 </br>
 
 <div class="content-box-gray">
+
 ### <span style="color:#686868">**Nota:**</span> 
 
 </br>
