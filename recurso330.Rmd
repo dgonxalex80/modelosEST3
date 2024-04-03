@@ -488,7 +488,7 @@ El área comprendida entre la curva ROC y la diagonal del cuadrado  (AUC = 0.829
 
 Existen casos donde es conveniente tener valores altos de estos indicadores 
 
-### **Alta Sensibilidad (Recall):**
+### **Alta Sensibilidad (Recall) :**
 
 **Detección de enfermedades graves:** Por ejemplo, en el diagnóstico de cáncer, es crucial identificar correctamente a todas las personas que realmente tienen la enfermedad (casos positivos). Una alta sensibilidad asegura que se detecten la mayor cantidad posible de casos positivos, aunque esto pueda resultar en un mayor número de falsos positivos.
 
@@ -496,7 +496,7 @@ Existen casos donde es conveniente tener valores altos de estos indicadores
 
 </br></br>
 
-###  **Alta Especificidad:**
+###  **Alta Especificidad (Specificity) :**
 
 **Pruebas de seguridad en aeropuertos:** En los controles de seguridad en aeropuertos, es importante minimizar los falsos positivos para no causar molestias innecesarias a los pasajeros. Una alta especificidad asegura que la mayoría de los pasajeros legítimos no sean identificados erróneamente como riesgosos.
 
